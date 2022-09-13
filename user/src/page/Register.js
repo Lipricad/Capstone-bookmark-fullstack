@@ -1,8 +1,8 @@
 import React from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, ButtonBase, TextField, useMediaQuery, useTheme } from "@mui/material";
+import { Box, Typography, ButtonBase, useMediaQuery, useTheme } from "@mui/material";
 import * as Yup from 'yup';
-
+import { TextField } from "formik-material-ui"
 
 /* GLOBAL STYLES */
 import global from "../styles/global";
@@ -22,9 +22,15 @@ function Register() {
   };
 
   const validationSchema = Yup.object().shape({
-    email: Yup.string().required("You must input a Title!"),
-    password: Yup.string().min(3).max(15).required(),
-    cpassword: Yup.string().min(3).max(15).required(),
+    email: Yup.string()
+      .required("Email address is required.")
+      .email("Please enter a valid email address."),
+    password: Yup.string()
+      .min(8, "Password not long enough.")
+      .required("Password is required."),
+    cpassword: Yup.string()
+      .required("Confirm Password is required.")
+      .oneOf([Yup.ref('password'), null], 'Passwords must match.'),
   });
 
   const onSubmit = (data) => {
@@ -48,11 +54,10 @@ function Register() {
                 id="inputRegister"
                 name="email"
                 className="InputField"
-                // component={TextField}
-                // variant="outlined"
+                component={TextField}
                 label="Email Address"
+                helperText={<ErrorMessage name="email" />}
               />
-              <ErrorMessage name="email" component="span" />
             </Box>
 
             <Box sx={{ marginTop: "40px" }}>
@@ -62,11 +67,11 @@ function Register() {
                 id="inputRegister"
                 name="password"
                 className="InputField"
-                // component={TextField}
-                // variant="outlined"
+                component={TextField}
+                type="password"
                 label="Password"
+                helperText={<ErrorMessage name="password" style={{ color: "red" }} />}
               />
-              <ErrorMessage name="password" component="span" />
             </Box>
 
             <Box sx={{ marginTop: "40px" }}>
@@ -75,11 +80,12 @@ function Register() {
                 id="inputRegister"
                 name="cpassword"
                 className="InputField"
-                // component={TextField}
-                // variant="outlined"
+                component={TextField}
+                type="password"
                 label="Confirm Password"
+                helperText={<ErrorMessage name="cpassword" />}
               />
-              <ErrorMessage name="cpassword" component="span" />
+
             </Box>
             <ButtonBase sx={global.buttonBase} type="submit" >
               <Typography variant="h5" sx={global.TypogBut}> Join Now</Typography>

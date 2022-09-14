@@ -1,6 +1,6 @@
 .App {
   height: auto;
-  background: red;
+  background: yellow;
 }
 
 body{
@@ -11,4 +11,8 @@ body{
 .InputField {
   width: 350px;
   background: white;
+}
+
+.NavBarDecoration {
+  text-decoration-line: none;
 }

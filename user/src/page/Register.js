@@ -3,6 +3,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box, Typography, ButtonBase, useMediaQuery, useTheme } from "@mui/material";
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
+import axios from 'axios';
+
 
 /* GLOBAL STYLES */
 import global from "../styles/global";
@@ -33,13 +35,16 @@ function Register() {
       .oneOf([Yup.ref('password'), null], 'Passwords must match.'),
   });
 
+  /* PASSING DATA TO DATABASE */
   const onSubmit = (data) => {
-    console.log(data);
+    axios.post("http://localhost:3001/register", data).then((response) => {
+      console.log("200");
+    });
   };
 
   return (
     <Box sx={{
-      display: "flex", minHeight: "98vh", background: 'url(pictures/background/reg_bg.jpg)',
+      display: "flex", minHeight: "100vh", background: 'url(pictures/background/reg_bg.jpg)',
       backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundPosition: "center"
     }}>
 

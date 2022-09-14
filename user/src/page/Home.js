@@ -1,8 +1,11 @@
 import React from 'react'
+import {Box, Typography} from "@mui/material";
 
 function Home() {
   return (
-    <div className='HomePage'>Home</div>
+    <Box sx={{marginTop:"100px"}}>
+      <Typography variant='h1'> HOME </Typography>
+    </Box>
   )
 }
 

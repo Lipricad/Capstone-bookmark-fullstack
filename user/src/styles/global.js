@@ -39,6 +39,11 @@ const global = {
     padding: "15px",
     marginTop: "40px",
     borderRadius: "8px",
+    filter: "brightness(90%)",
+    "&:hover": {
+      filter: "brightness(110%)",
+      transition: "0.3s"
+    }
   },
 
   menuStyle: {

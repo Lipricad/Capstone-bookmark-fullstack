@@ -11,13 +11,14 @@ import Home from "./page/Home";
 import Register from "./page/Register";
 import Login from "./page/Login";
 import About from "./page/About"
+import AddBookmark from './page/AddBookmark';
 
 function App() {
 
   //DRAWER
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
-  console.log(matches);   //checker
+
 
   const [open, setOpen] = useState(false);
 
@@ -120,6 +121,7 @@ function App() {
           <Route path="/about" exact element={<About />} />
           <Route path="/login" exact element={<Login />} />
           <Route path="/register" exact element={<Register />} />
+          <Route path="/add_bookmark" exact element={<AddBookmark />} />
         </Routes>
       </Router>
     </Box>

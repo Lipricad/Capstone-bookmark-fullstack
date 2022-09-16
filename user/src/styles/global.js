@@ -23,6 +23,13 @@ const global = {
     paddingTop: "20px"
   },
 
+  TypogCollection: {
+    color: "#Afa9a9",
+    textAlign: "center",
+    paddingTop: "8px",
+    fontWeight: "bold"
+  },
+
   buttonnav: {
     "&:hover": {
       transition: "0.4s",

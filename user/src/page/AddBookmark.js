@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box, Typography, IconButton, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
 import * as Yup from 'yup';
@@ -20,6 +20,15 @@ function AddBookmark() {
     setOpen(false);
   };
 
+  /* LIST OF COLLECTION */
+  const [listOfCollection, setlistOfCollection] = useState([]);
+
+  useEffect(() => {
+    axios.get("http://localhost:3001/collection").then((response) => {
+      setlistOfCollection(response.data);
+    });
+  }, []);
+
   /* FORMIK */
   const initialValues = {
     UserEmail: "",
@@ -38,6 +47,8 @@ function AddBookmark() {
   const onSubmit = (data) => {
     axios.post("http://localhost:3001/collection", data).then((response) => {
       console.log("200");
+      window.location.reload(); //TEMPORARY REFRESH
+      handleClose();
     });
   };
 
@@ -82,7 +93,7 @@ function AddBookmark() {
           {/* 3. ADD COLLECTION */}
 
           <Box sx={{ flex: "1 1 auto", textAlign: "center" }}>
-            <ButtonBase sx={{ border: "3px solid #6633ff", padding: "10px", "&:hover": { background:"#424242", transition: "0.3s"}}} onClick={handleClickOpen}>
+            <ButtonBase sx={{ border: "3px solid #6633ff", padding: "10px", "&:hover": { background: "#424242", transition: "0.3s" } }} onClick={handleClickOpen}>
               <Typography variant="h5" sx={global.TypogBut}> New Collection</Typography>
             </ButtonBase>
 
@@ -90,7 +101,7 @@ function AddBookmark() {
             {/* 3.1 DIALOG POPUP FORM */}
 
             <Dialog open={open} onClose={handleClose}>
-              <Box sx={{border: "3px solid black"}}>
+              <Box sx={{ border: "3px solid black" }}>
                 <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Create Collection</DialogTitle>
 
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
@@ -125,7 +136,7 @@ function AddBookmark() {
                       <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
                         <Typography sx={global.TypogButCancel}> Cancel </Typography>
                       </ButtonBase>
-                      <ButtonBase sx={global.buttonBase} type="sbumit">
+                      <ButtonBase sx={global.buttonBase} type="submit">
                         <Typography sx={global.TypogBut}> Confirm</Typography>
                       </ButtonBase>
                     </DialogActions>
@@ -138,8 +149,18 @@ function AddBookmark() {
 
           {/* 4. COLLUMN OF COLLECTION */}
 
-          <Box sx={{ flex: "20 1 auto", background: "red" }}>
+          <Box sx={{ flex: "20 1 auto", background: "red", textAlign: "center" }}>
+            {listOfCollection.map((value, key) => {
+              return (
+                <Box className="Box">
 
+                  <ButtonBase>
+                    <Typography variant="h6" sx={{color: "white"}}>{value.CollectionName}</Typography>
+                  </ButtonBase>
+
+                </Box>
+              )
+            })}
           </Box>
 
         </Box>

@@ -10,6 +10,11 @@ const global = {
     fontWeight: "bold"
   },
 
+  TypogButCancel: {
+    color: "black",
+    fontWeight: "bold"
+  },
+
   TypogTitle: {
     color: "#6633ff",
     fontWeight: "bold",
@@ -49,6 +54,20 @@ const global = {
     filter: "brightness(90%)",
     "&:hover": {
       filter: "brightness(110%)",
+      transition: "0.3s"
+    }
+  },
+
+  buttonBaseCancel: {
+    border: "solid",
+    borderWidth: "1px",
+    background: "white",
+    padding: "15px",
+    marginTop: "40px",
+    borderRadius: "8px",
+    filter: "brightness(100%)",
+    "&:hover": {
+      filter: "brightness(90%)",
       transition: "0.3s"
     }
   },

@@ -12,6 +12,10 @@ body{
   width: 350px;
   background: white;
 }
+.InputFieldPopup {
+  width: 250px;
+  background: white;
+}
 
 .NavBarDecoration {
   text-decoration-line: none;

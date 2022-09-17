@@ -11,6 +11,9 @@ const db = require('./models')
 const registerRouter = require("./routes/Register")
 app.use("/register", registerRouter);
 
+const collectionRouter = require("./routes/Collection")
+app.use("/collection", collectionRouter);
+
 /* TO RUN */
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {

@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
 
   const Collection = sequelize.define("Collection", {
     UserEmail: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     CollectionName: {

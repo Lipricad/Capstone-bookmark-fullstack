@@ -14,16 +14,14 @@ function Try() {
     <div className="App">
       {listOfUsers.map((value, key) => {
         return (
-          <div className="Box">
+
+          <div className="Box"  key={value.id}>
 
             <h1 className="Title"> EMAIL</h1>
             <p>{value.email}</p>
 
-
-            <h1 className="Title"> PASSWORD</h1>
-            <p>{value.password}</p>
-
           </div>
+
         )
       })}
     </div>

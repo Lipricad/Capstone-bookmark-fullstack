@@ -12,7 +12,7 @@ import Register from "./page/Register";
 import Login from "./page/Login";
 import About from "./page/About"
 import AddBookmark from './page/AddBookmark';
-import ShowCategory from './components/ShowCategory';
+// import Tryy from './page/try';
 
 function App() {
 
@@ -118,12 +118,13 @@ function App() {
 
                                                                                                           {/* ROUTES HERE */}
         <Routes>
+          {/* <Route path="/try" exact element={<Tryy />} /> */}
           <Route path="/" exact element={<Home />} />
           <Route path="/about" exact element={<About />} />
           <Route path="/login" exact element={<Login />} />
           <Route path="/register" exact element={<Register />} />
           <Route path="/add_bookmark" exact element={<AddBookmark />} />
-          <Route path="/category" exact element={<ShowCategory />} />
+          <Route path="/add_bookmark/:id/:CollectionName" exact element={<AddBookmark />} />
         </Routes>
       </Router>
     </Box>

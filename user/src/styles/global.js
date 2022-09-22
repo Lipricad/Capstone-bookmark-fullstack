@@ -72,6 +72,17 @@ const global = {
     }
   },
 
+  ColectionButtonCol: {
+    marginTop: "30px",
+    marginBottom: "60px",
+
+    "&:hover": {
+      borderBottom: "3px solid white",
+      borderTop: "3px solid white",
+      transition: "0.4s"
+    }
+  },
+
   //OVERFLOW STYLES
   CollectionOverflowstyle: {
     maxHeight: "62vh",

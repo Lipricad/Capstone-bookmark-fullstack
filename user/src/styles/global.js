@@ -72,6 +72,44 @@ const global = {
     }
   },
 
+  //OVERFLOW STYLES
+  CollectionOverflowstyle: {
+    maxHeight: "62vh",
+    textAlign: "center",
+    overflow: "auto",
+    borderTop: "3px solid #272727",
+    '&::-webkit-scrollbar': {
+      width: '0.4em'
+    },
+    '&::-webkit-scrollbar-track': {
+      boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+      webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.1)',
+      outline: '1px solid slategrey'
+    }
+  },
+
+  CategorynOverflowstyle: {
+    flex: "15 1 auto",
+    maxHeight: "84.5vh",
+    background: "#666666",
+    textAlign: "center",
+    overflow: "auto",
+    '&::-webkit-scrollbar': {
+      width: '0.4em'
+    },
+    '&::-webkit-scrollbar-track': {
+      boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+      webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: 'rgba(0,0,0,.1)',
+      outline: '1px solid slategrey'
+    }
+  },
+
   menuStyle: {
     "& .MuiPaper-root": {
       backgroundColor: "#6633ff",

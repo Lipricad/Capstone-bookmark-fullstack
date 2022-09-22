@@ -12,6 +12,7 @@ import Register from "./page/Register";
 import Login from "./page/Login";
 import About from "./page/About"
 import AddBookmark from './page/AddBookmark';
+import ShowCategory from './components/ShowCategory';
 
 function App() {
 
@@ -115,13 +116,14 @@ function App() {
           </Toolbar>
         </AppBar>
 
-
+                                                                                                          {/* ROUTES HERE */}
         <Routes>
           <Route path="/" exact element={<Home />} />
           <Route path="/about" exact element={<About />} />
           <Route path="/login" exact element={<Login />} />
           <Route path="/register" exact element={<Register />} />
           <Route path="/add_bookmark" exact element={<AddBookmark />} />
+          <Route path="/category" exact element={<ShowCategory />} />
         </Routes>
       </Router>
     </Box>

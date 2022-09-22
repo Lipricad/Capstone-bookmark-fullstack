@@ -9,6 +9,9 @@ import axios from 'axios';
 /* GLOBAL STYLES */
 import global from "../styles/global";
 
+/* COMPONENTS */
+import ShowCategory from '../components/ShowCategory';
+
 function AddBookmark() {
 
   /* FORM DIALOG POPUP */
@@ -53,23 +56,23 @@ function AddBookmark() {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#3b3b3b" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh",background: "#3b3b3b" }}>
 
 
       {/* 0. COLLECTION TITLE */}
 
-      <Box sx={{ display: "flex", flex: "1 1 auto", background: "#3b3b3b", borderBottom: "3px solid #272727", marginTop: "85px", alignItems: "center" }}>
-        <Typography variant="h3" sx={{ margin: "0 0 0 20px", color: "#Afa9a9", fontWeight: "bold" }}> TITLE TRY LNG PO </Typography>
+      <Box sx={{ display: "flex", flex: "1 1 auto", background: "#3b3b3b", borderBottom: "3px solid #272727", marginTop: "85px", alignItems: "center", maxHeight:"100px" }}>
+        <Typography variant="h3" sx={{ margin: "0 0 0 20px", color: "#Afa9a9", fontWeight: "bold", textAlign: "center"}}> TITLE TRY LNG PO </Typography>
       </Box>
 
-      <Box sx={{ display: "flex", flexDirection: "row", flex: "15 1 auto" }}>
+      <Box sx={{ display: "flex", flexDirection: "row", flex: "1 1 auto" }}>
 
 
         {/* 1. BOX FOR COLLECTION */}
 
-        <Box sx={{ flex: "1 1 auto", background: "#3b3b3b", display: "flex", flexDirection: "column" }}>
+        <Box sx={{ flex: "1 1 auto", background: "#3b3b3b", display: "flex", flexDirection: "column", maxWidth: "250px", minWidth:" 250px" }}>
 
-          <Box sx={{ display: "flex", flex: "1 1 auto" }}>
+          <Box sx={{ display: "flex", flex: "1 1 auto", maxHeight: "75px" }}>
             <Box sx={{ flex: "1 1 auto" }}>
               <Typography variant="h4" sx={global.TypogCollection}> Collection</Typography>
             </Box>
@@ -92,8 +95,9 @@ function AddBookmark() {
 
           {/* 3. ADD COLLECTION */}
 
-          <Box sx={{ flex: "1 1 auto", textAlign: "center" }}>
-            <ButtonBase sx={{ border: "3px solid #6633ff", padding: "10px", "&:hover": { background: "#424242", transition: "0.3s" } }} onClick={handleClickOpen}>
+          <Box sx={{ flex: "1 1 auto", textAlign: "center", maxHeight: "150px"}}>
+            <ButtonBase sx={{ border: "3px solid #6633ff", padding: "10px", marginTop: "30px", marginBottom: "30px", "&:hover": { background: "#424242", transition: "0.3s" } }}
+              onClick={handleClickOpen}>
               <Typography variant="h5" sx={global.TypogBut}> New Collection</Typography>
             </ButtonBase>
 
@@ -149,18 +153,18 @@ function AddBookmark() {
 
           {/* 4. COLLUMN OF COLLECTION */}
 
-          <Box sx={{ flex: "20 1 auto", background: "red", textAlign: "center" }}>
-            {listOfCollection.map((value, key) => {
-              return (
-                <Box className="Box">
-
-                  <ButtonBase>
-                    <Typography variant="h6" sx={{color: "white"}}>{value.CollectionName}</Typography>
-                  </ButtonBase>
-
-                </Box>
-              )
-            })}
+          <Box sx={{flex: "15 1 auto"}}>
+            <Box sx={global.CollectionOverflowstyle}>
+              {listOfCollection.map((value, key) => {
+                return (
+                  <Box>
+                    <ButtonBase sx={{ marginTop: "30px", marginBottom: "60px" }}>
+                      <Typography variant="h6" sx={{ color: "white" }}>{value.CollectionName}</Typography>
+                    </ButtonBase>
+                  </Box>
+                )
+              })}
+            </Box>
           </Box>
 
         </Box>
@@ -171,8 +175,8 @@ function AddBookmark() {
 
         {/* 5. CATEGORIES */}
 
-        <Box sx={{ flex: "15 1 auto", background: "#666666" }}>
-
+        <Box sx={global.CategorynOverflowstyle}>
+          <ShowCategory />
         </Box>
       </Box>
     </Box >

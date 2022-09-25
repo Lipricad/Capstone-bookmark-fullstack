@@ -10,12 +10,8 @@ import axios from 'axios';
 /* GLOBAL STYLES */
 import global from "../styles/global";
 
-/* COMPONENTS */
-import ShowCategory from '../components/ShowCategory';
 
-
-function AddBookmark() {
-
+function MainPageAddCol({children}) {
 
 
   /* FORM DIALOG POPUP */
@@ -57,8 +53,8 @@ function AddBookmark() {
 
 
   /* COLLECTION DATA */
-  var { CollectionName } = useParams();
-  var history = useNavigate();
+  let { CollectionName } = useParams();
+  let history = useNavigate();
 
 
 
@@ -176,8 +172,8 @@ function AddBookmark() {
             <Box sx={global.CollectionOverflowstyle}>
               {listOfCollection.map((value, key) => {
                 return (
-                  <Box  key={value.id}> 
-                    <ButtonBase sx={global.ColectionButtonCol} onClick={() => { history(`/add_bookmark/${value.id}/${value.CollectionName}`) }}>
+                  <Box key={value.id}>
+                    <ButtonBase sx={global.ColectionButtonCol} onClick={() => { history(`/add_category/${value.id}/${value.CollectionName}`) }}>
                       <Typography variant="h6" sx={{ color: "white" }}>{value.CollectionName}</Typography>
                     </ButtonBase>
                   </Box>
@@ -195,7 +191,7 @@ function AddBookmark() {
         {/* 5. CATEGORIES */}
 
         <Box sx={global.CategorynOverflowstyle}>
-          <ShowCategory />
+          {children}
         </Box>
       </Box>
 
@@ -203,4 +199,4 @@ function AddBookmark() {
   )
 }
 
-export default AddBookmark
+export default MainPageAddCol

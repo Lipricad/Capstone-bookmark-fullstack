@@ -75,17 +75,20 @@ const global = {
   ColectionButtonCol: {
     marginTop: "30px",
     marginBottom: "60px",
+    borderBottom: "2px solid transparent",
+    borderTop: "2px solid transparent",
 
     "&:hover": {
-      borderBottom: "3px solid white",
-      borderTop: "3px solid white",
+      borderBottom: "2px solid white",
+      borderTop: "2px solid white",
+      transform: "scale(1.02)",
       transition: "0.4s"
     }
   },
 
   //OVERFLOW STYLES
   CollectionOverflowstyle: {
-    maxHeight: "62vh",
+    maxHeight: "60vh",
     textAlign: "center",
     overflow: "auto",
     borderTop: "3px solid #272727",
@@ -104,7 +107,7 @@ const global = {
 
   CategorynOverflowstyle: {
     flex: "15 1 auto",
-    maxHeight: "84.5vh",
+    maxHeight: "100%",
     background: "#666666",
     textAlign: "center",
     overflow: "auto",

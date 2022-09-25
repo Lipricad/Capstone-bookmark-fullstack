@@ -20,7 +20,7 @@ db.sequelize.sync().then(() => {
     console.log("Server running on port 3001");
   });
 })
-// // drop the table if it already exists
+// // TO DROP THE TABLE DATA THAT ALREADY EXIST
 // db.sequelize.sync({ force: true }).then(() => {
 //   console.log("Drop and re-sync db.");
 // });

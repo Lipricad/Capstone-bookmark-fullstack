@@ -9,7 +9,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     }
-  })
+  });
+
+  Collection.associate = (models) => {
+    Collection.hasMany(models.Category, {
+      onDelete: "cascade",
+    });
+  }
 
   return Collection
 }

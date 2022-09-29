@@ -105,9 +105,9 @@ const global = {
     }
   },
 
-  CategorynOverflowstyle: {
+  CategoryOverflowstyle: {
     flex: "15 1 auto",
-    maxHeight: "100%",
+    maxHeight: "95vh",
     background: "#666666",
     textAlign: "center",
     overflow: "auto",
@@ -119,7 +119,7 @@ const global = {
       webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
     },
     '&::-webkit-scrollbar-thumb': {
-      backgroundColor: 'rgba(0,0,0,.1)',
+      backgroundColor: 'rgba(59,59,59,255)',
       outline: '1px solid slategrey'
     }
   },

@@ -64,7 +64,11 @@ function AddCategory() {
   const onSubmit = () => {
     axios.post("http://localhost:3001/category", { CategoryName: newCategory, CollectionId: id }).then((response) => {
       console.log("200");
-      window.location.reload(); //TEMPORARY REFRESH   {/* DITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO KA MAGALALAGAY NUNG UPDATE */}
+
+      /* UPDATE THE PAGE EVERYTIME YOU ADD */
+
+      const categoryToUpdate = {CategoryName: newCategory};
+      setlistOfCategory([...listOfCategory, categoryToUpdate]);
       handleClose();
     });
   };

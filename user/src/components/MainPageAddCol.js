@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, IconButton, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle  } from "@mui/material"
+import { Box, Typography, IconButton, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate, useParams } from "react-router-dom"
@@ -11,7 +11,7 @@ import axios from 'axios';
 import global from "../styles/global";
 
 
-function MainPageAddCol({children}) {
+function MainPageAddCol({ children }) {
 
 
   /* FORM DIALOG POPUP */
@@ -69,14 +69,14 @@ function MainPageAddCol({children}) {
 
   return (
     // AYUSIN MO NGA TO ABOT SA PAG SCROLL DOWN DITO YUNG MAY zIndex at positionFIXED
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#3b3b3b",  zIndex:"12", position:"fixed", width: "100%"}}>   
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#3b3b3b", zIndex: "12", position: "fixed", width: "100%" }}>
 
 
 
       {/* 0. COLLECTION TITLE */}
 
-      <Box sx={{ display: "flex", flex: "1 1 auto", background: "#3b3b3b", borderBottom: "3px solid #272727", marginTop: "85px", alignItems: "center", maxHeight: "120px", minHeight: "80px"}}>
-        <Typography variant="h3" sx={{ margin: "0 0 0 20px", color: "#Afa9a9", fontWeight: "bold", textAlign: "center" }}> Name: {CollectionName} </Typography>
+      <Box sx={{ display: "flex", flex: "1 1 auto", background: "#3b3b3b", borderBottom: "3px solid #272727", marginTop: "85px", alignItems: "center", maxHeight: "120px", minHeight: "80px" }}>
+        <Typography variant="h3" sx={{ margin: "0 0 0 20px", color: "#Afa9a9", fontWeight: "bold", textAlign: "center" }}> {CollectionName} </Typography>
       </Box>
 
       <Box sx={{ display: "flex", flexDirection: "row", flex: "1 1 auto" }}>
@@ -109,8 +109,8 @@ function MainPageAddCol({children}) {
 
           {/* 3. ADD COLLECTION */}
 
-          <Box sx={{ flex: "1 1 auto", textAlign: "center", maxHeight: "150px"}}>
-            <ButtonBase sx={{ border: "3px solid #6633ff", padding: "10px", marginTop: "30px", marginBottom: "30px", "&:hover": { background: "#424242", transition: "0.3s" } }}   
+          <Box sx={{ flex: "1 1 auto", textAlign: "center", maxHeight: "150px" }}>
+            <ButtonBase sx={{ border: "3px solid #6633ff", padding: "10px", marginTop: "30px", marginBottom: "30px", "&:hover": { background: "#424242", transition: "0.3s" } }}
               onClick={handleClickOpen}>
               <Typography variant="h5" sx={global.TypogBut}> New Collection</Typography>
             </ButtonBase>
@@ -133,7 +133,7 @@ function MainPageAddCol({children}) {
                             name="UserEmail"
                             className="InputFieldPopup"
                             component={TextField}
-                            label="Email Adress"
+                            label="Email Address"
                             helperText={<ErrorMessage name="UserEmail" />}
                           />
                         </Box>
@@ -154,7 +154,7 @@ function MainPageAddCol({children}) {
                       <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
                         <Typography sx={global.TypogButCancel}> Cancel </Typography>
                       </ButtonBase>
-                                                    {/* DITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO KA MAGALALAGAY NUNG UPDATE */}
+                                                     {/* DITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO KA MAGALALAGAY NUNG UPDATE */}
                       <ButtonBase sx={global.buttonBase} type="submit">
                         <Typography sx={global.TypogBut}> Confirm</Typography>
                       </ButtonBase>
@@ -174,7 +174,11 @@ function MainPageAddCol({children}) {
                 return (
                   <Box key={key}>
                                                     {/* DITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO KA MAGALALAGAY NUNG UPDATE */}
-                    <ButtonBase sx={global.ColectionButtonCol} onClick={() => { history(`/add_category/${value.id}/${value.CollectionName}`) }}>
+                    <ButtonBase sx={global.ColectionButtonCol}
+                      onClick={() => {
+                        history(`/add_category/${value.id}/${value.CollectionName}`);
+                        history(0);
+                      }}>
                       <Typography variant="h6" sx={{ color: "white" }}>{value.CollectionName}</Typography>
                     </ButtonBase>
                   </Box>
@@ -194,7 +198,7 @@ function MainPageAddCol({children}) {
           {children}
         </Box>
       </Box>
-      
+
 
     </Box >
   )

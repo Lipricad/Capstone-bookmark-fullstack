@@ -1,9 +1,6 @@
 import React from 'react'
 import { Box, Typography } from "@mui/material";
 
-/* GLOBAL STYLES */
-import global from "../styles/global";
-
 
 function About() {
   return (

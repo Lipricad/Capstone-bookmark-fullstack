@@ -16,7 +16,7 @@ function Register() {
   /* BREAKPOINT */
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
-  console.log(matches);   //checker
+  // console.log(matches);   //checker
 
   /* FORMIK */
   const initialValues = {
@@ -40,11 +40,12 @@ function Register() {
   /* PASSING DATA TO DATABASE */
   let history = useNavigate();
 
-  const onSubmit = (data) => {
+  const onSubmit = (data, {resetForm}) => {
     axios.post("http://localhost:3001/register", data).then((response) => {
-      console.log("200");
-
-      history(`/add_collection`);
+      console.log(response.data);
+      
+      resetForm({data: ""})
+      history(`/login`);
     });
   };
 
@@ -62,7 +63,6 @@ function Register() {
             <Box sx={{ marginTop: "40px" }}>
               <Field
                 autoComplete="off"
-                id="inputRegister"
                 name="email"
                 className="InputField"
                 component={TextField}
@@ -75,7 +75,6 @@ function Register() {
 
               <Field
                 autoComplete="off"
-                id="inputRegister"
                 name="password"
                 className="InputField"
                 component={TextField}
@@ -88,7 +87,6 @@ function Register() {
             <Box sx={{ marginTop: "40px" }}>
               <Field
                 autoComplete="off"
-                id="inputRegister"
                 name="cpassword"
                 className="InputField"
                 component={TextField}

@@ -57,10 +57,23 @@ function MainPageAddCol({ children }) {
   let history = useNavigate();
 
   /* PASSING DATA TO DATABASE */
-  const onSubmit = (data) => {
-    axios.post("http://localhost:3001/collection", data).then((response) => {
-      console.log("200");
-      window.location.reload(); //TEMPORARY REFRESH
+  const onSubmit = (data, { resetForm }) => {
+    axios.post("http://localhost:3001/collection",
+      data,
+      {
+        headers: {
+          accessToken: sessionStorage.getItem("accessToken"),
+        },
+      }
+    ).then((response) => {
+      if (response.data.error) {
+        console.log("400: unverified");
+      } else {
+        console.log("200");
+        window.location.reload(); //TEMPORARY REFRESH
+
+        resetForm({ data: "" })
+      }
       handleClose();
     });
   };
@@ -129,7 +142,6 @@ function MainPageAddCol({ children }) {
                         <Box>
                           <Field
                             autoComplete="off"
-                            id="inputAddCol"
                             name="UserEmail"
                             className="InputFieldPopup"
                             component={TextField}
@@ -140,7 +152,6 @@ function MainPageAddCol({ children }) {
                         <Box sx={{ marginTop: "30px" }}>
                           <Field
                             autoComplete="off"
-                            id="inputAddCol"
                             name="CollectionName"
                             className="InputFieldPopup"
                             component={TextField}
@@ -154,7 +165,7 @@ function MainPageAddCol({ children }) {
                       <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
                         <Typography sx={global.TypogButCancel}> Cancel </Typography>
                       </ButtonBase>
-                                                     {/* DITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO KA MAGALALAGAY NUNG UPDATE */}
+                      {/* DITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO KA MAGALALAGAY NUNG UPDATE */}
                       <ButtonBase sx={global.buttonBase} type="submit">
                         <Typography sx={global.TypogBut}> Confirm</Typography>
                       </ButtonBase>
@@ -173,11 +184,11 @@ function MainPageAddCol({ children }) {
               {listOfCollection.map((value, key) => {
                 return (
                   <Box key={key}>
-                                                    {/* DITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO KA MAGALALAGAY NUNG UPDATE */}
+                    {/* DITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO KA MAGALALAGAY NUNG UPDATE */}
                     <ButtonBase sx={global.ColectionButtonCol}
                       onClick={() => {
                         history(`/add_category/${value.id}/${value.CollectionName}`);
-                        history(0);
+                        history(0); //TEMPORARYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
                       }}>
                       <Typography variant="h6" sx={{ color: "white" }}>{value.CollectionName}</Typography>
                     </ButtonBase>

@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const {Collection} = require("../models")
+const { validateToken } = require("../middlewares/AuthMiddleware")
 
 //OUTPUT ALL
 router.get("/", async (req, res) => {
@@ -19,7 +20,7 @@ router.get('/byId/:id', async (req, res) => {
 
 
 //INPUT
-router.post("/", async (req, res) => {
+router.post("/", validateToken,  async (req, res) => {
   const post = req.body;
   await Collection.create(post);
   res.json(post);

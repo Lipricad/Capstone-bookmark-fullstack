@@ -4,7 +4,7 @@ import { Box, Typography, ButtonBase, Link } from "@mui/material";
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate } from "react-router-dom"
-// import axios from 'axios';
+import axios from 'axios';
 
 
 /* GLOBAL STYLES */
@@ -12,23 +12,34 @@ import global from "../styles/global";
 
 function Login() {
 
+  /* FORMIK */
+  const initialValues = {
+    email: "",
+    password: "",
+  };
+
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .required("Email address is required.")
+      .email("Please enter a valid email address."),
+    password: Yup.string()
+      .required("Password is required."),
+  });
+
   /* PASSING DATA TO DATABASE */
   let history = useNavigate();
 
-    /* FORMIK */
-    const initialValues = {
-      email: "",
-      password: "",
-    };
-  
-    const validationSchema = Yup.object().shape({
-      email: Yup.string()
-        .required("Email address is required.")
-        .email("Please enter a valid email address."),
-      password: Yup.string()
-        .min(8, "Password not long enough.")
-        .required("Password is required."),
+  const onSubmit = (data, { resetForm }) => {
+    axios.post("http://localhost:3001/register/login", data).then((response) => {
+      if (response.data.error) {
+        alert(response.data.error);
+      } else {
+        sessionStorage.setItem("accessToken", response.data);
+        history(`/add_collection`);
+      }
+      resetForm({ data: "" })
     });
+  };
 
 
 
@@ -41,12 +52,11 @@ function Login() {
       <Box sx={{ flexGrow: 1, textAlign: "center", marginTop: "6vh" }}>
         <Typography variant="h2" sx={global.TypogTitle}> Sign In </Typography>
 
-        <Formik initialValues={initialValues} onSubmit={""} validationSchema={validationSchema}>
+        <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
           <Form>
             <Box sx={{ marginTop: "40px", alignItems: "center" }}>
               <Field
                 autoComplete="off"
-                id="inputRegister"
                 name="email"
                 className="InputField"
                 component={TextField}
@@ -58,7 +68,6 @@ function Login() {
             <Box sx={{ marginTop: "40px" }}>
               <Field
                 autoComplete="off"
-                id="inputRegister"
                 name="password"
                 className="InputField"
                 component={TextField}

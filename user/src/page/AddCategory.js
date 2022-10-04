@@ -62,13 +62,25 @@ function AddCategory() {
   const [newCategory, setNewCategory] = useState("")
 
   const onSubmit = () => {
-    axios.post("http://localhost:3001/category", { CategoryName: newCategory, CollectionId: id }).then((response) => {
-      console.log("200");
+    axios.post("http://localhost:3001/category",
+      {
+        CategoryName: newCategory, CollectionId: id
+      },
+      {
+        headers: {
+          accessToken: sessionStorage.getItem("accessToken"),
+        },
+      }
+    ).then((response) => {
+      if (response.data.error) {
+        console.log("400: unverified");
+      } else {
+        console.log("200");
+        /* UPDATE THE PAGE EVERYTIME YOU ADD */
 
-      /* UPDATE THE PAGE EVERYTIME YOU ADD */
-
-      const categoryToUpdate = {CategoryName: newCategory};
-      setlistOfCategory([...listOfCategory, categoryToUpdate]);
+        const categoryToUpdate = { CategoryName: newCategory };
+        setlistOfCategory([...listOfCategory, categoryToUpdate]);
+      }
       handleClose();
     });
   };
@@ -81,12 +93,12 @@ function AddCategory() {
 
         {/* NEW CATEGORIES BUTTON BOX */}
 
-        <Box sx={{ display: "flex", flexDirection: "row", minHeight: "13vh"}}>
+        <Box sx={{ display: "flex", flexDirection: "row", minHeight: "13vh" }}>
 
           {/* CATEGORY BUTTON */}
 
-          <Box sx={{ flex: "1",  position: "fixed", right: "30px"  }}>
-            <Box sx={{paddingRight:"10px"}}>
+          <Box sx={{ flex: "1", position: "fixed", right: "30px" }}>
+            <Box sx={{ paddingRight: "10px" }}>
               <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
                 <Typography variant="h5" sx={global.TypogBut}> New Category </Typography>
               </ButtonBase>
@@ -104,7 +116,6 @@ function AddCategory() {
                       <Box sx={{ padding: "20px", borderTop: "4px solid black", borderBottom: "4px solid black" }}>
                         <Field
                           autoComplete="off"
-                          id="inputAddCat"
                           name="CategoryName"
                           className="InputFieldPopup"
                           component={TextField}

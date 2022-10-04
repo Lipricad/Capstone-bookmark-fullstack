@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const { Category } = require("../models")
+const { validateToken } = require("../middlewares/AuthMiddleware")
 
 // OUTPUT ONE
 router.get('/:CollectionId', async (req, res) => {
@@ -11,7 +12,7 @@ router.get('/:CollectionId', async (req, res) => {
 });
 
 // INPUT
-router.post("/", async (req, res) => {
+router.post("/", validateToken, async (req, res) => {
   const post = req.body;
   await Category.create(post);
   res.json(post);

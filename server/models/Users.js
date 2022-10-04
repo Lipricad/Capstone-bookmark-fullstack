@@ -8,9 +8,16 @@ module.exports = (sequelize, DataTypes) => {
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: true,
+      allowNull: false,
     }
-  })
+  });
+
+  // Users.associate = (models) => {
+  //   Users.hasMany(models.Collection, {
+  //     onDelete: "cascade",
+  //   });
+  // };
+
 
   return Users
 }

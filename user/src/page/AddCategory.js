@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
+import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Paper } from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useParams } from "react-router-dom"
@@ -68,7 +68,7 @@ function AddCategory() {
       },
       {
         headers: {
-          accessToken: sessionStorage.getItem("accessToken"),
+          accessToken: localStorage.getItem("accessToken"),
         },
       }
     ).then((response) => {
@@ -89,15 +89,15 @@ function AddCategory() {
 
   return (
     <MainPageAddCol>
-      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100%" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100%"}}>
 
         {/* NEW CATEGORIES BUTTON BOX */}
 
-        <Box sx={{ display: "flex", flexDirection: "row", minHeight: "13vh" }}>
+        <Box sx={{ display: "flex", flexDirection: "row", minHeight: "13vh", flex: "1 1 auto" }}>
 
           {/* CATEGORY BUTTON */}
 
-          <Box sx={{ flex: "1", position: "fixed", right: "30px" }}>
+          <Box sx={{ flex: "1", position: "fixed", right: "30px", zIndex: "12" }}>
             <Box sx={{ paddingRight: "10px" }}>
               <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
                 <Typography variant="h5" sx={global.TypogBut}> New Category </Typography>
@@ -142,20 +142,20 @@ function AddCategory() {
 
         {/* LIST OF CATEGORIES */}
 
-        <Box sx={{ flex: "30" }}>
-          {listOfCategory.map((value, key) => {
-            return (
-              <Box key={key}>
-                <ButtonBase sx={global.ColectionButtonCol}>
-                  <Typography variant="h6" sx={{ color: "white" }}>{value.CategoryName}</Typography>
-                </ButtonBase>
-              </Box>
-            )
-          })}
+        <Box sx={{ flex: "1 1 auto", display: "flex", flexDirection: "row", flexWrap: "wrap", marginBottom: "200px" }}>
+            {listOfCategory.map((value, key) => {
+              return (
+                <Paper elevation={3} key={key} sx={{margin: "1vh 1vw 1vh 1.2vw", padding: "90px", width: "10vw", height: "10vh"}}>
+                  <ButtonBase sx={global.ColectionButtonCol}>
+                    <Typography variant="h6" sx={{ color: "black" }}>{value.CategoryName}</Typography>
+                  </ButtonBase>
+                </Paper>
+              )
+            })}
         </Box>
 
       </Box>
-    </MainPageAddCol>
+   </MainPageAddCol>
   )
 }
 

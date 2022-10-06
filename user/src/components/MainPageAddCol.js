@@ -62,7 +62,7 @@ function MainPageAddCol({ children }) {
       data,
       {
         headers: {
-          accessToken: sessionStorage.getItem("accessToken"),
+          accessToken: localStorage.getItem("accessToken"),
         },
       }
     ).then((response) => {

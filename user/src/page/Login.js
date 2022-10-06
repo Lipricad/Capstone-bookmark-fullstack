@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box, Typography, ButtonBase, Link } from "@mui/material";
 import * as Yup from 'yup';
@@ -7,10 +7,14 @@ import { useNavigate } from "react-router-dom"
 import axios from 'axios';
 
 
-/* GLOBAL STYLES */
+/* GLOBAL STYLES && IMPORTS */
 import global from "../styles/global";
+import { AuthContext } from "../helpers/AuthContext";
 
 function Login() {
+
+  /* REFRESH PAGE */
+  const { setAuthState } = useContext(AuthContext);
 
   /* FORMIK */
   const initialValues = {
@@ -34,7 +38,10 @@ function Login() {
       if (response.data.error) {
         alert(response.data.error);
       } else {
-        sessionStorage.setItem("accessToken", response.data);
+        localStorage.setItem("accessToken", response.data);
+
+        setAuthState(true);
+
         history(`/add_collection`);
       }
       resetForm({ data: "" })

@@ -110,7 +110,8 @@ const global = {
     maxHeight: "95vh",
     background: "#666666",
     textAlign: "center",
-    overflow: "auto",
+    overflowX: "hidden",
+    overflowY: "scroll",
     '&::-webkit-scrollbar': {
       width: '0.4em'
     },

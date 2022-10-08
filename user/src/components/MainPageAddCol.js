@@ -132,8 +132,8 @@ function MainPageAddCol({ children }) {
             {/* 3.1 DIALOG POPUP FORM */}
 
             <Dialog open={open} onClose={handleClose}>
-              <Box sx={{ border: "3px solid black" }}>
-                <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Create Collection</DialogTitle>
+              <Box sx={{ border: "3px solid black"}}>
+                <DialogTitle variant="h4" sx={{ background: "#272727", color: "white" }}>Create Collection</DialogTitle>
 
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                   <Form>
@@ -190,7 +190,7 @@ function MainPageAddCol({ children }) {
                         history(`/add_category/${value.id}/${value.CollectionName}`);
                         history(0); //TEMPORARYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
                       }}>
-                      <Typography variant="h6" sx={{ color: "white" }}>{value.CollectionName}</Typography>
+                      <Typography variant="h6" sx={{ color: "white", fontWeight: "bold" }}>{value.CollectionName}</Typography>
                     </ButtonBase>
                   </Box>
                 )

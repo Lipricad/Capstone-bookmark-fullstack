@@ -13,7 +13,7 @@ import MainPageAddCol from '../components/MainPageAddCol'
 import global from "../styles/global";
 
 
-function AddCategory() {
+function AddCategory({ children }) {
 
   /* FORM DIALOG POPUP */
   const [open, setOpen] = useState(false);
@@ -89,7 +89,7 @@ function AddCategory() {
 
   return (
     <MainPageAddCol>
-      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100%"}}>
+      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100%" }}>
 
         {/* NEW CATEGORIES BUTTON BOX */}
 
@@ -142,20 +142,27 @@ function AddCategory() {
 
         {/* LIST OF CATEGORIES */}
 
-        <Box sx={{ flex: "1 1 auto", display: "flex", flexDirection: "row", flexWrap: "wrap", marginBottom: "200px" }}>
-            {listOfCategory.map((value, key) => {
-              return (
-                <Paper elevation={3} key={key} sx={{margin: "1vh 1vw 1vh 1.2vw", padding: "90px", width: "10vw", height: "10vh"}}>
-                  <ButtonBase sx={global.ColectionButtonCol}>
-                    <Typography variant="h6" sx={{ color: "black" }}>{value.CategoryName}</Typography>
-                  </ButtonBase>
-                </Paper>
-              )
-            })}
+        <Box sx={{ flex: "15", display: "flex", flexDirection: "row", flexWrap: "wrap", marginBottom: "200px" }}>
+          {listOfCategory.map((value, key) => {
+            return (
+
+              <Paper elevation={3} key={key} sx={{ margin: "1vh 1vw 2vh 1.5vw", width: "360px", height: "250px", display: "flex", flexDirection: "column" }}>
+
+                <Box sx={{ flex: "1", textAlign: "left" }}>
+                  <Typography variant="h6" sx={{ color: "black", marginLeft: "10px", fontWeight: "bold" }}>{value.CategoryName}</Typography>
+                </Box>
+
+                {/* LIST OF COLLECTION */}
+                <Box sx={{ flex: "5" }}>
+                  {children}
+                </Box>
+              </Paper>
+            )
+          })}
         </Box>
 
       </Box>
-   </MainPageAddCol>
+    </MainPageAddCol>
   )
 }
 

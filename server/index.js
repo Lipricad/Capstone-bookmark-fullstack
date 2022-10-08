@@ -17,6 +17,9 @@ app.use("/collection", collectionRouter);
 const categoryRouter = require("./routes/Category")
 app.use("/category", categoryRouter);
 
+const bookmarkRouter = require("./routes/Bookmark")
+app.use("/bookmark", bookmarkRouter);
+
 /* TO RUN */
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {

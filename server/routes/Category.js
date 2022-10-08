@@ -13,9 +13,9 @@ router.get('/:CollectionId', async (req, res) => {
 
 // INPUT
 router.post("/", validateToken, async (req, res) => {
-  const post = req.body;
-  await Category.create(post);
-  res.json(post);
+  const category = req.body;
+  await Category.create(category);
+  res.json(category);
 });
 
 

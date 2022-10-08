@@ -58,6 +58,21 @@ const global = {
     }
   },
 
+  buttonBookmark: {
+    border: "solid",
+    borderWidth: "2px",
+    background: "#6633ff",
+    padding: "15px",
+    marginTop: "5px",
+    borderRadius: "8px",
+    marginLeft: "10px",
+    filter: "brightness(90%)",
+    "&:hover": {
+      filter: "brightness(110%)",
+      transition: "0.3s"
+    }
+  },
+
   buttonBaseCancel: {
     border: "solid",
     borderWidth: "1px",
@@ -74,7 +89,7 @@ const global = {
 
   ColectionButtonCol: {
     marginTop: "30px",
-    marginBottom: "60px",
+    marginBottom: "10px",
     borderBottom: "2px solid transparent",
     borderTop: "2px solid transparent",
 

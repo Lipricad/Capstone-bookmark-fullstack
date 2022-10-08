@@ -37,7 +37,7 @@ router.post("/login", async (req, res) => {
           { email: userEmail.email, id: userEmail.id },
           "importantsecret"
         );
-        res.json(accessToken);
+        res.json({token: accessToken, email: email, id: userEmail.id});
       }
     })
 });
@@ -45,7 +45,8 @@ router.post("/login", async (req, res) => {
 
 //AUTHENTICATION 
 router.get('/auth', validateToken, (req, res) => {
-  res.json("200: authenticated");
+
+  res.json(req.email);
 })
 
 module.exports = router

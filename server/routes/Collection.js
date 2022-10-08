@@ -21,9 +21,9 @@ router.get('/byId/:id', async (req, res) => {
 
 //INPUT
 router.post("/", validateToken,  async (req, res) => {
-  const post = req.body;
-  await Collection.create(post);
-  res.json(post);
+  const collection = req.body;
+  await Collection.create(collection);
+  res.json(collection);
 });
 
 module.exports = router

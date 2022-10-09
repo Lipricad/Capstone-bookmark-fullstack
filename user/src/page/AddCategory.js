@@ -3,11 +3,12 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Paper } from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import axios from 'axios';
 
-/* COMPONENTS */
-import MainPageAddCol from '../components/MainPageAddCol'
+/* PARENT PAGES */
+import AddCollection from './AddCollection';
+
 
 /* GLOBAL STYLES */
 import global from "../styles/global";
@@ -56,12 +57,15 @@ function AddCategory({ children }) {
       .required("Category is required."),
   });
 
+  /* COLLECTION DATA */
+  let { CollectionName } = useParams();
+  let history = useNavigate();
 
 
   /* PASSING DATA TO DATABASE */
   const [newCategory, setNewCategory] = useState("")
 
-  const onSubmit = () => {
+  const onSubmit = (data) => {
     axios.post("http://localhost:3001/category",
       {
         CategoryName: newCategory, CollectionId: id
@@ -75,6 +79,7 @@ function AddCategory({ children }) {
       if (response.data.error) {
         console.log("400: unverified");
       } else {
+        history(0); //TEMPORARYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
         console.log("200");
         /* UPDATE THE PAGE EVERYTIME YOU ADD */
 
@@ -88,7 +93,7 @@ function AddCategory({ children }) {
 
 
   return (
-    <MainPageAddCol>
+    <AddCollection>
       <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100%" }}>
 
         {/* NEW CATEGORIES BUTTON BOX */}
@@ -148,11 +153,17 @@ function AddCategory({ children }) {
 
               <Paper elevation={3} key={key} sx={{ margin: "1vh 1vw 2vh 1.5vw", width: "360px", height: "250px", display: "flex", flexDirection: "column" }}>
 
-                <Box sx={{ flex: "1", textAlign: "left" }}>
-                  <Typography variant="h6" sx={{ color: "black", marginLeft: "10px", fontWeight: "bold" }}>{value.CategoryName}</Typography>
-                </Box>
+                <ButtonBase
+                  onClick={() => {
+                    history(`/add_bookmark/${id}/${CollectionName}/${value.id}/${value.CategoryName}`);
+                  }}>
+                  <Box sx={{ flex: "1", textAlign: "left" }}>
+                    <Typography variant="h6" sx={{ color: "black", marginLeft: "10px", fontWeight: "bold" }}>{value.CategoryName}</Typography>
+                  </Box>
+                </ButtonBase>
 
-                {/* LIST OF COLLECTION */}
+                {/* LIST OF BOOKMARK */}
+
                 <Box sx={{ flex: "5" }}>
                   {children}
                 </Box>
@@ -162,7 +173,7 @@ function AddCategory({ children }) {
         </Box>
 
       </Box>
-    </MainPageAddCol>
+    </AddCollection>
   )
 }
 

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const {Bookmark} = require("../models")
+const { Bookmark } = require("../models")
 const { validateToken } = require("../middlewares/AuthMiddleware")
 
 // OUTPUT ONE

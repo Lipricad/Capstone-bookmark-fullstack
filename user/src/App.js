@@ -12,7 +12,7 @@ import Home from "./page/Home";
 import Register from "./page/Register";
 import Login from "./page/Login";
 import About from "./page/About"
-import AddCollection from './components/MainPageAddCol';
+import AddCollection from './page/AddCollection';
 import AddCategory from './page/AddCategory';
 import AddBookmark from './page/AddBookmark';
 import { AuthContext } from "./helpers/AuthContext";
@@ -235,7 +235,7 @@ function App() {
 
                         <Box sx={{ flexGrow: 1 }}>
                           <ButtonBase sx={global.buttonnav}>
-                            <Link onClick={logout} to="/" className='NavBarDecoration'>
+                            <Link onClick={logout} to="/login" className='NavBarDecoration'>
                               <Typography variant="h5" sx={global.TypogBut}> Sign Out </Typography>
                             </Link>
                           </ButtonBase>
@@ -269,7 +269,7 @@ function App() {
             <Route path="/register" exact element={<Register />} />
             <Route path="/add_collection" exact element={<AddCollection />} />
             <Route path="/add_category/:id/:CollectionName" exact element={<AddCategory />} />
-            <Route path="/add_bookmark" exact element={<AddBookmark />} />
+            <Route path="/add_bookmark/:id/:CollectionName/:id/:CategoryName" exact element={<AddBookmark />} />
           </Routes>
         </Router>
       </AuthContext.Provider>

@@ -11,7 +11,7 @@ import axios from 'axios';
 import global from "../styles/global";
 
 
-function MainPageAddCol({ children }) {
+function AddCollection({ children }) {
 
 
   /* FORM DIALOG POPUP */
@@ -54,6 +54,7 @@ function MainPageAddCol({ children }) {
 
   /* COLLECTION DATA */
   let { CollectionName } = useParams();
+  let { CategoryName } = useParams();
   let history = useNavigate();
 
   /* PASSING DATA TO DATABASE */
@@ -88,8 +89,8 @@ function MainPageAddCol({ children }) {
 
       {/* 0. COLLECTION TITLE */}
 
-      <Box sx={{ display: "flex", flex: "1 1 auto", background: "#3b3b3b", borderBottom: "3px solid #272727", marginTop: "85px", alignItems: "center", maxHeight: "120px", minHeight: "80px" }}>
-        <Typography variant="h3" sx={{ margin: "0 0 0 20px", color: "#Afa9a9", fontWeight: "bold", textAlign: "center" }}> {CollectionName} </Typography>
+      <Box sx={{ display: "flex", flex: "1 1 auto", background: "#3b3b3b", borderBottom: "3px solid #272727", marginTop: "85px", alignItems: "center", maxHeight: "80px", minHeight: "80px" }}>
+        <Typography sx={{ fontSize: "3.5vh",margin: "0 0 0 20px", color: "#Afa9a9", fontWeight: "bold", textAlign: "center" }}> {CollectionName} {" >> "} {CategoryName} </Typography>
       </Box>
 
       <Box sx={{ display: "flex", flexDirection: "row", flex: "1 1 auto" }}>
@@ -177,7 +178,7 @@ function MainPageAddCol({ children }) {
           </Box>
 
 
-          {/* 4. COLLUMN OF COLLECTION */}
+          {/* 4. COLUMN OF COLLECTION */}
 
           <Box sx={{ flex: "15 1 auto" }}>
             <Box sx={global.CollectionOverflowstyle}>
@@ -215,4 +216,4 @@ function MainPageAddCol({ children }) {
   )
 }
 
-export default MainPageAddCol
+export default AddCollection

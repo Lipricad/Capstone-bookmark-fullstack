@@ -1,18 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
+import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Link } from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
-// import { useParams } from "react-router-dom"
-// import axios from 'axios';
+import { useParams, useNavigate } from "react-router-dom"
+import axios from 'axios';
 
-/* COMPONENTS */
-// import AddCategory from './AddCategory'
+/* PARENT PAGES */
+import AddCollection from './AddCollection';
 
 /* GLOBAL STYLES */
 import global from "../styles/global";
 
 function AddBookmark() {
+
+  let history = useNavigate();
+
   /* FORM DIALOG POPUP */
   const [open, setOpen] = useState(false);
   const handleClickOpen = () => {
@@ -24,24 +27,103 @@ function AddBookmark() {
 
 
 
+  /* LIST OF DATA */
+  let { id } = useParams();
+
+  const [listOfBookmark, setlistOfBookmark] = useState([]);
+
+  useEffect(() => {
+    /* CATEGORY */
+    axios.get(`http://localhost:3001/category/${id}`).then((response) => {
+      console.log(response.data)
+    });
+
+    /* BOOKMARK */
+    axios.get(`http://localhost:3001/bookmark/${id}`).then((response) => {
+      setlistOfBookmark(response.data);
+    });
+    /* REMOVE THE ESLINT-DISABLE IF YOU WANT TO SEE WARNING [ITS USELESS EITHERWAY] */
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps     
+
+  /* OPEN NEW TAB */
+  const openInNewTab = url => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+
   /* FORMIK */
   const initialValues = {
-    CategoryName: ""
+    BookmarkName: "",
+    LinkAddress: ""
   };
 
   const validationSchema = Yup.object().shape({
-    CategoryName: Yup.string()
-      .required("Category is required."),
+    BookmarkName: Yup.string()
+      .required("Bookmark name is required."),
+    LinkAddress: Yup.string()
+      .required("Address link is required."),
   });
 
 
 
-  return (
-    <Box>
-      {/* ADD BOOKMARK BUTTON */}
-      <Typography variant="h1" sx={{ color: "black", marginTop: "100px" }}>BOOKMARK PAGE</Typography>
+  /* PASSING DATA TO DATABASE */
+  const onSubmit = (data) => {
+    axios.post("http://localhost:3001/bookmark",
+      {
+        BookmarkName: data.BookmarkName, Bookmark_URL: data.LinkAddress, CategoryId: id
+      },
+      {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      }
+    ).then((response) => {
+      if (response.data.error) {
+        console.log("400: unverified");
+      } else {
+        console.log("200");
+        /* UPDATE THE PAGE EVERYTIME YOU ADD */
 
-      <Box sx={{ flex: "2.5", textAlign: "left" }}>
+        const bookmarkToUpdate = { BookmarkName: data.BookmarkName, Bookmark_URL: data.LinkAddress };
+        setlistOfBookmark([...listOfBookmark, bookmarkToUpdate]);
+
+        history(0);
+      }
+      handleClose();
+    });
+  };
+
+
+
+  return (
+    <AddCollection>
+
+
+
+      {/* LIST OF BOOKMARK */}
+
+      {listOfBookmark.map((value, key) => {
+        return (
+          <Box key={key}>
+            <Link onClick={() => openInNewTab(value.Bookmark_URL)} sx={{ textDecoration: "none"}}>
+              <Typography variant="h4" sx={{ color: "white", marginTop: "100px", cursor: "pointer" }}>
+
+                {value.BookmarkName}
+
+              </Typography>
+            </Link>
+          </Box>
+        )
+      })}
+
+
+      {/* END OF LIST OF BOOKMARK */}
+
+
+
+      {/* ADD BOOKMARK BUTTON */}
+
+      <Box sx={{ flex: "2.5", textAlign: "left", marginBottom: "200px" }}>                 {/* TEMPORARYYYYYYYYYYYYYYYYYYYYYYYYYY MARGIN*/}
         <ButtonBase sx={global.buttonBookmark} onClick={handleClickOpen}>
           <Typography sx={global.TypogBut}> Add Bookmark </Typography>
         </ButtonBase>
@@ -49,11 +131,11 @@ function AddBookmark() {
         {/* 3.1 DIALOG POPUP FORM */}
 
         <Dialog open={open} onClose={handleClose}>
-          <Box sx={{ border: "3px solid black"}}>
+          <Box sx={{ border: "3px solid black" }}>
             <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Add a Bookmark</DialogTitle>
 
-            <Formik initialValues={initialValues} onSubmit={""} validationSchema={validationSchema}>
-              <Form onChange={(e) => { /*setNewCategory(e.target.value)*/ }}>
+            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+              <Form>
                 <DialogContent>
                   <Box sx={{ padding: "20px", borderTop: "4px solid black" }}>
                     <Field
@@ -89,7 +171,7 @@ function AddBookmark() {
           </Box>
         </Dialog>
       </Box>
-    </Box>
+    </AddCollection>
   )
 }
 

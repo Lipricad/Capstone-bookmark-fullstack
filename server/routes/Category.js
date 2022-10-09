@@ -12,11 +12,10 @@ router.get('/:CollectionId', async (req, res) => {
 });
 
 // INPUT
-router.post("/", validateToken, async (req, res) => {
+router.post("/", async (req, res) => {
   const category = req.body;
   await Category.create(category);
   res.json(category);
 });
-
 
 module.exports = router

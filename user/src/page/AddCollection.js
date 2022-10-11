@@ -203,8 +203,6 @@ function AddCollection({ children }) {
 
 
 
-
-
         {/* 5. CATEGORIES */}
         <Box sx={global.CategoryOverflowstyle}>
           {children}

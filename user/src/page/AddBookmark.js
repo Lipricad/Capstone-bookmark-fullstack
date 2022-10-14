@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Paper, Tooltip } from "@mui/material"
+import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Paper, Tooltip, Menu, MenuItem } from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useParams, useNavigate } from "react-router-dom"
@@ -38,6 +38,8 @@ function AddBookmark() {
       console.log(response.data)
     });
 
+
+
     /* BOOKMARK */
     axios.get(`http://localhost:3001/bookmark/${id}`).then((response) => {
       setlistOfBookmark(response.data);
@@ -45,10 +47,29 @@ function AddBookmark() {
     /* REMOVE THE ESLINT-DISABLE IF YOU WANT TO SEE WARNING [ITS USELESS EITHERWAY] */
   }, []);  // eslint-disable-line react-hooks/exhaustive-deps     
 
+
+
   /* OPEN NEW TAB */
   const openInNewTab = url => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
+
+
+
+  //MENU DROP DOWN
+  const [Drop, setDrop] = useState(null);
+  const [dataID, setDataID] = useState("");
+
+  const DropDownId = (dataId) => {
+    setDataID(dataId);
+  }
+  const MenuDropDown = e => {
+    setDrop(e.currentTarget);
+  }
+  const MenuDropDownClose = e => {
+    setDrop(null);
+  }
+
 
 
   /* FORMIK */
@@ -87,7 +108,7 @@ function AddBookmark() {
         const bookmarkToUpdate = { BookmarkName: data.BookmarkName, Bookmark_URL: data.LinkAddress };
         setlistOfBookmark([...listOfBookmark, bookmarkToUpdate]);
 
-        history(0);
+        history(0);  //TEMPORARRYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
       }
       handleClose();
     });
@@ -97,6 +118,9 @@ function AddBookmark() {
 
   /* DELETION OF DATA */
   const deleteData = (id) => {
+
+    MenuDropDownClose();
+
     axios.delete(`http://localhost:3001/bookmark/${id}`, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     }).then(() => {
@@ -190,7 +214,7 @@ function AddBookmark() {
 
                       {/* LOGO OF THE BOOKMARK LOGOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO */}
                       <img height="16" width="16" alt="icon" src={`http://www.google.com/s2/favicons?domain=${value.Bookmark_URL}`} />
-                      
+
                       {"    " + value.BookmarkName}
                     </Typography>
 
@@ -199,7 +223,10 @@ function AddBookmark() {
               </Box>
 
               <Box sx={{ flex: "1" }}>
-                <IconButton onClick={() => { deleteData(value.id) }}>
+
+                 {/* BUTTON FOR RENAME AND DELETE */}
+
+                <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value.id) }}>
                   <img
                     src="/pictures/assets/3_dots.svg"
                     alt="Menubar"
@@ -207,6 +234,14 @@ function AddBookmark() {
                     width="25"
                   />
                 </IconButton>
+
+                {/* DROPDOWN MENU */}
+
+                <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
+                  <MenuItem> Rename </MenuItem>
+                  <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
+                </Menu>
+
               </Box>
 
             </Paper>

@@ -142,8 +142,8 @@ const global = {
 
   menuStyle: {
     "& .MuiPaper-root": {
-      backgroundColor: "#6633ff",
-      color: "white"
+      backgroundColor: "white",
+      color: "black"
     }
   }
 

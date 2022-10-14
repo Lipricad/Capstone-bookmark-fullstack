@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Paper } from "@mui/material"
+import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Paper, IconButton, Menu, MenuItem } from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate, useParams } from "react-router-dom"
@@ -44,6 +44,22 @@ function AddCategory({ children }) {
     });
     /* REMOVE THE ESLINT-DISABLE IF YOU WANT TO SEE WARNING [ITS USELESS EITHERWAY] */
   }, []);  // eslint-disable-line react-hooks/exhaustive-deps     
+
+
+
+  //MENU DROP DOWN
+  const [Drop, setDrop] = useState(null);
+  const [dataID, setDataID] = useState("");
+
+  const DropDownId = (dataId) => {
+    setDataID(dataId);
+  }
+  const MenuDropDown = e => {
+    setDrop(e.currentTarget);
+  }
+  const MenuDropDownClose = e => {
+    setDrop(null);
+  }
 
 
 
@@ -151,16 +167,48 @@ function AddCategory({ children }) {
           {listOfCategory.map((value, key) => {
             return (
 
-              <Paper elevation={3} key={key} sx={{ margin: "1vh 1vw 2vh 1.5vw", width: "360px", height: "250px", display: "flex", flexDirection: "column" }}>
+              <Paper elevation={3} key={key} sx={{
+                margin: "1vh 1vw 2vh 1.5vw", width: "360px", height: "250px", display: "flex", flexDirection: "column",
+                background: "#3b3b3b", border: "1px solid #272727"
+              }}>
 
-                <ButtonBase
-                  onClick={() => {
-                    history(`/add_bookmark/${id}/${CollectionName}/${value.id}/${value.CategoryName}`);
-                  }}>
-                  <Box sx={{ flex: "1", textAlign: "left" }}>
-                    <Typography variant="h6" sx={{ color: "black", marginLeft: "10px", fontWeight: "bold" }}>{value.CategoryName}</Typography>
+
+                <Box sx={{ flex: "1", textAlign: "left", display: "flex", flexDirection: "row" }}>
+
+                  <Box sx={{ flex: "7" }}>
+                    <ButtonBase
+                      onClick={() => {
+                        history(`/add_bookmark/${id}/${CollectionName}/${value.id}/${value.CategoryName}`);
+                      }}>
+                      <Typography variant="h5" sx={{ color: "white", marginLeft: "10px", marginTop: "10px", fontWeight: "bold" }}>
+                        {value.CategoryName}
+                      </Typography>
+                    </ButtonBase>
                   </Box>
-                </ButtonBase>
+
+                  {/* BUTTON FOR RENAME AND DELETE */}
+
+                  <Box sx={{ flex: "1" }}>
+                    <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value.id) }}>
+                      <img
+                        src="/pictures/assets/3_dots.svg"
+                        alt="Menubar"
+                        height="25"
+                        width="25"
+                      />
+                    </IconButton>
+
+                    {/* DROPDOWN MENU */}
+
+                    <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
+                      <MenuItem> Rename </MenuItem>
+                      <MenuItem onClick={() => { console.log(dataID) }}> Delete </MenuItem>
+                    </Menu>
+
+                  </Box>
+                </Box>
+
+
 
                 {/* LIST OF BOOKMARK */}
 

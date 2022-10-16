@@ -18,4 +18,17 @@ router.post("/",validateToken, async (req, res) => {
   res.json(category);
 });
 
+// DELETE
+router.delete("/:categoryId", validateToken, async (req, res) => {
+  const categoryId = req.params.categoryId
+
+  await Category.destroy({
+    where: {
+      id: categoryId,
+    },
+  });
+
+  res.json("200: deleted successfully")
+});
+
 module.exports = router

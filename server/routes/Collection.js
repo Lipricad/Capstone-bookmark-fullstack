@@ -26,4 +26,18 @@ router.post("/", validateToken,  async (req, res) => {
   res.json(collection);
 });
 
+
+// DELETE
+router.delete("/:collectionId", validateToken, async (req, res) => {
+  const collectionId = req.params.collectionId
+
+  await Collection.destroy({
+    where: {
+      id: collectionId,
+    },
+  });
+
+  res.json("200: deleted successfully")
+});
+
 module.exports = router

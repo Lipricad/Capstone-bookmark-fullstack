@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, IconButton, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle } from "@mui/material"
+import { Box, Typography, IconButton, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Menu, MenuItem } from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate, useParams } from "react-router-dom"
@@ -33,6 +33,22 @@ function AddCollection({ children }) {
       setlistOfCollection(response.data);
     });
   }, []);
+
+
+
+  //MENU DROP DOWN
+  const [Drop, setDrop] = useState(null);
+  const [dataID, setDataID] = useState("");
+
+  const DropDownId = (dataId) => {
+    setDataID(dataId);
+  }
+  const MenuDropDown = e => {
+    setDrop(e.currentTarget);
+  }
+  const MenuDropDownClose = e => {
+    setDrop(null);
+  }
 
 
 
@@ -81,6 +97,22 @@ function AddCollection({ children }) {
 
 
 
+  /* DELETION OF DATA */
+  const deleteData = (id) => {
+
+    MenuDropDownClose();
+
+    axios.delete(`http://localhost:3001/collection/${id}`, {
+      headers: { accessToken: localStorage.getItem("accessToken") },
+    }).then(() => {
+      setlistOfCollection(listOfCollection.filter((val) => {
+        return val.id !== id;
+      }))
+    })
+  }
+
+
+
   return (
     // AYUSIN MO NGA TO ABOT SA PAG SCROLL DOWN DITO YUNG MAY zIndex at positionFIXED
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#3b3b3b", zIndex: "12", position: "fixed", width: "100%" }}>
@@ -90,7 +122,7 @@ function AddCollection({ children }) {
       {/* 0. COLLECTION TITLE */}
 
       <Box sx={{ display: "flex", flex: "1 1 auto", background: "#3b3b3b", borderBottom: "3px solid #272727", marginTop: "85px", alignItems: "center", maxHeight: "80px", minHeight: "80px" }}>
-        <Typography sx={{ fontSize: "3.5vh",margin: "0 0 0 20px", color: "#Afa9a9", fontWeight: "bold", textAlign: "center" }}> {CollectionName} {" >> "} {CategoryName} </Typography>
+        <Typography sx={{ fontSize: "3.5vh", margin: "0 0 0 20px", color: "#Afa9a9", fontWeight: "bold", textAlign: "center" }}> {CollectionName} {" >> "} {CategoryName} </Typography>
       </Box>
 
       <Box sx={{ display: "flex", flexDirection: "row", flex: "1 1 auto" }}>
@@ -108,7 +140,7 @@ function AddCollection({ children }) {
 
             {/* 2. SETTINGS OF COLLECTION */}
 
-            <Box sx={{ flex: "1 1 auto" }}>
+            {/* <Box sx={{ flex: "1 1 auto" }}>
               <IconButton>
                 <img
                   src="/pictures/assets/3_dots.svg"
@@ -117,7 +149,7 @@ function AddCollection({ children }) {
                   width="30"
                 />
               </IconButton>
-            </Box>
+            </Box> */}
           </Box>
 
 
@@ -133,7 +165,7 @@ function AddCollection({ children }) {
             {/* 3.1 DIALOG POPUP FORM */}
 
             <Dialog open={open} onClose={handleClose}>
-              <Box sx={{ border: "3px solid black"}}>
+              <Box sx={{ border: "3px solid black" }}>
                 <DialogTitle variant="h4" sx={{ background: "#272727", color: "white" }}>Create Collection</DialogTitle>
 
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
@@ -186,13 +218,40 @@ function AddCollection({ children }) {
                 return (
                   <Box key={key}>
                     {/* DITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO KA MAGALALAGAY NUNG UPDATE */}
-                    <ButtonBase sx={global.ColectionButtonCol}
-                      onClick={() => {
-                        history(`/add_category/${value.id}/${value.CollectionName}`);
-                        history(0); //TEMPORARYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
-                      }}>
-                      <Typography variant="h6" sx={{ color: "white", fontWeight: "bold" }}>{value.CollectionName}</Typography>
-                    </ButtonBase>
+                    <Box sx={global.ColectionBox}>
+
+                      <Box sx={{ flex: "10" }}>
+                        <ButtonBase sx={global.ColectionButtonCol}
+                          onClick={() => {
+                            history(`/add_category/${value.id}/${value.CollectionName}`);
+                            history(0); //TEMPORARYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+                          }}>
+                          <Typography variant="h6" sx={{ color: "white", fontWeight: "bold" }}>{value.CollectionName}</Typography>
+                        </ButtonBase>
+                      </Box>
+
+                      {/* BUTTON FOR RENAME AND DELETE */}
+
+                      <Box sx={{ flex: "1", marginRight: "20px" }}>
+                        <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value.id) }}>
+                          <img
+                            src="/pictures/assets/3_dots.svg"
+                            alt="Menubar"
+                            height="20"
+                            width="20"
+                          />
+                        </IconButton>
+
+                        {/* DROPDOWN MENU */}
+
+                        <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
+                          <MenuItem> Rename </MenuItem>
+                          <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
+                        </Menu>
+
+                      </Box>
+
+                    </Box>
                   </Box>
                 )
               })}

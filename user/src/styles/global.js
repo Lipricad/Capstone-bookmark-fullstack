@@ -101,6 +101,12 @@ const global = {
     }
   },
 
+  ColectionBox: {
+    display: "flex", 
+    alignItems: "center",
+    borderBottom: "1px solid #272727",
+  },
+
   //OVERFLOW STYLES
   CollectionOverflowstyle: {
     maxHeight: "60vh",

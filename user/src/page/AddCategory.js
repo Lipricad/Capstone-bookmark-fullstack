@@ -108,6 +108,22 @@ function AddCategory({ children }) {
 
 
 
+  /* DELETION OF DATA */
+  const deleteData = (id) => {
+
+    MenuDropDownClose();
+
+    axios.delete(`http://localhost:3001/category/${id}`, {
+      headers: { accessToken: localStorage.getItem("accessToken") },
+    }).then(() => {
+      setlistOfCategory(listOfCategory.filter((val) => {
+        return val.id !== id;
+      }))
+    })
+  }
+
+
+
   return (
     <AddCollection>
       <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100%" }}>
@@ -202,7 +218,7 @@ function AddCategory({ children }) {
 
                     <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
                       <MenuItem> Rename </MenuItem>
-                      <MenuItem onClick={() => { console.log(dataID) }}> Delete </MenuItem>
+                      <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
                     </Menu>
 
                   </Box>

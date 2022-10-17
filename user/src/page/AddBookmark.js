@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Paper, Tooltip, Menu, MenuItem } from "@mui/material"
+import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, IconButton, Paper, Tooltip, Menu, MenuItem, FormControl, Select } from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useParams, useNavigate } from "react-router-dom"
@@ -16,8 +16,9 @@ function AddBookmark() {
 
   let history = useNavigate();
 
-  /* FORM DIALOG POPUP */
+  /* FORM DIALOG POPUP ADD BOOKMARK */
   const [open, setOpen] = useState(false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -25,23 +26,43 @@ function AddBookmark() {
     setOpen(false);
   };
 
+  /* FORM DIALOG POPUP MOVE TO */
+  const [openMoveto, setOpenMoveto] = useState(false);
+
+  const handleClickOpenMove = () => {
+    setOpenMoveto(true);
+  };
+  const handleCloseMove = () => {
+    setDrop(null);
+    setOpenMoveto(false);
+  };
+
+  const [category, setCategory] = useState('');
+
+  const handleChange = (event) => {
+    setCategory(event.target.value);
+  };
+
 
 
   /* LIST OF DATA */
   let { id } = useParams();
+  let { CATid } = useParams();
+
 
   const [listOfBookmark, setlistOfBookmark] = useState([]);
+  const [listOfCategory, setlistOfCategory] = useState([]);
 
   useEffect(() => {
-    /* CATEGORY */
+    /* COLLECTION */
     axios.get(`http://localhost:3001/category/${id}`).then((response) => {
-      console.log(response.data)
+      setlistOfCategory(response.data)
     });
 
 
 
     /* BOOKMARK */
-    axios.get(`http://localhost:3001/bookmark/${id}`).then((response) => {
+    axios.get(`http://localhost:3001/bookmark/${CATid}`).then((response) => {
       setlistOfBookmark(response.data);
     });
     /* REMOVE THE ESLINT-DISABLE IF YOU WANT TO SEE WARNING [ITS USELESS EITHERWAY] */
@@ -61,6 +82,7 @@ function AddBookmark() {
   const [dataID, setDataID] = useState("");
 
   const DropDownId = (dataId) => {
+    // console.log(dataId)
     setDataID(dataId);
   }
   const MenuDropDown = e => {
@@ -91,7 +113,7 @@ function AddBookmark() {
   const onSubmit = (data) => {
     axios.post("http://localhost:3001/bookmark",
       {
-        BookmarkName: data.BookmarkName, Bookmark_URL: data.LinkAddress, CategoryId: id
+        BookmarkName: data.BookmarkName, Bookmark_URL: data.LinkAddress, CategoryId: CATid
       },
       {
         headers: {
@@ -117,15 +139,15 @@ function AddBookmark() {
 
 
   /* DELETION OF DATA */
-  const deleteData = (id) => {
+  const deleteData = (delId) => {
 
     MenuDropDownClose();
 
-    axios.delete(`http://localhost:3001/bookmark/${id}`, {
+    axios.delete(`http://localhost:3001/bookmark/${delId.id}`, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     }).then(() => {
       setlistOfBookmark(listOfBookmark.filter((val) => {
-        return val.id !== id;
+        return val.id !== delId.id;
       }))
     })
   }
@@ -145,6 +167,7 @@ function AddBookmark() {
               <Typography variant="h5" sx={global.TypogBut}> Add Bookmark </Typography>
             </ButtonBase>
           </Box>
+
 
 
           {/* 3.1 DIALOG POPUP FORM */}
@@ -208,7 +231,10 @@ function AddBookmark() {
 
               <Box sx={{ flex: "6", padding: "50px 0" }}>
                 <ButtonBase onClick={() => openInNewTab(value.Bookmark_URL)}>
-                  <Tooltip title={value.BookmarkName} sx={{ fontSize: "20px" }}>
+                  <Tooltip
+                    title={
+                      Date(value.updatedAt).substring(0, 15).split('-')
+                    }>
 
                     <Typography variant="h6" noWrap sx={{ marginLeft: "10px", color: "white", textAlign: "center", maxWidth: "175px" }}>
 
@@ -224,9 +250,9 @@ function AddBookmark() {
 
               <Box sx={{ flex: "1" }}>
 
-                 {/* BUTTON FOR RENAME AND DELETE */}
+                {/* BUTTON FOR RENAME AND DELETE */}
 
-                <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value.id) }}>
+                <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value) }}>
                   <img
                     src="/pictures/assets/3_dots.svg"
                     alt="Menubar"
@@ -239,17 +265,56 @@ function AddBookmark() {
 
                 <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
                   <MenuItem> Rename </MenuItem>
+                  <MenuItem onClick={handleClickOpenMove}> Move to...</MenuItem>
                   <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
                 </Menu>
+
+                {/* 3.1 DIALOG POPUP MOVE TO*/}
+
+                <Dialog open={openMoveto} onClose={handleCloseMove}>
+                  <Box sx={{ border: "3px solid black" }}>
+                    <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Move bookmark to:</DialogTitle>
+                    <DialogContent>
+
+                      <FormControl sx={{ m: 1, minWidth: 275 }}>
+                        <Select
+                          value={category}
+                          onChange={handleChange}
+                          displayEmpty
+                          inputProps={{ 'aria-label': 'Without label' }}
+                        >
+
+                          {listOfCategory.map((value, key) => {
+                            return (
+                              <MenuItem key={key} value={value.id}>
+                                {value.CategoryName}
+                              </MenuItem>
+                            )
+                          })}
+
+                        </Select>
+                      </FormControl>
+
+                    </DialogContent>
+                    <DialogActions sx={{ background: "#272727" }}>
+                      <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseMove}>
+                        <Typography sx={global.TypogButCancel}> Cancel </Typography>
+                      </ButtonBase>
+                      <ButtonBase sx={global.buttonBase} onClick={console.log(category)}>
+                        <Typography sx={global.TypogBut}> Confirm</Typography>
+                      </ButtonBase>
+                    </DialogActions>
+                  </Box>
+                </Dialog>
 
               </Box>
 
             </Paper>
           )
         })}
-      </Box>
+      </Box >
 
-    </AddCollection>
+    </AddCollection >
   )
 }
 

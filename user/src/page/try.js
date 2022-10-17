@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react';
+import { Box, Typography} from "@mui/material"
 import axios from 'axios';
 
 function Try() {
-  const [listOfUsers, setlistOfUsers] = useState([]);
+  const [listOfCategory, setlistOfCategory] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/register").then((response) => {
-      setlistOfUsers(response.data);
+    axios.get("http://localhost:3001/category/4").then((response) => {
+      setlistOfCategory(response.data);
     });
   }, []);
 
   return (
-    <div className="App">
-      {listOfUsers.map((value, key) => {
+    <Box className="App">
+      {listOfCategory.map((value, key) => {
         return (
 
-          <div className="Box"  key={value.id}>
+          <Box className="Box"  key={value.id}>
 
-            <h1 className="Title"> EMAIL</h1>
-            <p>{value.email}</p>
+            <Typography sx={{marginTop: "100px"}} >{value.CategoryName}</Typography>
 
-          </div>
+          </Box>
 
         )
       })}
-    </div>
+    </Box>
   )
 }
 

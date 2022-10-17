@@ -262,14 +262,15 @@ function App() {
 
           {/* ROUTES HERE */}
           <Routes>
-            {/* <Route path="/try" exact element={<Tryy />} /> */}
             <Route path="/" exact element={<Home />} />
             <Route path="/about" exact element={<About />} />
             <Route path="/login" exact element={<Login />} />
             <Route path="/register" exact element={<Register />} />
             <Route path="/add_collection" exact element={<AddCollection />} />
             <Route path="/add_category/:id/:CollectionName" exact element={<AddCategory />} />
-            <Route path="/add_bookmark/:id/:CollectionName/:id/:CategoryName" exact element={<AddBookmark />} />
+            <Route path="/add_bookmark/:id/:CollectionName/:CATid/:CategoryName" exact element={<AddBookmark />} />
+
+            {/* <Route path="/try" exact element={<Tryy />} /> */}
           </Routes>
         </Router>
       </AuthContext.Provider>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, IconButton, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Menu, MenuItem } from "@mui/material"
+import { Box, Typography, IconButton, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Menu, MenuItem, Tooltip } from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate, useParams } from "react-router-dom"
@@ -98,17 +98,18 @@ function AddCollection({ children }) {
 
 
   /* DELETION OF DATA */
-  const deleteData = (id) => {
+  const deleteData = (delId) => {
 
     MenuDropDownClose();
 
-    axios.delete(`http://localhost:3001/collection/${id}`, {
+    axios.delete(`http://localhost:3001/collection/${delId.id}`, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     }).then(() => {
       setlistOfCollection(listOfCollection.filter((val) => {
-        return val.id !== id;
+        return val.id !== delId.id;
       }))
     })
+    history("/add_collection");
   }
 
 
@@ -226,14 +227,26 @@ function AddCollection({ children }) {
                             history(`/add_category/${value.id}/${value.CollectionName}`);
                             history(0); //TEMPORARYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
                           }}>
-                          <Typography variant="h6" sx={{ color: "white", fontWeight: "bold" }}>{value.CollectionName}</Typography>
+
+                          <Tooltip
+                            enterDelay={500} leaveDelay={50}
+                            title={
+                              value.CollectionName
+                            }>
+
+                            <Typography variant="h6" noWrap sx={{ color: "white", fontWeight: "bold", maxWidth: "175px" }}>
+                              {value.CollectionName}
+                            </Typography>
+
+                          </Tooltip>
+
                         </ButtonBase>
                       </Box>
 
                       {/* BUTTON FOR RENAME AND DELETE */}
 
                       <Box sx={{ flex: "1", marginRight: "20px" }}>
-                        <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value.id) }}>
+                        <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value) }}>
                           <img
                             src="/pictures/assets/3_dots.svg"
                             alt="Menubar"

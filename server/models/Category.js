@@ -13,5 +13,10 @@ module.exports = (sequelize, DataTypes) => {
     });
   }
 
+  // Category_img: {
+  //   type: DataTypes.STRING,
+  //   allowNull: false,
+  // }
+
   return Category
 }

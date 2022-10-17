@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Paper, IconButton, Menu, MenuItem } from "@mui/material"
+import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Paper, IconButton, Menu, MenuItem,Tooltip } from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate, useParams } from "react-router-dom"
@@ -109,15 +109,15 @@ function AddCategory({ children }) {
 
 
   /* DELETION OF DATA */
-  const deleteData = (id) => {
+  const deleteData = (delId) => {
 
     MenuDropDownClose();
 
-    axios.delete(`http://localhost:3001/category/${id}`, {
+    axios.delete(`http://localhost:3001/category/${delId.id}`, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     }).then(() => {
       setlistOfCategory(listOfCategory.filter((val) => {
-        return val.id !== id;
+        return val.id !== delId.id;
       }))
     })
   }
@@ -196,16 +196,26 @@ function AddCategory({ children }) {
                       onClick={() => {
                         history(`/add_bookmark/${id}/${CollectionName}/${value.id}/${value.CategoryName}`);
                       }}>
-                      <Typography variant="h5" sx={{ color: "white", marginLeft: "10px", marginTop: "10px", fontWeight: "bold" }}>
-                        {value.CategoryName}
-                      </Typography>
+
+                      <Tooltip
+                        enterDelay={500} leaveDelay={50}
+                        title={
+                          value.CategoryName
+                        }>
+
+                        <Typography variant="h5" sx={{ color: "white", marginLeft: "10px", marginTop: "10px", fontWeight: "bold" }}>
+                          {value.CategoryName}
+                        </Typography>
+
+                      </Tooltip>
+
                     </ButtonBase>
                   </Box>
 
                   {/* BUTTON FOR RENAME AND DELETE */}
 
                   <Box sx={{ flex: "1" }}>
-                    <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value.id) }}>
+                    <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value) }}>
                       <img
                         src="/pictures/assets/3_dots.svg"
                         alt="Menubar"
@@ -226,9 +236,9 @@ function AddCategory({ children }) {
 
 
 
-                {/* LIST OF BOOKMARK */}
+                {/* CUSTOM IMAGE */}
 
-                <Box sx={{ flex: "5" }}>
+                <Box sx={{ flex: "5", background: "blue" }}>
                   {children}
                 </Box>
               </Paper>

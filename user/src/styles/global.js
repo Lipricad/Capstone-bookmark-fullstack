@@ -29,7 +29,7 @@ const global = {
   },
 
   TypogCollection: {
-    color: "#Afa9a9",
+    color: "white",
     textAlign: "center",
     paddingTop: "8px",
     fontWeight: "bold"
@@ -45,7 +45,7 @@ const global = {
   },
 
   buttonBase: {
-    border: "solid",
+    border: "solid black",
     borderWidth: "2px",
     background: "#6633ff",
     padding: "15px",
@@ -105,7 +105,7 @@ const global = {
     display: "flex", 
     flex: "1",
     alignItems: "center",
-    borderBottom: "1px solid #272727",
+    borderBottom: "1px solid #45436d",
   },
 
   //OVERFLOW STYLES
@@ -116,7 +116,7 @@ const global = {
     maxHeight: "60vh",
     textAlign: "center",
     overflow: "auto",
-    borderTop: "3px solid #272727",
+    borderTop: "2px solid #45436d",
     '&::-webkit-scrollbar': {
       width: '0.4em'
     },
@@ -130,10 +130,13 @@ const global = {
     }
   },
 
+  //background: "#3b3b3b"  borderBottom: "2px solid #272727"  FOR DARKK MODE ETO GAWIN MO SA FUTURE 
+
   CategoryOverflowstyle: {
     flex: "15 1 auto",
     maxHeight: "95vh",
-    background: "#666666",
+    // background: "#666666",
+    background: "#FFFFFF",
     textAlign: "center",
     overflowX: "hidden",
     overflowY: "scroll",

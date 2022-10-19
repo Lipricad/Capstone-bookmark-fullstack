@@ -1,8 +1,11 @@
 import React from 'react'
+import { Box, Typography } from "@mui/material";
 
 function Account() {
   return (
-    <div>Account</div>
+    <Box>
+      <Typography variant="h1" sx={{marginTop: "200px"}}> ACCOUNT</Typography>
+    </Box>
   )
 }
 

@@ -26,6 +26,17 @@ function AddBookmark() {
     setOpen(false);
   };
 
+  /* FORM DIALOG RENAME */
+  const [openRename, setRename] = useState(false);
+
+  const handleClickRename = () => {
+    setRename(true);
+  };
+  const handleCloseRename = () => {
+    setDrop(null);
+    setRename(false);
+  };
+
   /* FORM DIALOG POPUP MOVE TO */
   const [openMoveto, setOpenMoveto] = useState(false);
 
@@ -97,14 +108,21 @@ function AddBookmark() {
   /* FORMIK */
   const initialValues = {
     BookmarkName: "",
-    LinkAddress: ""
+    LinkAddress: "",
   };
+  const initialValuesRename = {
+    RenameBookmark: ""
+  }
 
   const validationSchema = Yup.object().shape({
     BookmarkName: Yup.string()
       .required("Bookmark name is required."),
     LinkAddress: Yup.string()
       .required("Address link is required."),
+  });
+  const validationSchemaRename = Yup.object().shape({
+    RenameBookmark: Yup.string()
+      .required("Bookmark name is required."),
   });
 
 
@@ -151,6 +169,32 @@ function AddBookmark() {
       }))
     })
   }
+
+
+
+  /* UPDATE OF DATA */
+  const updateBookmarkname = (data) => {
+    axios.put(`http://localhost:3001/bookmark/renameBookmark`,
+      {
+        newBookmark: data.RenameBookmark,
+        id: dataID.id
+      }, {
+      headers: { accessToken: localStorage.getItem("accessToken") },
+    });
+    handleCloseRename();
+  }
+
+  const updateBookmarkcategory = () => {
+    axios.put(`http://localhost:3001/bookmark/changeCategory`,
+      {
+        newCategory: category,
+        id: dataID.id
+      }, {
+      headers: { accessToken: localStorage.getItem("accessToken") },
+    });
+    handleCloseMove();
+  }
+
 
 
   return (
@@ -234,7 +278,7 @@ function AddBookmark() {
                   <Tooltip sx={{ textAlign: "center" }}
                     title={
                       <span style={{ whiteSpace: 'pre-line', textAlign: "center" }}>
-                        <Typography sx={{fontSize: "10px"}}> {value.BookmarkName + "\n\n" + (value.updatedAt).substring(0, 10)} </Typography>
+                        <Typography sx={{ fontSize: "15px" }}> {value.BookmarkName + "\n\n" + (value.updatedAt).substring(0, 10)} </Typography>
                       </span>
                     }>
 
@@ -266,19 +310,55 @@ function AddBookmark() {
                 {/* DROPDOWN MENU */}
 
                 <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
-                  <MenuItem> Rename </MenuItem>
+                  <MenuItem onClick={handleClickRename}> Rename </MenuItem>
                   <MenuItem onClick={handleClickOpenMove}> Move to...</MenuItem>
                   <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
                 </Menu>
 
-                {/* 3.1 DIALOG POPUP MOVE TO*/}
+
+                {/* 3.1 DIALOG POPUP RENAME RENAME RENAME RENAME RENAME*/}
+
+                <Dialog open={openRename} onClose={handleCloseRename}>
+                  <Box sx={{ border: "3px solid black" }}>
+                    <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Add a Bookmark</DialogTitle>
+
+                    <Formik initialValues={initialValuesRename} onSubmit={updateBookmarkname} validationSchema={validationSchemaRename}>
+                      <Form>
+                        <DialogContent>
+                          <Box>
+                            <Field
+                              autoComplete="off"
+                              name="RenameBookmark"
+                              className="InputFieldPopup"
+                              component={TextField}
+                              label="New Bookmark Name"
+                              helperText={<ErrorMessage name="RenameBookmark" />}
+                            />
+                          </Box>
+                        </DialogContent>
+                        <DialogActions sx={{ background: "#272727" }}>
+                          <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseRename}>
+                            <Typography sx={global.TypogButCancel}> Cancel </Typography>
+                          </ButtonBase>
+                          <ButtonBase sx={global.buttonBase} type="submit">
+                            <Typography sx={global.TypogBut}> Confirm</Typography>
+                          </ButtonBase>
+                        </DialogActions>
+                      </Form>
+                    </Formik>
+                  </Box>
+                </Dialog>
+
+
+
+                {/* 3.1 DIALOG POPUP MOVE TO MOVE TO MOVE TO MOVE TO*/}
 
                 <Dialog open={openMoveto} onClose={handleCloseMove}>
                   <Box sx={{ border: "3px solid black" }}>
-                    <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Move bookmark to:</DialogTitle>
+                    <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Move to Category:</DialogTitle>
                     <DialogContent>
 
-                      <FormControl sx={{ m: 1, minWidth: 275 }}>
+                      <FormControl sx={{ m: 1, minWidth: 275, marginTop: "20px" }}>
                         <Select
                           value={category}
                           onChange={handleChange}
@@ -302,7 +382,8 @@ function AddBookmark() {
                       <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseMove}>
                         <Typography sx={global.TypogButCancel}> Cancel </Typography>
                       </ButtonBase>
-                      <ButtonBase sx={global.buttonBase} onClick={console.log(category)}>
+                      {/* () => {console.log(category)} */}
+                      <ButtonBase sx={global.buttonBase} onClick={() => { updateBookmarkcategory() }}>
                         <Typography sx={global.TypogBut}> Confirm</Typography>
                       </ButtonBase>
                     </DialogActions>

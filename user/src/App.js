@@ -15,6 +15,7 @@ import About from "./page/About"
 import AddCollection from './page/AddCollection';
 import AddCategory from './page/AddCategory';
 import AddBookmark from './page/AddBookmark';
+import Account from './page/Account';
 import PageNotFound from './page/PageNotFound';
 import { AuthContext } from "./helpers/AuthContext";
 // import Tryy from './page/try';
@@ -201,7 +202,7 @@ function App() {
                           </ListItem>
                           <ListItem button divider sx={{ padding: "20px" }} >
                             <ListItemIcon>
-                              <Link to="/login" className='NavBarDecoration'>
+                              <Link to="/account" className='NavBarDecoration'>
                                 <Typography variant="h5" sx={global.TypogBut}> Account </Typography>
                               </Link>
                             </ListItemIcon>
@@ -228,7 +229,7 @@ function App() {
 
                         <Box sx={{ flexGrow: 1 }}>
                           <ButtonBase sx={global.buttonnav}>
-                            <Link to="/login" className='NavBarDecoration'>
+                            <Link to="/account" className='NavBarDecoration'>
                               <Typography variant="h5" sx={global.TypogBut}> Account </Typography>
                             </Link>
                           </ButtonBase>
@@ -270,9 +271,10 @@ function App() {
             <Route path="/add_collection" exact element={<AddCollection />} />
             <Route path="/add_category/:id/:CollectionName" exact element={<AddCategory />} />
             <Route path="/add_bookmark/:id/:CollectionName/:CATid/:CategoryName" exact element={<AddBookmark />} />
+            <Route path="/account" exact element={<Account />} />
 
-            <Route path="*" exact element={<PageNotFound/>}/>
             {/* <Route path="/try" exact element={<Tryy />} /> */}
+            <Route path="*" exact element={<PageNotFound />} />
           </Routes>
         </Router>
       </AuthContext.Provider>

@@ -121,14 +121,15 @@ function AddCollection({ children }) {
 
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#3b3b3b", zIndex: "12", position: "fixed", width: "100%" }}>
+    // background: "#3b3b3b"
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#8984D6", zIndex: "12", position: "fixed", width: "100%" }}>
 
 
 
       {/* 0. COLLECTION TITLE */}
 
-      <Box sx={{ display: "flex", flex: "1 1 auto", background: "#3b3b3b", borderBottom: "3px solid #272727", marginTop: "85px", alignItems: "center", maxHeight: "80px", minHeight: "80px" }}>
-        <Typography sx={{ fontSize: "3.5vh", margin: "0 0 0 20px", color: "#Afa9a9", fontWeight: "bold", textAlign: "center" }}> {CollectionName} {" >> "} {CategoryName} </Typography>
+      <Box sx={{ display: "flex", flex: "1 1 auto", background: "#8984D6", borderBottom: "2px solid #45436d", marginTop: "85px", alignItems: "center", maxHeight: "80px", minHeight: "80px" }}>
+        <Typography sx={{ fontSize: "3.5vh", margin: "0 0 0 20px", color: "white", fontWeight: "bold", textAlign: "center" }}> {CollectionName} {" >> "} {CategoryName} </Typography>
       </Box>
 
       <Box sx={{ display: "flex", flexDirection: "row", flex: "1 1 auto" }}>
@@ -136,9 +137,9 @@ function AddCollection({ children }) {
 
         {/* 1. BOX FOR COLLECTION */}
 
-        <Box sx={{ flex: "1 1 auto", background: "#3b3b3b", display: "flex", flexDirection: "column", maxWidth: "250px", minWidth: " 250px", }}>
+        <Box sx={{ flex: "1 1 auto", background: "#8984D6", display: "flex", flexDirection: "column", maxWidth: "250px", minWidth: " 250px", }}>
 
-          <Box sx={{ display: "flex", flex: "1 1 auto", maxHeight: "75px" }}>
+          <Box sx={{ display: "flex", flex: "1 1 auto", maxHeight: "40px", minHeight: "40px" }}>
             <Box sx={{ flex: "1 1 auto" }}>
               <Typography variant="h4" sx={global.TypogCollection}> Collection</Typography>
             </Box>
@@ -147,8 +148,8 @@ function AddCollection({ children }) {
 
           {/* 3. ADD COLLECTION */}
 
-          <Box sx={{ flex: "1 1 auto", textAlign: "center", maxHeight: "150px" }}>
-            <ButtonBase sx={{ border: "3px solid #6633ff", padding: "10px", marginTop: "30px", marginBottom: "30px", "&:hover": { background: "#424242", transition: "0.3s" } }}
+          <Box sx={{ flex: "1 1 auto", textAlign: "center", maxHeight: "120px", minHeight: "120px" }}>
+            <ButtonBase sx={{ border: "3px solid #6633ff", padding: "10px", marginTop: "30px", marginBottom: "30px", "&:hover": { background: "#45436d", transition: "0.3s" } }}
               onClick={handleClickOpen}>
               <Typography variant="h5" sx={global.TypogBut}> New Collection</Typography>
             </ButtonBase>
@@ -158,7 +159,7 @@ function AddCollection({ children }) {
 
             <Dialog open={open} onClose={handleClose}>
               <Box sx={{ border: "3px solid black" }}>
-                <DialogTitle variant="h4" sx={{ background: "#272727", color: "white" }}>Create Collection</DialogTitle>
+                <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white" }}>Create Collection</DialogTitle>
 
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                   <Form>
@@ -176,7 +177,7 @@ function AddCollection({ children }) {
                         </Box>
                       </Box>
                     </DialogContent>
-                    <DialogActions sx={{ background: "#272727" }}>
+                    <DialogActions sx={{ background: "#7251b2" }}>
                       <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
                         <Typography sx={global.TypogButCancel}> Cancel </Typography>
                       </ButtonBase>
@@ -215,7 +216,7 @@ function AddCollection({ children }) {
                               value.CollectionName
                             }>
 
-                            <Typography variant="h6" noWrap sx={{ color: "white", fontWeight: "bold", maxWidth: "175px" }}>
+                            <Typography variant="h6" noWrap sx={{ color: "white", fontWeight: "bold", maxWidth: "160px" }}>
                               {value.CollectionName}
                             </Typography>
 
@@ -251,7 +252,7 @@ function AddCollection({ children }) {
               })}
 
             </Box>
-            <Box sx={{ flex: "1" }}> </Box>    {/* FOOTER TO */}
+            <Box sx={{ flex: "1"}}> </Box>    {/* FOOTER TO */}
           </Box>
 
         </Box>

@@ -10,6 +10,16 @@ router.get("/", async (req, res) => {
 });
 
 
+// OUTPUT BY USERID
+router.get('/OutputUser',  validateToken, async (req, res) => {
+  const UserId = req.user.id
+
+  const collection = await Collection.findAll({ where: { UserId: UserId } })
+  res.json(collection);
+});
+
+
+
 // OUTPUT ONE
 router.get('/byId/:id', async (req, res) => {
   const id= req.params.id
@@ -22,6 +32,7 @@ router.get('/byId/:id', async (req, res) => {
 //INPUT
 router.post("/", validateToken,  async (req, res) => {
   const collection = req.body;
+  collection.UserId = req.user.id;
   await Collection.create(collection);
   res.json(collection);
 });
@@ -29,8 +40,7 @@ router.post("/", validateToken,  async (req, res) => {
 
 // DELETE
 router.delete("/:collectionId", validateToken, async (req, res) => {
-  const collectionId = req.params.collectionId
-
+  const collectionId = req.params.collectionId;
   await Collection.destroy({
     where: {
       id: collectionId,

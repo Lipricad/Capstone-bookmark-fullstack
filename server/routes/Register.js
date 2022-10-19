@@ -43,10 +43,20 @@ router.post("/login", async (req, res) => {
 });
 
 
+
 //AUTHENTICATION 
 router.get('/auth', validateToken, (req, res) => {
 
   res.json(req.email);
 })
 
+
+
+//OUTPUT ALL
+router.get("/", async (req, res) => {
+  const listOfUser = await Users.findAll()
+  res.json(listOfUser);
+});
+
 module.exports = router
+

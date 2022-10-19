@@ -8,7 +8,7 @@ const validateToken = (req, res, next) => {
   try {
     const validToken = verify(accessToken, "importantsecret");
 
-    req.email = validToken;   //PARA MAKUHA KO ULIT YUNG DATA OR MAACCESS KO SA OTHER PAGES
+    req.user = validToken;   //PARA MAKUHA KO ULIT YUNG DATA OR MAACCESS KO SA OTHER PAGES
 
     if (validToken) {
       return next();

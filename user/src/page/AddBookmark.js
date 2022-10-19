@@ -231,14 +231,16 @@ function AddBookmark() {
 
               <Box sx={{ flex: "6", padding: "50px 0" }}>
                 <ButtonBase onClick={() => openInNewTab(value.Bookmark_URL)}>
-                  <Tooltip
+                  <Tooltip sx={{ textAlign: "center" }}
                     title={
-                      Date(value.updatedAt).substring(0, 15).split('-')
+                      <span style={{ whiteSpace: 'pre-line', textAlign: "center" }}>
+                        <Typography sx={{fontSize: "10px"}}> {value.BookmarkName + "\n\n" + (value.updatedAt).substring(0, 10)} </Typography>
+                      </span>
                     }>
 
                     <Typography variant="h6" noWrap sx={{ marginLeft: "10px", color: "white", textAlign: "center", maxWidth: "175px" }}>
 
-                      {/* LOGO OF THE BOOKMARK LOGOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO */}
+                      {/* ICON OF THE BOOKMARK ICON ICON ICON ICON ICON ICON ICON */}
                       <img height="16" width="16" alt="icon" src={`http://www.google.com/s2/favicons?domain=${value.Bookmark_URL}`} />
 
                       {"    " + value.BookmarkName}

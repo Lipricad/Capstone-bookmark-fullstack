@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom"
 
 
 function About() {
+
+  let history = useNavigate();
+
+  /* VERIFY IF THE USER IS LOGGED IN, IF THEY ARE THEY CANT ACCESS THE PAGE*/
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      history("/add_collection")
+    }
+    /* REMOVE THE ESLINT-DISABLE IF YOU WANT TO SEE WARNING [ITS USELESS EITHERWAY] */
+  }, []);  // eslint-disable-line react-hooks/exhaustive-deps     
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "black" }}>
       <Box sx={{ textAlign: "center", background: "#3b3b3b", flex: "1 1 auto", color: "white" }}>

@@ -6,7 +6,7 @@ function Try() {
   const [listOfCategory, setlistOfCategory] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/category/4").then((response) => {
+    axios.get("http://localhost:3001/category").then((response) => {
       setlistOfCategory(response.data);
     });
   }, []);

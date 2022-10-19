@@ -28,11 +28,23 @@ function AddCollection({ children }) {
   /* LIST OF COLLECTION */
   const [listOfCollection, setlistOfCollection] = useState([]);
 
+  /* VERIFY IF THE USER IS LOGGED IN, IF NOT THEY CANT ACCESS THE PAGE*/
+
   useEffect(() => {
-    axios.get("http://localhost:3001/collection").then((response) => {
-      setlistOfCollection(response.data);
-    });
-  }, []);
+    if (!localStorage.getItem("accessToken")) {
+      history("/login")
+    } else {
+      axios.get("http://localhost:3001/collection/OutputUser",
+        {
+          headers: {
+            accessToken: localStorage.getItem("accessToken"),
+          },
+        }).then((response) => {
+          setlistOfCollection(response.data);
+        });
+    }
+    /* REMOVE THE ESLINT-DISABLE IF YOU WANT TO SEE WARNING [ITS USELESS EITHERWAY] */
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 
 
@@ -54,14 +66,10 @@ function AddCollection({ children }) {
 
   /* FORMIK */
   const initialValues = {
-    UserEmail: "",
     CollectionName: "",
   };
 
   const validationSchema = Yup.object().shape({
-    UserEmail: Yup.string()
-      .required("Email address is required.")
-      .email("Please enter a valid email address."),
     CollectionName: Yup.string()
       .required("Collection is required."),
   });
@@ -74,7 +82,7 @@ function AddCollection({ children }) {
   let history = useNavigate();
 
   /* PASSING DATA TO DATABASE */
-  const onSubmit = (data, { resetForm }) => {
+  const onSubmit = (data) => {
     axios.post("http://localhost:3001/collection",
       data,
       {
@@ -88,8 +96,6 @@ function AddCollection({ children }) {
       } else {
         console.log("200");
         window.location.reload(); //TEMPORARY REFRESH
-
-        resetForm({ data: "" })
       }
       handleClose();
     });
@@ -115,7 +121,6 @@ function AddCollection({ children }) {
 
 
   return (
-    // AYUSIN MO NGA TO ABOT SA PAG SCROLL DOWN DITO YUNG MAY zIndex at positionFIXED
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#3b3b3b", zIndex: "12", position: "fixed", width: "100%" }}>
 
 
@@ -137,20 +142,6 @@ function AddCollection({ children }) {
             <Box sx={{ flex: "1 1 auto" }}>
               <Typography variant="h4" sx={global.TypogCollection}> Collection</Typography>
             </Box>
-
-
-            {/* 2. SETTINGS OF COLLECTION */}
-
-            {/* <Box sx={{ flex: "1 1 auto" }}>
-              <IconButton>
-                <img
-                  src="/pictures/assets/3_dots.svg"
-                  alt="Menubar"
-                  height="30"
-                  width="30"
-                />
-              </IconButton>
-            </Box> */}
           </Box>
 
 
@@ -174,16 +165,6 @@ function AddCollection({ children }) {
                     <DialogContent>
                       <Box sx={{ padding: "20px", borderTop: "4px solid black", borderBottom: "4px solid black" }}>
                         <Box>
-                          <Field
-                            autoComplete="off"
-                            name="UserEmail"
-                            className="InputFieldPopup"
-                            component={TextField}
-                            label="Email Address"
-                            helperText={<ErrorMessage name="UserEmail" />}
-                          />
-                        </Box>
-                        <Box sx={{ marginTop: "30px" }}>
                           <Field
                             autoComplete="off"
                             name="CollectionName"
@@ -213,7 +194,7 @@ function AddCollection({ children }) {
 
           {/* 4. COLUMN OF COLLECTION */}
 
-          <Box sx={{ flex: "15 1 auto" }}>
+          <Box sx={{ flex: "15 1 auto", display: "flex", flexDirection: "column" }}>
             <Box sx={global.CollectionOverflowstyle}>
               {listOfCollection.map((value, key) => {
                 return (
@@ -268,7 +249,9 @@ function AddCollection({ children }) {
                   </Box>
                 )
               })}
+
             </Box>
+            <Box sx={{ flex: "1" }}> </Box>    {/* FOOTER TO */}
           </Box>
 
         </Box>

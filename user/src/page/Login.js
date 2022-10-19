@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box, Typography, ButtonBase, Link } from "@mui/material";
 import * as Yup from 'yup';
@@ -11,10 +11,25 @@ import axios from 'axios';
 import global from "../styles/global";
 import { AuthContext } from "../helpers/AuthContext";
 
+
 function Login() {
 
   /* REFRESH PAGE */
   const { setAuthState } = useContext(AuthContext);
+
+  let history = useNavigate();
+
+   /* VERIFY IF THE USER IS LOGGED IN, IF THEY ARE THEY CANT ACCESS THE PAGE*/
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      history("/add_collection")
+    }
+    
+    /* REMOVE THE ESLINT-DISABLE IF YOU WANT TO SEE WARNING [ITS USELESS EITHERWAY] */
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps 
+
+
 
   /* FORMIK */
   const initialValues = {
@@ -30,8 +45,9 @@ function Login() {
       .required("Password is required."),
   });
 
+
+
   /* PASSING DATA TO DATABASE */
-  let history = useNavigate();
 
   const onSubmit = (data, { resetForm }) => {
     axios.post("http://localhost:3001/register/login", data).then((response) => {

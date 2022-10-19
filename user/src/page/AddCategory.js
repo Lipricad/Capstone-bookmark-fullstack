@@ -81,7 +81,7 @@ function AddCategory({ children }) {
   /* PASSING DATA TO DATABASE */
   const [newCategory, setNewCategory] = useState("")
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     axios.post("http://localhost:3001/category",
       {
         CategoryName: newCategory, CollectionId: id

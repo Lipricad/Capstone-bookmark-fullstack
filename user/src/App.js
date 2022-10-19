@@ -15,6 +15,7 @@ import About from "./page/About"
 import AddCollection from './page/AddCollection';
 import AddCategory from './page/AddCategory';
 import AddBookmark from './page/AddBookmark';
+import PageNotFound from './page/PageNotFound';
 import { AuthContext } from "./helpers/AuthContext";
 // import Tryy from './page/try';
 
@@ -270,6 +271,7 @@ function App() {
             <Route path="/add_category/:id/:CollectionName" exact element={<AddCategory />} />
             <Route path="/add_bookmark/:id/:CollectionName/:CATid/:CategoryName" exact element={<AddBookmark />} />
 
+            <Route path="*" exact element={<PageNotFound/>}/>
             {/* <Route path="/try" exact element={<Tryy />} /> */}
           </Routes>
         </Router>

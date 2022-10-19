@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box, Typography, ButtonBase, useMediaQuery, useTheme } from "@mui/material";
 import * as Yup from 'yup';
@@ -17,6 +17,20 @@ function Register() {
   const theme = useTheme()
   const matches = useMediaQuery(theme.breakpoints.down('sm'));
   // console.log(matches);   //checker
+
+  let history = useNavigate();
+
+  /* VERIFY IF THE USER IS LOGGED IN, IF THEY ARE THEY CANT ACCESS THE PAGE*/
+
+  useEffect(() => {
+    if (localStorage.getItem("accessToken")) {
+      history("/add_collection")
+    }
+
+    /* REMOVE THE ESLINT-DISABLE IF YOU WANT TO SEE WARNING [ITS USELESS EITHERWAY] */
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps     
+
+
 
   /* FORMIK */
   const initialValues = {
@@ -38,13 +52,12 @@ function Register() {
   });
 
   /* PASSING DATA TO DATABASE */
-  let history = useNavigate();
 
-  const onSubmit = (data, {resetForm}) => {
+  const onSubmit = (data, { resetForm }) => {
     axios.post("http://localhost:3001/register", data).then((response) => {
       console.log(response.data);
-      
-      resetForm({data: ""})
+
+      resetForm({ data: "" })
       history(`/login`);
     });
   };

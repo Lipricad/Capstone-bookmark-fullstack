@@ -20,3 +20,7 @@ body{
 .NavBarDecoration {
   text-decoration-line: none;
 }
+
+#notfound{
+  filter: drop-shadow(0 0 1rem #6633ff);
+}

@@ -103,12 +103,16 @@ const global = {
 
   ColectionBox: {
     display: "flex", 
+    flex: "1",
     alignItems: "center",
     borderBottom: "1px solid #272727",
   },
 
   //OVERFLOW STYLES
   CollectionOverflowstyle: {
+    display: "flex",
+    flexDirection: "column",
+    flex: "4",
     maxHeight: "60vh",
     textAlign: "center",
     overflow: "auto",

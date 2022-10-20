@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Paper, IconButton, Menu, MenuItem,Tooltip } from "@mui/material"
+import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Paper, IconButton, Menu, MenuItem, Tooltip } from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate, useParams } from "react-router-dom"
@@ -95,7 +95,7 @@ function AddCategory({ children }) {
       if (response.data.error) {
         console.log("400: unverified");
       } else {
-        history(0); //TEMPORARYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+        history("/loading"); //TEMPORARYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
         console.log("200");
         /* UPDATE THE PAGE EVERYTIME YOU ADD */
 
@@ -130,51 +130,65 @@ function AddCategory({ children }) {
 
         {/* NEW CATEGORIES BUTTON BOX */}
 
-        <Box sx={{ display: "flex", flexDirection: "row", minHeight: "13vh", flex: "1 1 auto" }}>
+        <Box sx={{ display: "flex", flexDirection: "row", height: "150px", minHeight: "150px" }}>
+          <Box sx={{ flex: 1, width: "100vw", position: "fixed", display: "flex", flexDirection: "row", right: "0px", zIndex: "12" }}>
 
-          {/* CATEGORY BUTTON */}
+            {/* BACK BUTTON */}
 
-          <Box sx={{ flex: "1", position: "fixed", right: "30px", zIndex: "12" }}>
-            <Box sx={{ paddingRight: "10px" }}>
-              <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
-                <Typography variant="h5" sx={global.TypogBut}> New Category </Typography>
-              </ButtonBase>
+            <Box sx={{ flex: "3" }}>
+              <Box sx={{ paddingRight: "10px" }}>
+                <ButtonBase sx={global.buttonBase} onClick={() => { history("/add_collection"); }} >
+                  <Typography variant="h5" sx={global.TypogBut}> Back</Typography>
+                </ButtonBase>
+              </Box>
             </Box>
 
-            {/* 3.1 DIALOG POPUP FORM */}
+            <Box sx={{ flex: "2" }}> </Box>
 
-            <Dialog open={open} onClose={handleClose}>
-              <Box sx={{ border: "3px solid black" }}>
-                <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Create Category</DialogTitle>
+            {/* CATEGORY BUTTON */}
 
-                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                  <Form onChange={(e) => { setNewCategory(e.target.value) }}>
-                    <DialogContent>
-                      <Box sx={{ padding: "20px", borderTop: "4px solid black", borderBottom: "4px solid black" }}>
-                        <Field
-                          autoComplete="off"
-                          name="CategoryName"
-                          className="InputFieldPopup"
-                          component={TextField}
-                          label="Category Name"
-                          helperText={<ErrorMessage name="CategoryName" />}
-                        />
-                      </Box>
-                    </DialogContent>
-                    <DialogActions sx={{ background: "#272727" }}>
-                      <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
-                        <Typography sx={global.TypogButCancel}> Cancel </Typography>
-                      </ButtonBase>
-                      <ButtonBase sx={global.buttonBase} type="submit">
-                        <Typography sx={global.TypogBut}> Confirm</Typography>
-                      </ButtonBase>
-                    </DialogActions>
-                  </Form>
-                </Formik>
+            <Box sx={{ flex: "1", marginRight: "10px" }}>
+              <Box sx={{ paddingRight: "10px" }}>
+                <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
+                  <Typography variant="h5" sx={global.TypogBut}> New Category </Typography>
+                </ButtonBase>
               </Box>
-            </Dialog>
-          </Box>
 
+              {/* 3.1 DIALOG POPUP FORM */}
+
+              <Dialog open={open} onClose={handleClose}>
+                <Box sx={{ border: "3px solid black" }}>
+                  <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Create Category</DialogTitle>
+
+                  <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                    <Form onChange={(e) => { setNewCategory(e.target.value) }}>
+                      <DialogContent>
+                        <Box sx={{ padding: "20px", borderTop: "4px solid black", borderBottom: "4px solid black" }}>
+                          <Field
+                            autoComplete="off"
+                            name="CategoryName"
+                            className="InputFieldPopup"
+                            component={TextField}
+                            label="Category Name"
+                            helperText={<ErrorMessage name="CategoryName" />}
+                          />
+                        </Box>
+                      </DialogContent>
+                      <DialogActions sx={{ background: "#272727" }}>
+                        <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
+                          <Typography sx={global.TypogButCancel}> Cancel </Typography>
+                        </ButtonBase>
+                        <ButtonBase sx={global.buttonBase} type="submit">
+                          <Typography sx={global.TypogBut}> Confirm</Typography>
+                        </ButtonBase>
+                      </DialogActions>
+                    </Form>
+                  </Formik>
+                </Box>
+              </Dialog>
+            </Box>
+
+          </Box>
         </Box>
 
         {/* LIST OF CATEGORIES */}
@@ -203,7 +217,7 @@ function AddCategory({ children }) {
                           value.CategoryName
                         }>
 
-                        <Typography variant="h5" sx={{ color: "white", marginLeft: "10px", marginTop: "10px", fontWeight: "bold" }}>
+                        <Typography noWrap variant="h5" sx={{ color: "white", marginLeft: "10px", marginTop: "10px", fontWeight: "bold", maxWidth: "300px" }}>
                           {value.CategoryName}
                         </Typography>
 
@@ -244,6 +258,11 @@ function AddCategory({ children }) {
               </Paper>
             )
           })}
+
+
+
+          {/* DITO YUNG DROP DOWN MENU */}
+
         </Box>
 
       </Box>

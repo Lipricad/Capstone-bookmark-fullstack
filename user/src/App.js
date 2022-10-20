@@ -8,6 +8,7 @@ import axios from 'axios';
 import global from "./styles/global";
 
 /* PAGES */
+import Loading from "./page/LoadingPage";
 import Home from "./page/Home";
 import Register from "./page/Register";
 import Login from "./page/Login";
@@ -77,7 +78,7 @@ function App() {
         {/* NAVIGATION PART */}
 
         <Router>
-          <AppBar position="fixed" sx={{ background: "#6633ff" }}>
+          <AppBar position="fixed" sx={{ background: "#6633ff", position: "sticky" }}>
 
             {/* AuthSTATE */}
 
@@ -265,6 +266,7 @@ function App() {
           {/* ROUTES HERE */}
           <Routes>
             <Route path="/" exact element={<Home />} />
+            <Route path="/loading" exact element={<Loading />} />
             <Route path="/about" exact element={<About />} />
             <Route path="/login" exact element={<Login />} />
             <Route path="/register" exact element={<Register />} />

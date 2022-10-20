@@ -95,7 +95,7 @@ function AddCollection({ children }) {
         console.log("400: unverified");
       } else {
         console.log("200");
-        window.location.reload(); //TEMPORARY REFRESH
+        history("/loading"); //TEMPORARY REFRESH
       }
       handleClose();
     });
@@ -128,8 +128,10 @@ function AddCollection({ children }) {
 
       {/* 0. COLLECTION TITLE */}
 
-      <Box sx={{ display: "flex", flex: "1 1 auto", background: "#8984D6", borderBottom: "2px solid #45436d", marginTop: "85px", alignItems: "center", maxHeight: "80px", minHeight: "80px" }}>
-        <Typography sx={{ fontSize: "3.5vh", margin: "0 0 0 20px", color: "white", fontWeight: "bold", textAlign: "center" }}> {CollectionName} {" >> "} {CategoryName} </Typography>
+      <Box sx={{ display: "flex", flex: "1 1 auto", background: "#8984D6", borderBottom: "2px solid #45436d", alignItems: "center", maxHeight: "80px", minHeight: "80px" }}>
+        <Typography sx={{ fontSize: "3.5vh", margin: "0 0 0 20px", color: "white", fontWeight: "bold", textAlign: "center" }}>
+          {CollectionName} {" → "} {CategoryName}
+        </Typography>
       </Box>
 
       <Box sx={{ display: "flex", flexDirection: "row", flex: "1 1 auto" }}>
@@ -207,7 +209,7 @@ function AddCollection({ children }) {
                         <ButtonBase sx={global.ColectionButtonCol}
                           onClick={() => {
                             history(`/add_category/${value.id}/${value.CollectionName}`);
-                            history(0); //TEMPORARYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+                            history("/loading"); //TEMPORARYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
                           }}>
 
                           <Tooltip
@@ -251,8 +253,12 @@ function AddCollection({ children }) {
                 )
               })}
 
+
+
+              {/* DITO YUNG DROP DOWN MENU */}
+
             </Box>
-            <Box sx={{ flex: "1"}}> </Box>    {/* FOOTER TO */}
+            <Box sx={{ flex: "1" }}> </Box>    {/* FOOTER TO */}
           </Box>
 
         </Box>

@@ -3,8 +3,12 @@ import { Box, Typography } from "@mui/material";
 
 function Account() {
   return (
-    <Box>
-      <Typography variant="h1" sx={{marginTop: "200px"}}> ACCOUNT</Typography>
+    <Box sx={{
+      display: "flex", flexDirection: "column", minHeight: "91vh", background: 'url(pictures/background/fpass_bg.jpg)',
+      backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundPosition: "center"
+    }}>
+
+    
     </Box>
   )
 }

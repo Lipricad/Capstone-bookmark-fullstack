@@ -17,7 +17,7 @@ function Home() {
 
   return (
     <Box sx={{
-      display: "flex", flexDirection: "column", minHeight: "100vh", background: 'url(pictures/background/home_bg.jpg)',
+      display: "flex", flexDirection: "column", minHeight: "91vh", background: 'url(pictures/background/home_bg.jpg)', 
       backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundPosition: "center"
     }}>
       <Box>

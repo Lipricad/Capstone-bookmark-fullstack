@@ -72,11 +72,11 @@ function Login() {
 
   return (
     <Box sx={{
-      display: "flex", flexDirection: "column", minHeight: "100vh", background: 'url(pictures/background/signin_bg.jpg)',
+      display: "flex", flexDirection: "column", minHeight: "91vh", background: 'url(pictures/background/signin_bg.jpg)',
       backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundPosition: "center"
     }}>
 
-      <Box sx={{ flexGrow: 1, textAlign: "center", marginTop: "6vh" }}>
+      <Box sx={{ flexGrow: 1, textAlign: "center"}}>
         <Typography variant="h2" sx={global.TypogTitle}> Sign In </Typography>
 
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
@@ -116,7 +116,7 @@ function Login() {
           </Form>
         </Formik>
 
-        <Box sx={{ marginTop: "20px" }}>
+        <Box sx={{ marginTop: "20px", marginBottom: "100px" }}>
           <Typography> Dont have an account? </Typography>
           <Link
             onClick={() => { history(`/register`); }}

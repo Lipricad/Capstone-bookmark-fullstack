@@ -17,7 +17,7 @@ function PageNotFound() {
         <img
           id="notfound"
           src="/pictures/Logo/NotFound.png"
-          alt="Bookmark Website"
+          alt="Not Found :("
           height="400"
           width="400"
         />

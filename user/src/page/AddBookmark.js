@@ -148,7 +148,7 @@ function AddBookmark() {
         const bookmarkToUpdate = { BookmarkName: data.BookmarkName, Bookmark_URL: data.LinkAddress };
         setlistOfBookmark([...listOfBookmark, bookmarkToUpdate]);
 
-        history(0);  //TEMPORARRYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+        history("/loading");
       }
       handleClose();
     });
@@ -181,6 +181,8 @@ function AddBookmark() {
       }, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     });
+
+    history("/loading");
     handleCloseRename();
   }
 
@@ -192,6 +194,8 @@ function AddBookmark() {
       }, {
       headers: { accessToken: localStorage.getItem("accessToken") },
     });
+
+    history("/loading");
     handleCloseMove();
   }
 
@@ -200,64 +204,94 @@ function AddBookmark() {
   return (
     <AddCollection>
 
-      <Box sx={{ display: "flex", flexDirection: "row", minHeight: "13vh", flex: "1 1 auto" }}>
+      <Box sx={{ display: "flex", flexDirection: "row", height: "150px", minHeight: "150px" }}>
+        <Box sx={{ flex: 1, width: "100vw", position: "fixed", display: "flex", flexDirection: "row", right: "0px", zIndex: "12" }}>
 
-        {/* ADD BOOKMARK BUTTON */}
+          {/* BACK BUTTON */}
 
+          <Box sx={{ flex: "3" }}>
+            <Box sx={{ paddingRight: "10px" }}>
+              <ButtonBase sx={global.buttonBase} onClick={() => { history(-1); }} >
+                <Typography variant="h5" sx={global.TypogBut}> Back</Typography>
+              </ButtonBase>
+            </Box>
+          </Box>
 
-        <Box sx={{ flex: "1", position: "fixed", right: "30px", zIndex: "12" }}>
-          <Box sx={{ paddingRight: "10px" }}>
-            <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
-              <Typography variant="h5" sx={global.TypogBut}> Add Bookmark </Typography>
-            </ButtonBase>
+          {/* SEARCH BAR/ SORT */}
+
+          <Box sx={{ flex: "2", display:"flex" }}>
+
+            <Box sx={{ paddingRight: "10px" }}>
+              <ButtonBase sx={global.buttonBase} onClick={() => { history(-1); }} >
+                <Typography variant="h5" sx={global.TypogBut}> SEARCH</Typography>
+              </ButtonBase>
+            </Box>
+
+            <Box sx={{ paddingRight: "10px" }}>
+              <ButtonBase sx={global.buttonBase} onClick={() => { history(-1); }} >
+                <Typography variant="h5" sx={global.TypogBut}> SORT</Typography>
+              </ButtonBase>
+            </Box>
+
           </Box>
 
 
+          {/* ADD BOOKMARK BUTTON */}
 
-          {/* 3.1 DIALOG POPUP FORM */}
-
-          <Dialog open={open} onClose={handleClose}>
-            <Box sx={{ border: "3px solid black" }}>
-              <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Add a Bookmark</DialogTitle>
-
-              <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                <Form>
-                  <DialogContent>
-                    <Box sx={{ padding: "20px", borderTop: "4px solid black" }}>
-                      <Field
-                        autoComplete="off"
-                        name="BookmarkName"
-                        className="InputFieldPopup"
-                        component={TextField}
-                        label="Bookmark Name"
-                        helperText={<ErrorMessage name="BookmarkName" />}
-                      />
-                    </Box>
-                    <Box sx={{ padding: "20px", borderBottom: "4px solid black" }}>
-                      <Field
-                        autoComplete="off"
-                        name="LinkAddress"
-                        className="InputFieldPopup"
-                        component={TextField}
-                        label="Address Link"
-                        helperText={<ErrorMessage name="LinkAddress" />}
-                      />
-                    </Box>
-                  </DialogContent>
-                  <DialogActions sx={{ background: "#272727" }}>
-                    <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
-                      <Typography sx={global.TypogButCancel}> Cancel </Typography>
-                    </ButtonBase>
-                    <ButtonBase sx={global.buttonBase} type="submit">
-                      <Typography sx={global.TypogBut}> Confirm</Typography>
-                    </ButtonBase>
-                  </DialogActions>
-                </Form>
-              </Formik>
+          <Box sx={{ flex: "1", marginRight: "10px" }}>
+            <Box sx={{ paddingRight: "10px" }}>
+              <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
+                <Typography variant="h5" sx={global.TypogBut}> Add Bookmark </Typography>
+              </ButtonBase>
             </Box>
-          </Dialog>
-        </Box>
 
+
+
+            {/* 3.1 DIALOG POPUP FORM */}
+
+            <Dialog open={open} onClose={handleClose}>
+              <Box sx={{ border: "3px solid black" }}>
+                <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Add a Bookmark</DialogTitle>
+
+                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                  <Form>
+                    <DialogContent>
+                      <Box sx={{ padding: "20px", borderTop: "4px solid black" }}>
+                        <Field
+                          autoComplete="off"
+                          name="BookmarkName"
+                          className="InputFieldPopup"
+                          component={TextField}
+                          label="Bookmark Name"
+                          helperText={<ErrorMessage name="BookmarkName" />}
+                        />
+                      </Box>
+                      <Box sx={{ padding: "20px", borderBottom: "4px solid black" }}>
+                        <Field
+                          autoComplete="off"
+                          name="LinkAddress"
+                          className="InputFieldPopup"
+                          component={TextField}
+                          label="Address Link"
+                          helperText={<ErrorMessage name="LinkAddress" />}
+                        />
+                      </Box>
+                    </DialogContent>
+                    <DialogActions sx={{ background: "#272727" }}>
+                      <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
+                        <Typography sx={global.TypogButCancel}> Cancel </Typography>
+                      </ButtonBase>
+                      <ButtonBase sx={global.buttonBase} type="submit">
+                        <Typography sx={global.TypogBut}> Confirm</Typography>
+                      </ButtonBase>
+                    </DialogActions>
+                  </Form>
+                </Formik>
+              </Box>
+            </Dialog>
+          </Box>
+
+        </Box>
       </Box>
 
 
@@ -268,7 +302,7 @@ function AddBookmark() {
         {listOfBookmark.map((value, key) => {
           return (
             <Paper elevation={3} key={key} sx={{
-              margin: "1vh 1vw 2vh 1.5vw", width: "250px", height: "125px", display: "flex", flexDirection: "row",
+              margin: "5vh 2vw 2vh 1.5vw", width: "250px", height: "125px", display: "flex", flexDirection: "row",
               background: "#3b3b3b", border: "1px solid #272727"
             }}>
 
@@ -307,94 +341,97 @@ function AddBookmark() {
                   />
                 </IconButton>
 
-                {/* DROPDOWN MENU */}
-
-                <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
-                  <MenuItem onClick={handleClickRename}> Rename </MenuItem>
-                  <MenuItem onClick={handleClickOpenMove}> Move to...</MenuItem>
-                  <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
-                </Menu>
-
-
-                {/* 3.1 DIALOG POPUP RENAME RENAME RENAME RENAME RENAME*/}
-
-                <Dialog open={openRename} onClose={handleCloseRename}>
-                  <Box sx={{ border: "3px solid black" }}>
-                    <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Add a Bookmark</DialogTitle>
-
-                    <Formik initialValues={initialValuesRename} onSubmit={updateBookmarkname} validationSchema={validationSchemaRename}>
-                      <Form>
-                        <DialogContent>
-                          <Box>
-                            <Field
-                              autoComplete="off"
-                              name="RenameBookmark"
-                              className="InputFieldPopup"
-                              component={TextField}
-                              label="New Bookmark Name"
-                              helperText={<ErrorMessage name="RenameBookmark" />}
-                            />
-                          </Box>
-                        </DialogContent>
-                        <DialogActions sx={{ background: "#272727" }}>
-                          <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseRename}>
-                            <Typography sx={global.TypogButCancel}> Cancel </Typography>
-                          </ButtonBase>
-                          <ButtonBase sx={global.buttonBase} type="submit">
-                            <Typography sx={global.TypogBut}> Confirm</Typography>
-                          </ButtonBase>
-                        </DialogActions>
-                      </Form>
-                    </Formik>
-                  </Box>
-                </Dialog>
-
-
-
-                {/* 3.1 DIALOG POPUP MOVE TO MOVE TO MOVE TO MOVE TO*/}
-
-                <Dialog open={openMoveto} onClose={handleCloseMove}>
-                  <Box sx={{ border: "3px solid black" }}>
-                    <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Move to Category:</DialogTitle>
-                    <DialogContent>
-
-                      <FormControl sx={{ m: 1, minWidth: 275, marginTop: "20px" }}>
-                        <Select
-                          value={category}
-                          onChange={handleChange}
-                          displayEmpty
-                          inputProps={{ 'aria-label': 'Without label' }}
-                        >
-
-                          {listOfCategory.map((value, key) => {
-                            return (
-                              <MenuItem key={key} value={value.id}>
-                                {value.CategoryName}
-                              </MenuItem>
-                            )
-                          })}
-
-                        </Select>
-                      </FormControl>
-
-                    </DialogContent>
-                    <DialogActions sx={{ background: "#272727" }}>
-                      <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseMove}>
-                        <Typography sx={global.TypogButCancel}> Cancel </Typography>
-                      </ButtonBase>
-                      {/* () => {console.log(category)} */}
-                      <ButtonBase sx={global.buttonBase} onClick={() => { updateBookmarkcategory() }}>
-                        <Typography sx={global.TypogBut}> Confirm</Typography>
-                      </ButtonBase>
-                    </DialogActions>
-                  </Box>
-                </Dialog>
-
               </Box>
 
             </Paper>
           )
         })}
+
+
+
+        {/* DITO YUNG DROP DOWN MENU */}
+
+        <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
+          <MenuItem onClick={handleClickRename}> Rename </MenuItem>
+          <MenuItem onClick={handleClickOpenMove}> Move to...</MenuItem>
+          <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
+        </Menu>
+
+
+        {/* 3.1 DIALOG POPUP RENAME RENAME RENAME RENAME RENAME*/}
+
+        <Dialog open={openRename} onClose={handleCloseRename}>
+          <Box sx={{ border: "3px solid black" }}>
+            <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> Add a Bookmark </DialogTitle>
+
+            <Formik initialValues={initialValuesRename} onSubmit={updateBookmarkname} validationSchema={validationSchemaRename}>
+              <Form>
+                <DialogContent>
+                  <Box>
+                    <Field
+                      autoComplete="off"
+                      name="RenameBookmark"
+                      className="InputFieldPopup"
+                      component={TextField}
+                      label="New Bookmark Name"
+                      helperText={<ErrorMessage name="RenameBookmark" />}
+                    />
+                  </Box>
+                </DialogContent>
+                <DialogActions sx={{ background: "#272727" }}>
+                  <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseRename}>
+                    <Typography sx={global.TypogButCancel}> Cancel </Typography>
+                  </ButtonBase>
+                  <ButtonBase sx={global.buttonBase} type="submit">
+                    <Typography sx={global.TypogBut}> Confirm</Typography>
+                  </ButtonBase>
+                </DialogActions>
+              </Form>
+            </Formik>
+          </Box>
+        </Dialog>
+
+
+
+        {/* 3.1 DIALOG POPUP MOVE TO MOVE TO MOVE TO MOVE TO*/}
+
+        <Dialog open={openMoveto} onClose={handleCloseMove}>
+          <Box sx={{ border: "3px solid black" }}>
+            <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Move to Category:</DialogTitle>
+            <DialogContent>
+
+              <FormControl sx={{ m: 1, minWidth: 275, marginTop: "20px" }}>
+                <Select
+                  value={category}
+                  onChange={handleChange}
+                  displayEmpty
+                  inputProps={{ 'aria-label': 'Without label' }}
+                >
+
+                  {listOfCategory.map((value, key) => {
+                    return (
+                      <MenuItem key={key} value={value.id}>
+                        {value.CategoryName}
+                      </MenuItem>
+                    )
+                  })}
+
+                </Select>
+              </FormControl>
+
+            </DialogContent>
+            <DialogActions sx={{ background: "#272727" }}>
+              <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseMove}>
+                <Typography sx={global.TypogButCancel}> Cancel </Typography>
+              </ButtonBase>
+              {/* () => {console.log(category)} */}
+              <ButtonBase sx={global.buttonBase} onClick={() => { updateBookmarkcategory() }}>
+                <Typography sx={global.TypogBut}> Confirm</Typography>
+              </ButtonBase>
+            </DialogActions>
+          </Box>
+        </Dialog>
+
       </Box >
 
     </AddCollection >

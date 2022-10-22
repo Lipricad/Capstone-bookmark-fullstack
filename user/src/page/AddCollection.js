@@ -23,6 +23,17 @@ function AddCollection({ children }) {
     setOpen(false);
   };
 
+  /* FORM DIALOG RENAME */
+  const [openRename, setRename] = useState(false);
+
+  const handleClickRename = () => {
+    setRename(true);
+  };
+  const handleCloseRename = () => {
+    setDrop(null);
+    setRename(false);
+  };
+
 
 
   /* LIST OF COLLECTION */
@@ -68,10 +79,17 @@ function AddCollection({ children }) {
   const initialValues = {
     CollectionName: "",
   };
+  const initialValuesRename = {
+    RenameCollection: ""
+  }
 
   const validationSchema = Yup.object().shape({
     CollectionName: Yup.string()
       .required("Collection is required."),
+  });
+  const validationSchemaRename = Yup.object().shape({
+    RenameCollection: Yup.string()
+      .required("Collection name is required."),
   });
 
 
@@ -117,6 +135,22 @@ function AddCollection({ children }) {
     })
     history("/add_collection");
   }
+
+
+
+    /* UPDATE OF DATA */
+    const updateCollectionname = (data) => {
+      axios.put(`http://localhost:3001/collection/renameCollection`,
+        {
+          newCollection: data.RenameCollection,
+          id: dataID.id
+        }, {
+        headers: { accessToken: localStorage.getItem("accessToken") },
+      });
+  
+      history("/loading");
+      handleCloseRename();
+    }
 
 
 
@@ -238,14 +272,6 @@ function AddCollection({ children }) {
                             width="20"
                           />
                         </IconButton>
-
-                        {/* DROPDOWN MENU */}
-
-                        <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
-                          <MenuItem> Rename </MenuItem>
-                          <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
-                        </Menu>
-
                       </Box>
 
                     </Box>
@@ -256,6 +282,45 @@ function AddCollection({ children }) {
 
 
               {/* DITO YUNG DROP DOWN MENU */}
+
+              <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
+                <MenuItem onClick={handleClickRename}> Rename </MenuItem>
+                <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
+              </Menu>
+
+              {/* 3.1 DIALOG POPUP RENAME RENAME RENAME RENAME RENAME*/}
+
+              <Dialog open={openRename} onClose={handleCloseRename}>
+                <Box sx={{ border: "3px solid black" }}>
+                  <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> New name: </DialogTitle>
+
+                  <Formik initialValues={initialValuesRename} onSubmit={updateCollectionname} validationSchema={validationSchemaRename}>
+                    <Form>
+                      <DialogContent>
+                        <Box>
+                          <Field
+                            autoComplete="off"
+                            name="RenameCollection"
+                            className="InputFieldPopup"
+                            component={TextField}
+                            label="New Collection Name"
+                            helperText={<ErrorMessage name="RenameCollection" />}
+                          />
+                        </Box>
+                      </DialogContent>
+                      <DialogActions sx={{ background: "#272727" }}>
+                        <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseRename}>
+                          <Typography sx={global.TypogButCancel}> Cancel </Typography>
+                        </ButtonBase>
+                        <ButtonBase sx={global.buttonBase} type="submit">
+                          <Typography sx={global.TypogBut}> Confirm</Typography>
+                        </ButtonBase>
+                      </DialogActions>
+                    </Form>
+                  </Formik>
+                </Box>
+              </Dialog>
+
 
             </Box>
             <Box sx={{ flex: "1" }}> </Box>    {/* FOOTER TO */}

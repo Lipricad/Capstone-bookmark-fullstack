@@ -9,8 +9,8 @@ function PageNotFound() {
   let history = useNavigate();
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", flexWrap: "wrap", background: "#FFFFFF" }}>
-      <Box sx={{ flex: "1 1 auto", display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "91vh", flexWrap: "wrap", background: "#FFFFFF" }}>
+      <Box sx={{ flex: "1 1 auto", display: "flex", alignItems: "flex-end", justifyContent: "center", marginTop: "10vh" }}>
         <Typography variant="h3" sx={global.TypogTitle}> Page Not Found</Typography>
       </Box>
       <Box sx={{ flex: "1 1 auto", display: "flex", alignItems: "flex-start", justifyContent: "center" }}>

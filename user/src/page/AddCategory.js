@@ -25,6 +25,16 @@ function AddCategory({ children }) {
     setOpen(false);
   };
 
+  /* FORM DIALOG RENAME */
+  const [openRename, setRename] = useState(false);
+
+  const handleClickRename = () => {
+    setRename(true);
+  };
+  const handleCloseRename = () => {
+    setDrop(null);
+    setRename(false);
+  };
 
 
   /* LIST OF DATA */
@@ -68,10 +78,19 @@ function AddCategory({ children }) {
     CategoryName: ""
   };
 
+  const initialValuesRename = {
+    RenameCategory: ""
+  }
+
   const validationSchema = Yup.object().shape({
     CategoryName: Yup.string()
       .required("Category is required."),
   });
+  const validationSchemaRename = Yup.object().shape({
+    RenameCategory: Yup.string()
+      .required("Category name is required."),
+  });
+
 
   /* COLLECTION DATA */
   let { CollectionName } = useParams();
@@ -120,6 +139,21 @@ function AddCategory({ children }) {
         return val.id !== delId.id;
       }))
     })
+  }
+
+
+   /* UPDATE OF DATA */
+   const updateCategoryname = (data) => {
+    axios.put(`http://localhost:3001/category/renameCategory`,
+      {
+        newCategory: data.RenameCategory,
+        id: dataID.id
+      }, {
+      headers: { accessToken: localStorage.getItem("accessToken") },
+    });
+
+    history("/loading");
+    handleCloseRename();
   }
 
 
@@ -237,18 +271,8 @@ function AddCategory({ children }) {
                         width="25"
                       />
                     </IconButton>
-
-                    {/* DROPDOWN MENU */}
-
-                    <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
-                      <MenuItem> Rename </MenuItem>
-                      <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
-                    </Menu>
-
                   </Box>
                 </Box>
-
-
 
                 {/* CUSTOM IMAGE */}
 
@@ -260,8 +284,46 @@ function AddCategory({ children }) {
           })}
 
 
-
           {/* DITO YUNG DROP DOWN MENU */}
+
+          <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
+            <MenuItem onClick={handleClickRename}> Rename </MenuItem>
+            <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
+          </Menu>
+
+          {/* 3.1 DIALOG POPUP RENAME RENAME RENAME RENAME RENAME*/}
+
+          <Dialog open={openRename} onClose={handleCloseRename}>
+            <Box sx={{ border: "3px solid black" }}>
+              <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> New name: </DialogTitle>
+
+              <Formik initialValues={initialValuesRename} onSubmit={updateCategoryname} validationSchema={validationSchemaRename}>
+                <Form>
+                  <DialogContent>
+                    <Box>
+                      <Field
+                        autoComplete="off"
+                        name="RenameCategory"
+                        className="InputFieldPopup"
+                        component={TextField}
+                        label="New Category Name"
+                        helperText={<ErrorMessage name="RenameCategory" />}
+                      />
+                    </Box>
+                  </DialogContent>
+                  <DialogActions sx={{ background: "#272727" }}>
+                    <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseRename}>
+                      <Typography sx={global.TypogButCancel}> Cancel </Typography>
+                    </ButtonBase>
+                    <ButtonBase sx={global.buttonBase} type="submit">
+                      <Typography sx={global.TypogBut}> Confirm</Typography>
+                    </ButtonBase>
+                  </DialogActions>
+                </Form>
+              </Formik>
+            </Box>
+          </Dialog>
+
 
         </Box>
 

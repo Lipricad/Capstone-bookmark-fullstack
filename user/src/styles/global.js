@@ -19,7 +19,6 @@ const global = {
     color: "#6633ff",
     fontWeight: "bold",
     textAlign: "center",
-    paddingTop: "120px"
   },
 
   TypogTitle2: {
@@ -50,6 +49,21 @@ const global = {
     background: "#6633ff",
     padding: "15px",
     marginTop: "40px",
+    borderRadius: "8px",
+    filter: "brightness(90%)",
+    "&:hover": {
+      filter: "brightness(110%)",
+      transition: "0.3s"
+    }
+  },
+
+  buttonBasefp: {
+    border: "solid black",
+    borderWidth: "2px",
+    background: "#6633ff",
+    padding: "15px",
+    width: "100%",
+    marginTop: "2vh",
     borderRadius: "8px",
     filter: "brightness(90%)",
     "&:hover": {

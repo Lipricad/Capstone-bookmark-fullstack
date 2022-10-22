@@ -19,13 +19,13 @@ function Login() {
 
   let history = useNavigate();
 
-   /* VERIFY IF THE USER IS LOGGED IN, IF THEY ARE THEY CANT ACCESS THE PAGE*/
+  /* VERIFY IF THE USER IS LOGGED IN, IF THEY ARE THEY CANT ACCESS THE PAGE*/
 
   useEffect(() => {
     if (localStorage.getItem("accessToken")) {
       history("/add_collection")
     }
-    
+
     /* REMOVE THE ESLINT-DISABLE IF YOU WANT TO SEE WARNING [ITS USELESS EITHERWAY] */
   }, []); // eslint-disable-line react-hooks/exhaustive-deps 
 
@@ -47,7 +47,7 @@ function Login() {
 
 
 
-  /* PASSING DATA TO DATABASE */
+  /* PASSING DATA TO API */
 
   const onSubmit = (data, { resetForm }) => {
     axios.post("http://localhost:3001/register/login", data).then((response) => {
@@ -76,7 +76,7 @@ function Login() {
       backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundPosition: "center"
     }}>
 
-      <Box sx={{ flexGrow: 1, textAlign: "center"}}>
+      <Box sx={{ flexGrow: 1, textAlign: "center", marginTop: "10vh" }}>
         <Typography variant="h2" sx={global.TypogTitle}> Sign In </Typography>
 
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
@@ -105,7 +105,9 @@ function Login() {
             </Box>
 
             <Box sx={{ marginTop: "20px" }}>
-              <Link sx={{ textDecoration: "none" }}>
+              <Link
+                onClick={() => { history(`/forgot_pass`); }}
+                sx={{ textDecoration: "none" }}>
                 <Typography sx={{ cursor: "pointer", color: "#6633ff", fontSize: "18px" }}> Forgot Password?</Typography>
               </Link>
             </Box>

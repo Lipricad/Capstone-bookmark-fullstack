@@ -19,7 +19,7 @@ function About() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "black" }}>
       <Box sx={{ textAlign: "center", background: "#3b3b3b", flex: "1 1 auto", color: "white" }}>
-        <Typography variant="h2" sx={{ paddingTop: "120px", margin: "0 20px 0 20px" }}> What is Bookmark</Typography>
+        <Typography variant="h2" sx={{ paddingTop: "75px", margin: "0 20px 0 20px" }}> What is Bookmark</Typography>
         <Typography variant="h4" sx={{ paddingTop: "50px", margin: "0 10px 20px 10px" }}>Bookmark is a web-based website organizer that prioritizes ease of access, privacy and use!</Typography>
       </Box>
       <Box sx={{ textAlign: "left", background: "#666666", flex: "1 1 auto", color: "white" }}>

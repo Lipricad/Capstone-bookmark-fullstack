@@ -12,11 +12,11 @@ function LoadingPage() {
 
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", flexWrap: "wrap", background: "#FFFFFF" }}>
 
-      <Box sx={{ flex: "1 1 auto", display: "flex", alignItems: "flex-end", justifyContent: "center" }}>
+      <Box sx={{ flex: "1 1 auto", display: "flex", alignItems: "flex-end", justifyContent: "center", userSelect: "none" }}>
         <ButtonBase onClick={setTimeout(() => { history(-1); }, 500)}> </ButtonBase>
         <Typography variant="h3" sx={global.TypogTitle}> Loading. Please Wait...</Typography>
       </Box>
-      <Box sx={{ flex: "2 1 auto", display: "flex", alignItems: "flex-start", justifyContent: "center"}}>
+      <Box sx={{ flex: "2 1 auto", display: "flex", alignItems: "flex-start", justifyContent: "center", userSelect: "none" }}>
         <img
           src="/pictures/assets/Loading_icon.svg"
           alt="Loading"

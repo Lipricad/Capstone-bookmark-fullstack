@@ -68,7 +68,7 @@ function Register() {
       backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundPosition: "center"
     }}>
 
-      <Box sx={{ flexGrow: 1, textAlign: "center", marginTop: "6vh", marginBottom: "100px" }}>
+      <Box sx={{ flexGrow: 1, textAlign: "center", marginTop: "10vh", marginBottom: "100px" }}>
         <Typography variant="h2" sx={global.TypogTitle}> Join Us </Typography>
 
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >

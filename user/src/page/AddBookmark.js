@@ -251,7 +251,7 @@ function AddBookmark() {
 
             <Dialog open={open} onClose={handleClose}>
               <Box sx={{ border: "3px solid black" }}>
-                <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Add a Bookmark</DialogTitle>
+                <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> New name: </DialogTitle>
 
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                   <Form>
@@ -357,7 +357,6 @@ function AddBookmark() {
           <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
         </Menu>
 
-
         {/* 3.1 DIALOG POPUP RENAME RENAME RENAME RENAME RENAME*/}
 
         <Dialog open={openRename} onClose={handleCloseRename}>
@@ -397,7 +396,7 @@ function AddBookmark() {
 
         <Dialog open={openMoveto} onClose={handleCloseMove}>
           <Box sx={{ border: "3px solid black" }}>
-            <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Move to Category:</DialogTitle>
+            <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Move to:</DialogTitle>
             <DialogContent>
 
               <FormControl sx={{ m: 1, minWidth: 275, marginTop: "20px" }}>

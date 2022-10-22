@@ -17,6 +17,8 @@ import AddCollection from './page/AddCollection';
 import AddCategory from './page/AddCategory';
 import AddBookmark from './page/AddBookmark';
 import Account from './page/Account';
+import SendEmail from './page/SendEmail';
+import ResetPass from './page/ResetPass';
 import PageNotFound from './page/PageNotFound';
 import { AuthContext } from "./helpers/AuthContext";
 // import Tryy from './page/try';
@@ -57,7 +59,7 @@ function App() {
 
   //DRAWER
   const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('sm'));
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
 
   //LOGOUT
   const logout = () => {
@@ -274,6 +276,8 @@ function App() {
             <Route path="/add_category/:id/:CollectionName" exact element={<AddCategory />} />
             <Route path="/add_bookmark/:id/:CollectionName/:CATid/:CategoryName" exact element={<AddBookmark />} />
             <Route path="/account" exact element={<Account />} />
+            <Route path="/forgot_pass" exact element={<SendEmail />} />
+            <Route path="/reset-password" exact element={<ResetPass />} />
 
             {/* <Route path="/try" exact element={<Tryy />} /> */}
             <Route path="*" exact element={<PageNotFound />} />

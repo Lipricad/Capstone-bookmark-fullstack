@@ -20,10 +20,6 @@ router.post("/", validateToken, async (req, res) => {
 
 
 
-
-
-
-
 //UPDATE BOOKMARK NAME
 router.put("/renameBookmark", validateToken, async (req, res) => {
   const { newBookmark, id } = req.body;
@@ -39,8 +35,6 @@ router.put("/changeCategory", validateToken, async (req, res) => {
   await Bookmark.update({ CategoryId: newCategory }, { where: { id: id } });
   res.json(newCategory);
 });
-
-
 
 
 

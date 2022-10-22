@@ -18,6 +18,17 @@ router.post("/",validateToken, async (req, res) => {
   res.json(category);
 });
 
+
+
+//UPDATE CATEGORY NAME
+router.put("/renameCategory", validateToken, async (req, res) => {
+  const { newCategory, id } = req.body;
+  await Category.update({ CategoryName: newCategory }, { where: { id: id } });
+  res.json(newCategory);
+});
+
+
+
 // DELETE
 router.delete("/:categoryId", validateToken, async (req, res) => {
   const categoryId = req.params.categoryId

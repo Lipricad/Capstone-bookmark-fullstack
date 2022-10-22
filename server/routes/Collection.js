@@ -19,7 +19,6 @@ router.get('/OutputUser',  validateToken, async (req, res) => {
 });
 
 
-
 // OUTPUT ONE
 router.get('/byId/:id', async (req, res) => {
   const id= req.params.id
@@ -35,6 +34,14 @@ router.post("/", validateToken,  async (req, res) => {
   collection.UserId = req.user.id;
   await Collection.create(collection);
   res.json(collection);
+});
+
+
+//UPDATE COLLECTION NAME
+router.put("/renameCollection", validateToken, async (req, res) => {
+  const { newCollection, id } = req.body;
+  await Collection.update({ CollectionName: newCollection }, { where: { id: id } });
+  res.json(newCollection);
 });
 
 

@@ -1,20 +1,52 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box, Typography, ButtonBase, Paper, } from "@mui/material";
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
-// import { useNavigate } from "react-router-dom"
-// import axios from 'axios';
+import { useNavigate, useParams } from "react-router-dom"
+import axios from 'axios';
 
 /* GLOBAL STYLES && IMPORTS */
 import global from "../styles/global";
 
 
 
-
 function ResetPass() {
 
-  // let history = useNavigate();
+  let history = useNavigate();
+  let { id } = useParams();
+  let { forgotToken } = useParams();
+
+  /* List of User Details */
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+
+    if (localStorage.getItem("accessToken")) {
+      history("/add_collection")
+    } else {
+      axios.get(`http://localhost:3001/register/reset-password/${id}/${forgotToken}`,
+        {
+          headers: {
+            forgotToken: localStorage.getItem("forgotToken"),
+          },
+        }).then((response) => {
+
+          if (response.data.error) {
+            history("/PageNotFound")
+          } else {
+            setUserData(response.data);
+          }
+        }).catch((error) => {
+          if (error.response) {
+            localStorage.removeItem("forgotToken");
+            history("/PageNotFound");
+          }
+        });
+    }
+    /* REMOVE THE ESLINT-DISABLE IF YOU WANT TO SEE WARNING [ITS USELESS EITHERWAY] */
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps     
+
 
 
   /* FORMIK */
@@ -34,6 +66,28 @@ function ResetPass() {
 
 
 
+  const changePassword = (data, { resetForm }) => {
+    axios.put("http://localhost:3001/register/changepass-forgot", {
+      newPassword: data.npassword
+    },
+      {
+        headers: {
+          forgotToken: localStorage.getItem("forgotToken"),
+        },
+      }).then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          alert(response.data)
+          localStorage.removeItem("forgotToken");
+          history("/login")
+        }
+        resetForm({ data: "" })
+      });
+  }
+
+
+
   return (
     <Box sx={{
       display: "flex", flexDirection: "column", minHeight: "91vh", background: 'url(pictures/background/fpass_bg.jpg)',
@@ -48,8 +102,16 @@ function ResetPass() {
 
           <Typography variant="h3" sx={{ color: "#6633ff", fontWeight: "bold", paddingBottom: "4vh" }}> Change Password </Typography>
 
+
+          <Typography variant="h6" noWrap sx={{ color: "#6633ff", fontWeight: "bold", paddingBottom: "4vh" }}>
+
+            {userData.email}
+
+          </Typography>
+
+
           {/* INPUT */}
-          <Formik initialValues={initialValues} onSubmit={""} validationSchema={validationSchema}>
+          <Formik initialValues={initialValues} onSubmit={changePassword} validationSchema={validationSchema}>
             <Form>
               <Box sx={{ alignItems: "center", display: "flex", flexDirection: "column" }}>
                 <Box>

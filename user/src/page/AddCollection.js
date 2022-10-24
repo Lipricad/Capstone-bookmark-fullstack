@@ -236,14 +236,13 @@ function AddCollection({ children }) {
               {listOfCollection.map((value, key) => {
                 return (
                   <Box key={key}>
-                    {/* DITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO KA MAGALALAGAY NUNG UPDATE */}
                     <Box sx={global.ColectionBox}>
 
                       <Box sx={{ flex: "10" }}>
                         <ButtonBase sx={global.ColectionButtonCol}
                           onClick={() => {
                             history(`/add_category/${value.id}/${value.CollectionName}`);
-                            history("/loading"); //TEMPORARYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY
+                            history("/loading");
                           }}>
 
                           <Tooltip

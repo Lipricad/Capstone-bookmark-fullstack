@@ -163,14 +163,14 @@ function AddCategory({ children }) {
       <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100%" }}>
 
         {/* NEW CATEGORIES BUTTON BOX */}
-
+        {/* background: "blue", zIndex: "12", position: "fixed" */}
         <Box sx={{ display: "flex", flexDirection: "row", height: "150px", minHeight: "150px" }}>
-          <Box sx={{ flex: 1, width: "100vw", position: "fixed", display: "flex", flexDirection: "row", right: "0px", zIndex: "12" }}>
+          <Box sx={{ flex: 1, width: "100vw", display: "flex", flexDirection: "row", right: "0px"}}> 
 
             {/* BACK BUTTON */}
 
-            <Box sx={{ flex: "3" }}>
-              <Box sx={{ paddingRight: "10px" }}>
+            <Box sx={{ flex: "1" }}>
+              <Box>
                 <ButtonBase sx={global.buttonBase} onClick={() => { history("/add_collection"); }} >
                   <Typography variant="h5" sx={global.TypogBut}> Back</Typography>
                 </ButtonBase>
@@ -178,11 +178,12 @@ function AddCategory({ children }) {
             </Box>
 
             <Box sx={{ flex: "2" }}> </Box>
+            <Box sx={{ flex: "1" }}> </Box>
 
             {/* CATEGORY BUTTON */}
 
             <Box sx={{ flex: "1", marginRight: "10px" }}>
-              <Box sx={{ paddingRight: "10px" }}>
+              <Box>
                 <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
                   <Typography variant="h5" sx={global.TypogBut}> New Category </Typography>
                 </ButtonBase>

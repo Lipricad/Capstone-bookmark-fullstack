@@ -31,13 +31,8 @@ function Account() {
 
 
 
-
   /* List of User Details */
   const [listOfDetails, setlistOfDetails] = useState([]);
-
-  // const [oldPassword, setOldPassword] = useState("");
-  // const [newPassword, setNewPassword] = useState("");
-
 
   /* FORM DIALOG POPUP */
   const [open, setOpen] = useState(false);

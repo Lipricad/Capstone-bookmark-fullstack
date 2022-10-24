@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box, Typography, ButtonBase, Paper, } from "@mui/material";
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
-// import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from 'axios';
 
 /* GLOBAL STYLES && IMPORTS */
@@ -11,7 +11,15 @@ import global from "../styles/global";
 
 function SendEmail() {
 
-  // let history = useNavigate();
+  let history = useNavigate();
+
+  useEffect(() => {
+
+    if (localStorage.getItem("accessToken")) {
+      history("/add_collection")
+      
+    }
+  }, []);
 
   /* FORMIK */
   const initialValues = {
@@ -23,18 +31,20 @@ function SendEmail() {
       .required("Email address is required.")
       .email("Please enter a valid email address."),
   });
-  
+
 
 
   /* PASSING DATA TO API */
   const onSubmit = (data, { resetForm }) => {
-    axios.post("http://localhost:3001/register/forgot-password", {email: data.email}
+    axios.post("http://localhost:3001/register/forgot-password", { email: data.email }
     ).then((response) => {
-      localStorage.setItem("forgotToken", response.data.token);
-
-      console.log(response.data)
-
-      alert(response.status)
+      if (response.data.error) {
+        alert(response.data.error)
+      }
+      else {
+        localStorage.setItem("forgotToken", response.data.token);
+        alert("Email sent, check your email address.")
+      }
       resetForm({ data: "" })
     });
   };
@@ -49,8 +59,8 @@ function SendEmail() {
           {/* TITLE */}
 
           <Typography variant="h3" sx={{ color: "#6633ff", fontWeight: "bold", paddingBottom: "4vh" }}> Forgot Password </Typography>
-          <Typography variant="h5" sx={{ color: "#6633ff", fontWeight: "bold",paddingBottom: "1vh" , textAlign: "left" }}> Email Adress </Typography>
-          
+          <Typography variant="h5" sx={{ color: "#6633ff", fontWeight: "bold", paddingBottom: "1vh", textAlign: "left" }}> Email Address </Typography>
+
           {/* INPUT */}
           <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
             <Form>

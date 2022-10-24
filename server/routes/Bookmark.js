@@ -3,11 +3,27 @@ const router = express.Router()
 const { Bookmark } = require("../models")
 const { validateToken } = require("../middlewares/AuthMiddleware")
 
-// OUTPUT ONE
+// OUTPUT ONE 
 router.get('/:CategoryId', async (req, res) => {
   const CategoryId = req.params.CategoryId
 
   const bookmark = await Bookmark.findAll({ where: { CategoryId: CategoryId } })
+  res.json(bookmark);
+});
+
+// SORTED NAME
+router.get('/:CategoryId/sname', async (req, res) => {
+  const CategoryId = req.params.CategoryId
+
+  const bookmark = await Bookmark.findAll({ where: { CategoryId: CategoryId }, order: [['BookmarkName', 'ASC']] })
+  res.json(bookmark);
+});
+
+// SORT DATE
+router.get('/:CategoryId/sdate', async (req, res) => {
+  const CategoryId = req.params.CategoryId
+
+  const bookmark = await Bookmark.findAll({ where: { CategoryId: CategoryId }, order: [['updatedAt', 'DESC']] })
   res.json(bookmark);
 });
 

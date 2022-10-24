@@ -106,7 +106,7 @@ function Login() {
 
             <Box sx={{ marginTop: "20px" }}>
               <Link
-                onClick={() => { history(`/forgot_pass`); }}
+                onClick={() => { history(`/forgot-pass`); }}
                 sx={{ textDecoration: "none" }}>
                 <Typography sx={{ cursor: "pointer", color: "#6633ff", fontSize: "18px" }}> Forgot Password?</Typography>
               </Link>

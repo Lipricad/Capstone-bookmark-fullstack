@@ -70,12 +70,11 @@ function AddBookmark() {
       setlistOfCategory(response.data)
     });
 
-
-
     /* BOOKMARK */
     axios.get(`http://localhost:3001/bookmark/${CATid}`).then((response) => {
       setlistOfBookmark(response.data);
     });
+
     /* REMOVE THE ESLINT-DISABLE IF YOU WANT TO SEE WARNING [ITS USELESS EITHERWAY] */
   }, []);  // eslint-disable-line react-hooks/exhaustive-deps     
 
@@ -89,19 +88,33 @@ function AddBookmark() {
 
 
   //MENU DROP DOWN
-  const [Drop, setDrop] = useState(null);
   const [dataID, setDataID] = useState("");
 
   const DropDownId = (dataId) => {
     // console.log(dataId)
     setDataID(dataId);
   }
+
+  //RNAME, MT, DEL DROP DOWN
+  const [Drop, setDrop] = useState(null);
+
   const MenuDropDown = e => {
     setDrop(e.currentTarget);
   }
   const MenuDropDownClose = e => {
     setDrop(null);
   }
+
+  //FILTER DROP DOWN
+  const [FDrop, setFDrop] = useState(null);
+
+  const MenuFDropDown = e => {
+    setFDrop(e.currentTarget);
+  }
+  const MenuFDropDownClose = e => {
+    setFDrop(null);
+  }
+
 
 
 
@@ -201,45 +214,80 @@ function AddBookmark() {
 
 
 
+  //SORT
+  const sortname = () => {
+    /* BOOKMARK */
+    axios.get(`http://localhost:3001/bookmark/${CATid}/sname`).then((response) => {
+      setlistOfBookmark(response.data);
+      MenuDropDownClose();
+    });
+  }
+
+  const sorttime = () => {
+    /* BOOKMARK */
+    axios.get(`http://localhost:3001/bookmark/${CATid}/sdate`).then((response) => {
+      setlistOfBookmark(response.data);
+      MenuDropDownClose();
+    });
+  }
+
+
+
   return (
     <AddCollection>
 
       <Box sx={{ display: "flex", flexDirection: "row", height: "150px", minHeight: "150px" }}>
-        <Box sx={{ flex: 1, width: "100vw", position: "fixed", display: "flex", flexDirection: "row", right: "0px", zIndex: "12" }}>
+        {/* background: "blue", zIndex: "12", position: "fixed" */}
+        <Box sx={{ flex: 1, width: "100vw", display: "flex", flexDirection: "row", right: "0px" }}>
 
           {/* BACK BUTTON */}
 
-          <Box sx={{ flex: "3" }}>
-            <Box sx={{ paddingRight: "10px" }}>
+          <Box sx={{ flex: "1" }}>
+            <Box>
               <ButtonBase sx={global.buttonBase} onClick={() => { history(-1); }} >
                 <Typography variant="h5" sx={global.TypogBut}> Back</Typography>
               </ButtonBase>
             </Box>
           </Box>
 
-          {/* SEARCH BAR/ SORT */}
+          {/* SEARCH BAR */}
 
-          <Box sx={{ flex: "2", display:"flex" }}>
+          <Box sx={{ flex: "2", display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
 
-            <Box sx={{ paddingRight: "10px" }}>
+            <Box sx={{ flex: "1", paddingRight: "10px" }}>
               <ButtonBase sx={global.buttonBase} onClick={() => { history(-1); }} >
                 <Typography variant="h5" sx={global.TypogBut}> SEARCH</Typography>
               </ButtonBase>
             </Box>
+          </Box>
 
-            <Box sx={{ paddingRight: "10px" }}>
-              <ButtonBase sx={global.buttonBase} onClick={() => { history(-1); }} >
-                <Typography variant="h5" sx={global.TypogBut}> SORT</Typography>
+          {/* SORT */}
+          <Box sx={{ flex: "1", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+            <Box sx={{ flex: "1" }}>
+              <ButtonBase sx={global.buttonBase} onClick={MenuFDropDown} >
+                <Tooltip title={"Filter"} >
+                  <img
+                    src="/pictures/assets/filter.svg"
+                    alt="filter"
+                    height="30"
+                    width="30"
+                  />
+                </Tooltip>
+                <Typography sx={global.TypogBut}> Filter </Typography>
               </ButtonBase>
             </Box>
 
-          </Box>
+            <Menu onClose={MenuFDropDownClose} anchorEl={FDrop} open={Boolean(FDrop)} sx={global.menuStyle}>
+              <MenuItem onClick={() => { sortname() }}> Sort by name </MenuItem>
+              <MenuItem onClick={() => { sorttime() }}> Sort by time </MenuItem>
+            </Menu>
 
+          </Box>
 
           {/* ADD BOOKMARK BUTTON */}
 
           <Box sx={{ flex: "1", marginRight: "10px" }}>
-            <Box sx={{ paddingRight: "10px" }}>
+            <Box>
               <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
                 <Typography variant="h5" sx={global.TypogBut}> Add Bookmark </Typography>
               </ButtonBase>
@@ -252,7 +300,6 @@ function AddBookmark() {
             <Dialog open={open} onClose={handleClose}>
               <Box sx={{ border: "3px solid black" }}>
                 <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> New name: </DialogTitle>
-
                 <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                   <Form>
                     <DialogContent>
@@ -290,7 +337,6 @@ function AddBookmark() {
               </Box>
             </Dialog>
           </Box>
-
         </Box>
       </Box>
 
@@ -305,8 +351,6 @@ function AddBookmark() {
               margin: "5vh 2vw 2vh 1.5vw", width: "250px", height: "125px", display: "flex", flexDirection: "row",
               background: "#3b3b3b", border: "1px solid #272727"
             }}>
-
-
               <Box sx={{ flex: "6", padding: "50px 0" }}>
                 <ButtonBase onClick={() => openInNewTab(value.Bookmark_URL)}>
                   <Tooltip sx={{ textAlign: "center" }}
@@ -362,7 +406,6 @@ function AddBookmark() {
         <Dialog open={openRename} onClose={handleCloseRename}>
           <Box sx={{ border: "3px solid black" }}>
             <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> Add a Bookmark </DialogTitle>
-
             <Formik initialValues={initialValuesRename} onSubmit={updateBookmarkname} validationSchema={validationSchemaRename}>
               <Form>
                 <DialogContent>
@@ -398,7 +441,6 @@ function AddBookmark() {
           <Box sx={{ border: "3px solid black" }}>
             <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Move to:</DialogTitle>
             <DialogContent>
-
               <FormControl sx={{ m: 1, minWidth: 275, marginTop: "20px" }}>
                 <Select
                   value={category}
@@ -417,13 +459,11 @@ function AddBookmark() {
 
                 </Select>
               </FormControl>
-
             </DialogContent>
             <DialogActions sx={{ background: "#272727" }}>
               <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseMove}>
                 <Typography sx={global.TypogButCancel}> Cancel </Typography>
               </ButtonBase>
-              {/* () => {console.log(category)} */}
               <ButtonBase sx={global.buttonBase} onClick={() => { updateBookmarkcategory() }}>
                 <Typography sx={global.TypogBut}> Confirm</Typography>
               </ButtonBase>

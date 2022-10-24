@@ -72,7 +72,6 @@ function App() {
   }
 
 
-
   return (
     <Box>
       <AuthContext.Provider value={{ authState, setAuthState }}>
@@ -104,7 +103,6 @@ function App() {
                         anchor="right"
                         onClose={() => setOpen(false)}
                         open={open}
-                        onOpen={() => setOpen(true)}
                         PaperProps={{ style: { background: "#6633ff" } }}>
                         <List>
                           <ListItem button divider sx={{ padding: "20px" }} >
@@ -117,7 +115,7 @@ function App() {
                           <ListItem button divider sx={{ padding: "20px" }} >
                             <ListItemIcon>
                               <Link to="/login" className='NavBarDecoration'>
-                                <Typography variant="h5" sx={global.TypogBut}> Sign In </Typography>
+                                <Typography variant="h5" sx={global.TypogBut}> Login </Typography>
                               </Link>
                             </ListItemIcon>
                           </ListItem>
@@ -193,7 +191,6 @@ function App() {
                         anchor="right"
                         onClose={() => setOpen(false)}
                         open={open}
-                        onOpen={() => setOpen(true)}
                         PaperProps={{ style: { background: "#6633ff" } }}>
                         <List>
                           <ListItem button divider sx={{ padding: "20px" }} >
@@ -214,7 +211,7 @@ function App() {
                           <ListItem button divider sx={{ padding: "20px" }} >
                             <ListItemIcon>
                               <Link onClick={logout} to="/" className='NavBarDecoration'>
-                                <Typography variant="h5" sx={global.TypogBut}> Sign Out </Typography>
+                                <Typography variant="h5" sx={global.TypogBut}> Logout </Typography>
                               </Link>
                             </ListItemIcon>
                           </ListItem>
@@ -241,7 +238,7 @@ function App() {
                         <Box sx={{ flexGrow: 1 }}>
                           <ButtonBase sx={global.buttonnav}>
                             <Link onClick={logout} to="/login" className='NavBarDecoration'>
-                              <Typography variant="h5" sx={global.TypogBut}> Sign Out </Typography>
+                              <Typography variant="h5" sx={global.TypogBut}> Logout </Typography>
                             </Link>
                           </ButtonBase>
                         </Box>
@@ -276,8 +273,8 @@ function App() {
             <Route path="/add_category/:id/:CollectionName" exact element={<AddCategory />} />
             <Route path="/add_bookmark/:id/:CollectionName/:CATid/:CategoryName" exact element={<AddBookmark />} />
             <Route path="/account" exact element={<Account />} />
-            <Route path="/forgot_pass" exact element={<SendEmail />} />
-            <Route path="/reset-password" exact element={<ResetPass />} />
+            <Route path="/forgot-pass" exact element={<SendEmail />} />
+            <Route path="/reset-password/:id/:forgotToken" exact element={<ResetPass />} />
 
             {/* <Route path="/try" exact element={<Tryy />} /> */}
             <Route path="*" exact element={<PageNotFound />} />

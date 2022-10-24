@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box, Typography, ButtonBase, Paper, } from "@mui/material";
+import Swal from 'sweetalert2';
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate, useParams } from "react-router-dom"
@@ -76,9 +77,17 @@ function ResetPass() {
         },
       }).then((response) => {
         if (response.data.error) {
-          alert(response.data.error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: response.data.error,
+          })
         } else {
-          alert(response.data)
+          Swal.fire(
+            'Complete!',
+            response.data,
+            'success'
+          )
           localStorage.removeItem("forgotToken");
           history("/login")
         }

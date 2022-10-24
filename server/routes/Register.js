@@ -3,7 +3,6 @@ const router = express.Router()
 const { Users } = require("../models")
 const bcrypt = require("bcrypt")
 const { validateToken, forgotToken } = require("../middlewares/AuthMiddleware")
-const jwt = require("jsonwebtoken");
 var nodemailer = require('nodemailer')
 
 const { sign } = require("jsonwebtoken")
@@ -33,7 +32,7 @@ router.post("/login", async (req, res) => {
 
   const userEmail = await Users.findOne({ where: { email: email } });
 
-  if (!userEmail) res.json({ error: "Email doesn't exist." })
+  if (!userEmail) res.json({ error: "Account doesn't exist." })
   else
     bcrypt.compare(password, userEmail.password).then((match) => {
       if (!match) res.json({ error: "Incorrect Combination of Email or Password." })
@@ -75,8 +74,6 @@ router.get('/userdetails', validateToken, async (req, res) => {
 
 
 
-
-
 // CREATE LINK BY EMAIL
 router.post('/forgot-password', async (req, res) => {
   const { email } = req.body;
@@ -110,7 +107,7 @@ router.post('/forgot-password', async (req, res) => {
       from: "bookmarkspprt@gmail.com",
       to: userEmail.email,
       subject: "Password Reset",
-      text: "Hi! Dear user " + userEmail.email + ", \n\nPlease access the link before it expires in 3 minutes. \n" + link, 
+      text: "Hi! Dear user " + userEmail.email + ", \n\nPlease access the link before it expires in 3 minutes. \n" + link,
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -151,8 +148,6 @@ router.get('/reset-password/:id/:forgotToken', forgotToken, async (req, res, nex
 //CHANGE PASSWORD - FORGOT
 router.put('/changepass-forgot', forgotToken, async (req, res) => {
   const { newPassword } = req.body
-
-  const userEmail = await Users.findOne({ where: { email: req.user.email } });
 
   bcrypt.hash(newPassword, 10).then((hash) => {
     Users.update({ password: hash }, { where: { email: req.user.email } })

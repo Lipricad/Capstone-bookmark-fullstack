@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box, Typography, ButtonBase, Link } from "@mui/material";
+import Swal from 'sweetalert2';
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate } from "react-router-dom"
@@ -52,7 +53,11 @@ function Login() {
   const onSubmit = (data, { resetForm }) => {
     axios.post("http://localhost:3001/register/login", data).then((response) => {
       if (response.data.error) {
-        alert(response.data.error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: response.data.error,
+        })
       } else {
         localStorage.setItem("accessToken", response.data.token);
 

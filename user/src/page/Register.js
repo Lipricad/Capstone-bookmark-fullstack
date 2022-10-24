@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box, Typography, ButtonBase, useMediaQuery, useTheme } from "@mui/material";
+import Swal from 'sweetalert2';
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate } from "react-router-dom"
@@ -31,7 +32,6 @@ function Register() {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps     
 
 
-
   /* FORMIK */
   const initialValues = {
     email: "",
@@ -55,10 +55,16 @@ function Register() {
 
   const onSubmit = (data, { resetForm }) => {
     axios.post("http://localhost:3001/register", data).then((response) => {
-      console.log(response.data);
-
+      if (response.data.error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: response.data.error,
+        })
+      } else {
+        history(`/login`);
+      }
       resetForm({ data: "" })
-      history(`/login`);
     });
   };
 

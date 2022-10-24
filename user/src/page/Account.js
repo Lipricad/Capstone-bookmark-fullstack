@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Box, ButtonBase, Typography, Paper, Tooltip, Dialog, DialogActions, DialogContent, DialogTitle, } from "@mui/material";
+import Swal from 'sweetalert2';
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate } from "react-router-dom"
@@ -76,9 +77,18 @@ function Account() {
         },
       }).then((response) => {
         if (response.data.error) {
-          alert(response.data.error);
+          handleClose();
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: response.data.error,
+          })
         } else {
-          alert(response.data)
+          Swal.fire(
+            'Complete!',
+            response.data,
+            'success'
+          )
           history("/loading")
         }
         resetForm({ data: "" })

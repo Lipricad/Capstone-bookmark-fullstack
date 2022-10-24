@@ -82,13 +82,13 @@ function Login() {
     }}>
 
       <Box sx={{ flexGrow: 1, textAlign: "center", marginTop: "10vh" }}>
-        <Typography variant="h2" sx={global.TypogTitle}> Sign In </Typography>
+        <Typography variant="h2" sx={global.TypogTitle}> Login </Typography>
 
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
           <Form>
             <Box sx={{ marginTop: "40px", alignItems: "center" }}>
               <Field
-                autoComplete="off"
+                // autoComplete="off"
                 name="email"
                 className="InputField"
                 component={TextField}
@@ -118,7 +118,7 @@ function Login() {
             </Box>
 
             <ButtonBase sx={global.buttonBase} type="submit">
-              <Typography variant="h5" sx={global.TypogBut}> Sign In </Typography>
+              <Typography variant="h5" sx={global.TypogBut}> Login </Typography>
             </ButtonBase>
           </Form>
         </Formik>

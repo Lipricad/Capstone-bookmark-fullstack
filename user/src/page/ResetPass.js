@@ -83,11 +83,13 @@ function ResetPass() {
             text: response.data.error,
           })
         } else {
-          Swal.fire(
-            'Complete!',
-            response.data,
-            'success'
-          )
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: response.data,
+            showConfirmButton: false,
+            timer: 1500
+          })
           localStorage.removeItem("forgotToken");
           history("/login")
         }

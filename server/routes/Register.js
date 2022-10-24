@@ -70,10 +70,6 @@ router.get('/userdetails', validateToken, async (req, res) => {
 
 
 
-
-
-
-
 // CREATE LINK BY EMAIL
 router.post('/forgot-password', async (req, res) => {
   const { email } = req.body;
@@ -155,48 +151,6 @@ router.put('/changepass-forgot', forgotToken, async (req, res) => {
   });
 
 })
-
-
-
-
-
-
-
-
-
-
-// // OUTPUT BY EMAIL
-// router.get('/recover', async (req, res) => {
-//   const { email } = req.body;
-
-//   const userEmail = await Users.findOne({ where: { email: email } });
-
-//   res.json(userEmail.id);
-// });
-
-
-
-// //CHANGE PASSWORD - FORGOT
-// router.put('/recoverforgotpass', async (req, res) => {
-//   const { id, newPassword } = req.body
-
-//   const userEmail = await Users.findOne({ where: { id: id } });
-
-//   bcrypt.hash(newPassword, 10).then((hash) => {
-//     Users.update({ password: hash }, { where: { id: id } })
-//     res.json("Password successfully changed.");
-//   });
-
-// })
-
-
-
-
-
-
-
-
-
 
 
 

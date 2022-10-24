@@ -116,7 +116,7 @@ const global = {
   },
 
   ColectionBox: {
-    display: "flex", 
+    display: "flex",
     flex: "1",
     alignItems: "center",
     borderBottom: "1px solid #45436d",
@@ -154,6 +154,7 @@ const global = {
     textAlign: "center",
     overflowX: "hidden",
     overflowY: "scroll",
+
     '&::-webkit-scrollbar': {
       width: '0.4em'
     },
@@ -171,6 +172,56 @@ const global = {
     "& .MuiPaper-root": {
       backgroundColor: "white",
       color: "black"
+    }
+  },
+
+
+  /* SEARCH BAR STYLES */
+  searchfield: {
+    position: "static"
+  },
+
+  dataResult: {
+    marginTop: "5px",
+    width: "100%",
+    height: "100vh",
+    maxHeight: "100px",
+    background: "white",
+    boxShadow: "rgba(0,0,0,0.35) 0px 5px 15px",
+    overflow: "hidden",
+    overflowY: "auto",
+
+    '&::-webkit-scrollbar': {
+      display: "none"
+    },
+  },
+
+  dataResultBlank: {
+    marginTop: "5px",
+    width: "100%",
+    height: "100px",
+  },
+
+  dataItem: {
+    textDecoration: "none",
+    width: "100%",
+    height: "50px",
+    display: "flex",
+    color: "black",
+    cursor: "default"
+  },
+
+  dataItemTypog: {
+    paddingLeft: "10px",
+    textDecoration: "none",
+    width: "100%",
+    height: "50px",
+    display: "flex",
+    alignItems: "center",
+    color: "black",
+
+    "&:hover": {
+      backgroundColor: "lightgrey"
     }
   }
 

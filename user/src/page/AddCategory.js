@@ -142,8 +142,8 @@ function AddCategory({ children }) {
   }
 
 
-   /* UPDATE OF DATA */
-   const updateCategoryname = (data) => {
+  /* UPDATE OF DATA */
+  const updateCategoryname = (data) => {
     axios.put(`http://localhost:3001/category/renameCategory`,
       {
         newCategory: data.RenameCategory,
@@ -164,25 +164,30 @@ function AddCategory({ children }) {
 
         {/* NEW CATEGORIES BUTTON BOX */}
         {/* background: "blue", zIndex: "12", position: "fixed" */}
-        <Box sx={{ display: "flex", flexDirection: "row", height: "150px", minHeight: "150px" }}>
-          <Box sx={{ flex: 1, width: "100vw", display: "flex", flexDirection: "row", right: "0px"}}> 
+        <Box sx={{ display: "flex", flexDirection: "row", height: "200px", minHeight: "200px" }}>
+          <Box sx={{ flex: 1, width: "100vw", display: "flex", flexDirection: "row", right: "0px" }}>
 
             {/* BACK BUTTON */}
 
-            <Box sx={{ flex: "1" }}>
+            <Box sx={{ flex: "2" }}>
               <Box>
                 <ButtonBase sx={global.buttonBase} onClick={() => { history("/add_collection"); }} >
-                  <Typography variant="h5" sx={global.TypogBut}> Back</Typography>
+                  <img
+                    src="/pictures/assets/back.svg"
+                    alt="back"
+                    height="30"
+                    width="30"
+                  />
                 </ButtonBase>
               </Box>
             </Box>
 
+            <Box sx={{ flex: "3" }}> </Box>
             <Box sx={{ flex: "2" }}> </Box>
-            <Box sx={{ flex: "1" }}> </Box>
 
             {/* CATEGORY BUTTON */}
 
-            <Box sx={{ flex: "1", marginRight: "10px" }}>
+            <Box sx={{ flex: "2", marginRight: "10px" }}>
               <Box>
                 <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
                   <Typography variant="h5" sx={global.TypogBut}> New Category </Typography>

@@ -6,6 +6,9 @@ import { TextField } from "formik-material-ui"
 import { useParams, useNavigate } from "react-router-dom"
 import axios from 'axios';
 
+/*  COMPONENTS */
+import SearchBar from '../components/SearchBar';
+
 /* PARENT PAGES */
 import AddCollection from './AddCollection';
 
@@ -236,41 +239,43 @@ function AddBookmark() {
   return (
     <AddCollection>
 
-      <Box sx={{ display: "flex", flexDirection: "row", height: "150px", minHeight: "150px" }}>
+      <Box sx={{ display: "flex", flexDirection: "row", height: "200px", minHeight: "200px" }}>
         {/* background: "blue", zIndex: "12", position: "fixed" */}
         <Box sx={{ flex: 1, width: "100vw", display: "flex", flexDirection: "row", right: "0px" }}>
 
           {/* BACK BUTTON */}
 
-          <Box sx={{ flex: "1" }}>
+          <Box sx={{ flex: "2" }}>
             <Box>
               <ButtonBase sx={global.buttonBase} onClick={() => { history(-1); }} >
-                <Typography variant="h5" sx={global.TypogBut}> Back</Typography>
+                <img
+                  src="/pictures/assets/back.svg"
+                  alt="back"
+                  height="30"
+                  width="30"
+                />
               </ButtonBase>
             </Box>
           </Box>
 
           {/* SEARCH BAR */}
 
-          <Box sx={{ flex: "2", display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
-
-            <Box sx={{ flex: "1", paddingRight: "10px" }}>
-              <ButtonBase sx={global.buttonBase} onClick={() => { history(-1); }} >
-                <Typography variant="h5" sx={global.TypogBut}> SEARCH</Typography>
-              </ButtonBase>
+          <Box sx={{ flex: "3", display: "flex", flexDirection: "row", alignItems: "flex-end" }}>
+            <Box sx={{ flex: "1", marginRight: "1vw" }}>
+              <SearchBar placeholder="Search Bookmark" data={listOfBookmark} />
             </Box>
           </Box>
 
           {/* SORT */}
-          <Box sx={{ flex: "1", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+          <Box sx={{ flex: "2", display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
             <Box sx={{ flex: "1" }}>
               <ButtonBase sx={global.buttonBase} onClick={MenuFDropDown} >
                 <Tooltip title={"Filter"} >
                   <img
                     src="/pictures/assets/filter.svg"
                     alt="filter"
-                    height="30"
-                    width="30"
+                    height="20"
+                    width="20"
                   />
                 </Tooltip>
                 <Typography sx={global.TypogBut}> Filter </Typography>
@@ -286,7 +291,7 @@ function AddBookmark() {
 
           {/* ADD BOOKMARK BUTTON */}
 
-          <Box sx={{ flex: "1", marginRight: "10px" }}>
+          <Box sx={{ flex: "2", marginRight: "10px" }}>
             <Box>
               <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
                 <Typography variant="h5" sx={global.TypogBut}> Add Bookmark </Typography>
@@ -349,7 +354,7 @@ function AddBookmark() {
           return (
             <Paper elevation={3} key={key} sx={{
               margin: "5vh 2vw 2vh 1.5vw", width: "250px", height: "125px", display: "flex", flexDirection: "row",
-              background: "#3b3b3b", border: "1px solid #272727"
+              background: "#3b3b3b", border: "1px solid #272727", zIndex: "1"
             }}>
               <Box sx={{ flex: "6", padding: "50px 0" }}>
                 <ButtonBase onClick={() => openInNewTab(value.Bookmark_URL)}>

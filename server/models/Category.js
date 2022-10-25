@@ -4,7 +4,10 @@ module.exports = (sequelize, DataTypes) => {
     CategoryName: {
       type: DataTypes.STRING,
       allowNull: false,
-    }
+    },
+    // CategoryDescription: {
+    //   type: DataTypes.STRING,
+    // }
   });
 
   Category.associate = (models) => {
@@ -12,11 +15,6 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: "cascade",
     });
   }
-
-  // Category_img: {
-  //   type: DataTypes.STRING,
-  //   allowNull: false,
-  // }
 
   return Category
 }

@@ -4,16 +4,22 @@ const { Category } = require("../models")
 const { validateToken } = require("../middlewares/AuthMiddleware")
 
 // OUTPUT ONE
-router.get('/:CollectionId', async (req, res) => {
+router.get('/:CollectionId/:UserId', validateToken, async (req, res) => {
   const CollectionId = req.params.CollectionId
+  const UserId = req.params.UserId
 
-  const category = await Category.findAll({ where: { CollectionId: CollectionId } })
-  res.json(category);
+  if (UserId != req.user.id) {
+    res.json({error: "Not same User."})
+  } else {
+    const category = await Category.findAll({ where: { CollectionId: CollectionId } })
+    res.json(category);
+  }
 });
 
 // INPUT
-router.post("/",validateToken, async (req, res) => {
+router.post("/", validateToken, async (req, res) => {
   const category = req.body;
+  category.UserId = req.user.id;
   await Category.create(category);
   res.json(category);
 });

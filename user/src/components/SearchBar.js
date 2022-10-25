@@ -6,6 +6,11 @@ import global from "../styles/global";
 
 function SearchBar({ placeholder, data }) {
 
+  /* OPEN NEW TAB */
+  const openInNewTab = url => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
   const [filteredData, setFilteredData] = useState([]);
 
   const haldleFilter = (event) => {
@@ -59,7 +64,7 @@ function SearchBar({ placeholder, data }) {
           <Box sx={global.dataResult}>
             {filteredData.slice(0, 10).map((value, key) => {
               return (
-                <Link sx={global.dataItem}>
+                <Link sx={global.dataItem} onClick={() => openInNewTab(value.Bookmark_URL)} key={key}>
                   <Typography sx={global.dataItemTypog}>
                     <img height="16" width="16" alt="icon" src={`http://www.google.com/s2/favicons?domain=${value.Bookmark_URL}`} />
                     {value.BookmarkName}

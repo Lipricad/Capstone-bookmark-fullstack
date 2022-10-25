@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, IconButton, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Menu, MenuItem, Tooltip } from "@mui/material"
+import {
+  Box, Typography, IconButton, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Menu, MenuItem, Tooltip,
+  useMediaQuery, useTheme, Drawer, List, ListItem, ListItemIcon
+} from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate, useParams } from "react-router-dom"
@@ -10,9 +13,16 @@ import axios from 'axios';
 /* GLOBAL STYLES */
 import global from "../styles/global";
 
+/* COMPONENT */
+import Title from '../components/Title';
+
 
 function AddCollection({ children }) {
 
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
+  /* MOBILE DRAWER */
+  const [openMob, setOpenMob] = useState(false);
 
   /* FORM DIALOG POPUP */
   const [open, setOpen] = useState(false);
@@ -138,203 +148,259 @@ function AddCollection({ children }) {
 
 
 
-    /* UPDATE OF DATA */
-    const updateCollectionname = (data) => {
-      axios.put(`http://localhost:3001/collection/renameCollection`,
-        {
-          newCollection: data.RenameCollection,
-          id: dataID.id
-        }, {
-        headers: { accessToken: localStorage.getItem("accessToken") },
-      });
-  
-      history("/loading");
-      handleCloseRename();
-    }
+  /* UPDATE OF DATA */
+  const updateCollectionname = (data) => {
+    axios.put(`http://localhost:3001/collection/renameCollection`,
+      {
+        newCollection: data.RenameCollection,
+        id: dataID.id
+      }, {
+      headers: { accessToken: localStorage.getItem("accessToken") },
+    });
+    history(`/add_collection`);
+    history("/loading");
+    handleCloseRename();
+  }
 
 
 
   return (
     // background: "#3b3b3b"
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#8984D6", zIndex: "12", position: "fixed", width: "100%" }}>
-
-
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#8984D6", zIndex: "12", position: "fixed", marginTop: "78px", width: "100%" }}>
 
       {/* 0. COLLECTION TITLE */}
 
-      <Box sx={{ display: "flex", flex: "1 1 auto", background: "#8984D6", borderBottom: "2px solid #45436d", alignItems: "center", maxHeight: "80px", minHeight: "80px" }}>
-        <Typography sx={{ fontSize: "3.5vh", margin: "0 0 0 20px", color: "white", fontWeight: "bold", textAlign: "center" }}>
-          {CollectionName} {" → "} {CategoryName}
-        </Typography>
-      </Box>
-
-      <Box sx={{ display: "flex", flexDirection: "row", flex: "1 1 auto" }}>
-
-
-        {/* 1. BOX FOR COLLECTION */}
-
-        <Box sx={{ flex: "1 1 auto", background: "#8984D6", display: "flex", flexDirection: "column", maxWidth: "250px", minWidth: " 250px", }}>
-
-          <Box sx={{ display: "flex", flex: "1 1 auto", maxHeight: "40px", minHeight: "40px" }}>
-            <Box sx={{ flex: "1 1 auto" }}>
-              <Typography variant="h4" sx={global.TypogCollection}> Collection</Typography>
+      <Title CollectionName={CollectionName} CategoryName={CategoryName} />
+      {matches ?
+        (                                                                                                      //MOBILE SIZE
+          <Box sx={{ flex: "1", background: "white" }}>
+            <Box sx={{ flex: "1", background: "red" }}>
+              <IconButton onClick={() => setOpenMob(true)}>
+                <img
+                  src="/pictures/assets/addcollectionIcon.svg"
+                  alt="Menubar"
+                  height="30"
+                  width="30" />
+              </IconButton>
             </Box>
-          </Box>
 
+            <Box sx={global.CategoryOverflowstyle}>
+              {children}
+            </Box>
 
-          {/* 3. ADD COLLECTION */}
-
-          <Box sx={{ flex: "1 1 auto", textAlign: "center", maxHeight: "120px", minHeight: "120px" }}>
-            <ButtonBase sx={{ border: "3px solid #6633ff", padding: "10px", marginTop: "30px", marginBottom: "30px", "&:hover": { background: "#45436d", transition: "0.3s" } }}
-              onClick={handleClickOpen}>
-              <Typography variant="h5" sx={global.TypogBut}> New Collection</Typography>
-            </ButtonBase>
-
-
-            {/* 3.1 DIALOG POPUP FORM */}
-
-            <Dialog open={open} onClose={handleClose}>
-              <Box sx={{ border: "3px solid black" }}>
-                <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white" }}>Create Collection</DialogTitle>
-
-                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                  <Form>
-                    <DialogContent>
-                      <Box sx={{ padding: "20px", borderTop: "4px solid black", borderBottom: "4px solid black" }}>
-                        <Box>
-                          <Field
-                            autoComplete="off"
-                            name="CollectionName"
-                            className="InputFieldPopup"
-                            component={TextField}
-                            label="Collection Name"
-                            helperText={<ErrorMessage name="CollectionName" />}
-                          />
-                        </Box>
-                      </Box>
-                    </DialogContent>
-                    <DialogActions sx={{ background: "#7251b2" }}>
-                      <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
-                        <Typography sx={global.TypogButCancel}> Cancel </Typography>
-                      </ButtonBase>
-                      {/* DITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO KA MAGALALAGAY NUNG UPDATE */}
-                      <ButtonBase sx={global.buttonBase} type="submit">
-                        <Typography sx={global.TypogBut}> Confirm</Typography>
-                      </ButtonBase>
-                    </DialogActions>
-                  </Form>
-                </Formik>
-              </Box>
-            </Dialog>
-          </Box>
-
-
-          {/* 4. COLUMN OF COLLECTION */}
-
-          <Box sx={{ flex: "15 1 auto", display: "flex", flexDirection: "column" }}>
-            <Box sx={global.CollectionOverflowstyle}>
-              {listOfCollection.map((value, key) => {
-                return (
-                  <Box key={key}>
-                    <Box sx={global.ColectionBox}>
-
-                      <Box sx={{ flex: "10" }}>
+            <Drawer
+              anchor="left"
+              onClose={() => setOpenMob(false)}
+              open={openMob}
+              PaperProps={{ style: { background: "#6633ff" } }}>
+              <List>
+                <ListItem button divider sx={{ padding: "20px" }} >
+                  <ListItemIcon>
+                    <ButtonBase sx={global.MNewCollectionButton}
+                      onClick={handleClickOpen}>
+                      <Typography variant="h6" sx={global.TypogBut}> New Collection</Typography>
+                    </ButtonBase>
+                  </ListItemIcon>
+                </ListItem>
+                {/* COLLECTION LIST */}
+                {listOfCollection.map((value, key) => {
+                  return (
+                    <Box key={key} sx={{ display: "flex", flexDirection: "row", background: "#8984D6" }}>
+                      <Box sx={{ flex: "1", marginLeft: "10px" }}>                                                                                {/* COLLECTION MOB */}
                         <ButtonBase sx={global.ColectionButtonCol}
                           onClick={() => {
-                            history(`/add_category/${value.id}/${value.CollectionName}`);
+                            history(`/add_category/${value.id}/${value.CollectionName}/${value.UserId}`);
                             history("/loading");
                           }}>
-
                           <Tooltip
                             enterDelay={500} leaveDelay={50}
                             title={
                               value.CollectionName
                             }>
-
-                            <Typography variant="h6" noWrap sx={{ color: "white", fontWeight: "bold", maxWidth: "160px" }}>
+                            <Typography variant="h6" noWrap sx={global.TypogCollectionName}>
                               {value.CollectionName}
                             </Typography>
-
                           </Tooltip>
-
                         </ButtonBase>
                       </Box>
-
-                      {/* BUTTON FOR RENAME AND DELETE */}
-
-                      <Box sx={{ flex: "1", marginRight: "20px" }}>
+                      <Box sx={{ marginRight: "10px" }}>                                                                                                {/* DELETE AND RENAME BUTTON */}
                         <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value) }}>
                           <img
                             src="/pictures/assets/3_dots.svg"
                             alt="Menubar"
                             height="20"
-                            width="20"
-                          />
+                            width="20" />
                         </IconButton>
                       </Box>
-
                     </Box>
-                  </Box>
-                )
-              })}
+                  )
+                })}
 
+              </List>
+            </Drawer>
 
+          </Box>
+        )
+        : (                                                                                                   //DESKTOP SIZE
+          <Box sx={{ display: "flex", flexDirection: "row", flex: "1 1 auto" }}>
 
-              {/* DITO YUNG DROP DOWN MENU */}
+            {/* 1. BOX FOR COLLECTION */}
 
-              <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
-                <MenuItem onClick={handleClickRename}> Rename </MenuItem>
-                <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
-              </Menu>
+            <Box sx={{ flex: "1 1 auto", background: "#8984D6", display: "flex", flexDirection: "column", maxWidth: "250px", minWidth: " 250px", }}>
 
-              {/* 3.1 DIALOG POPUP RENAME RENAME RENAME RENAME RENAME*/}
-
-              <Dialog open={openRename} onClose={handleCloseRename}>
-                <Box sx={{ border: "3px solid black" }}>
-                  <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> New name: </DialogTitle>
-
-                  <Formik initialValues={initialValuesRename} onSubmit={updateCollectionname} validationSchema={validationSchemaRename}>
-                    <Form>
-                      <DialogContent>
-                        <Box>
-                          <Field
-                            autoComplete="off"
-                            name="RenameCollection"
-                            className="InputFieldPopup"
-                            component={TextField}
-                            label="New Collection Name"
-                            helperText={<ErrorMessage name="RenameCollection" />}
-                          />
-                        </Box>
-                      </DialogContent>
-                      <DialogActions sx={{ background: "#272727" }}>
-                        <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseRename}>
-                          <Typography sx={global.TypogButCancel}> Cancel </Typography>
-                        </ButtonBase>
-                        <ButtonBase sx={global.buttonBase} type="submit">
-                          <Typography sx={global.TypogBut}> Confirm</Typography>
-                        </ButtonBase>
-                      </DialogActions>
-                    </Form>
-                  </Formik>
+              <Box sx={{ display: "flex", flex: "1 1 auto", maxHeight: "40px", minHeight: "40px" }}>
+                <Box sx={{ flex: "1 1 auto" }}>
+                  <Typography variant="h4" sx={global.TypogCollection}> Collection</Typography>
                 </Box>
-              </Dialog>
+              </Box>
 
+
+              {/* 3. ADD COLLECTION */}
+
+              <Box sx={{ flex: "1 1 auto", textAlign: "center", maxHeight: "120px", minHeight: "120px" }}>
+                <ButtonBase sx={global.NewCollectionButton}
+                  onClick={handleClickOpen}>
+                  <Typography variant="h5" sx={global.TypogBut}> New Collection</Typography>
+                </ButtonBase>
+              </Box>
+
+
+              {/* 4. COLUMN OF COLLECTION */}
+
+              <Box sx={{ flex: "15 1 auto", display: "flex", flexDirection: "column" }}>
+                <Box sx={global.CollectionOverflowstyle}>
+                  {listOfCollection.map((value, key) => {
+                    return (
+                      <Box key={key}>
+                        <Box sx={global.ColectionBox}>
+
+                          <Box sx={{ flex: "10" }}>
+                            <ButtonBase sx={global.ColectionButtonCol}
+                              onClick={() => {
+                                history(`/add_category/${value.id}/${value.CollectionName}/${value.UserId}`);
+                                history("/loading");
+                              }}>
+
+                              <Tooltip
+                                enterDelay={500} leaveDelay={50}
+                                title={
+                                  value.CollectionName
+                                }>
+
+                                <Typography variant="h6" noWrap sx={global.TypogCollectionName}>
+                                  {value.CollectionName}
+                                </Typography>
+
+                              </Tooltip>
+
+                            </ButtonBase>
+                          </Box>
+
+                          {/* BUTTON FOR RENAME AND DELETE */}
+
+                          <Box sx={{ flex: "1", marginRight: "20px" }}>
+                            <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value) }}>
+                              <img
+                                src="/pictures/assets/3_dots.svg"
+                                alt="Menubar"
+                                height="20"
+                                width="20" />
+                            </IconButton>
+                          </Box>
+
+                        </Box>
+                      </Box>
+                    )
+                  })}
+
+                </Box>
+                <Box sx={{ flex: "1", background: "red", positon: "fixed" }}> </Box>    {/* FOOTER TO */}
+              </Box>
 
             </Box>
-            <Box sx={{ flex: "1" }}> </Box>    {/* FOOTER TO */}
+
+            {/* 5. CATEGORIES */}
+            <Box sx={global.CategoryOverflowstyle}>
+              {children}
+            </Box>
           </Box>
+        )}
 
+      {/* 3.1 DIALOG POPUP FORM */}
+
+      <Dialog open={open} onClose={handleClose}>
+        <Box sx={{ border: "3px solid black" }}>
+          <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white", textAlign: "center" }}>Create Collection</DialogTitle>
+
+          <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+            <Form>
+              <DialogContent>
+                <Box sx={{ padding: "20px", borderTop: "4px solid black", borderBottom: "4px solid black" }}>
+                  <Box>
+                    <Field
+                      autoComplete="off"
+                      name="CollectionName"
+                      className="InputFieldPopup"
+                      component={TextField}
+                      label="Collection Name"
+                      helperText={<ErrorMessage name="CollectionName" />}
+                      fullWidth
+                    />
+                  </Box>
+                </Box>
+              </DialogContent>
+              <DialogActions sx={{ background: "#7251b2" }}>
+                <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
+                  <Typography sx={global.TypogButCancel}> Cancel </Typography>
+                </ButtonBase>
+                <ButtonBase sx={global.buttonBase} type="submit">
+                  <Typography sx={global.TypogBut}> Confirm</Typography>
+                </ButtonBase>
+              </DialogActions>
+            </Form>
+          </Formik>
         </Box>
+      </Dialog>
 
+      {/* DITO YUNG DROP DOWN MENU */}
 
+      <Menu onClose={MenuDropDownClose} anchorEl={Drop} open={Boolean(Drop)} sx={global.menuStyle}>
+        <MenuItem onClick={handleClickRename}> Rename </MenuItem>
+        <MenuItem onClick={() => { deleteData(dataID) }}> Delete </MenuItem>
+      </Menu>
 
-        {/* 5. CATEGORIES */}
-        <Box sx={global.CategoryOverflowstyle}>
-          {children}
+      {/* 3.1 DIALOG POPUP RENAME RENAME RENAME RENAME RENAME*/}
+
+      <Dialog open={openRename} onClose={handleCloseRename}>
+        <Box sx={{ border: "3px solid black" }}>
+          <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> New name: </DialogTitle>
+
+          <Formik initialValues={initialValuesRename} onSubmit={updateCollectionname} validationSchema={validationSchemaRename}>
+            <Form>
+              <DialogContent>
+                <Box>
+                  <Field
+                    autoComplete="off"
+                    name="RenameCollection"
+                    className="InputFieldPopup"
+                    component={TextField}
+                    label="New Collection Name"
+                    helperText={<ErrorMessage name="RenameCollection" />}
+                  />
+                </Box>
+              </DialogContent>
+              <DialogActions sx={{ background: "#272727" }}>
+                <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseRename}>
+                  <Typography sx={global.TypogButCancel}> Cancel </Typography>
+                </ButtonBase>
+                <ButtonBase sx={global.buttonBase} type="submit">
+                  <Typography sx={global.TypogBut}> Confirm</Typography>
+                </ButtonBase>
+              </DialogActions>
+            </Form>
+          </Formik>
         </Box>
-      </Box>
-
+      </Dialog>
 
     </Box >
   )

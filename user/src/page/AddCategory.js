@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Paper, IconButton, Menu, MenuItem, Tooltip } from "@mui/material"
+import { Box, Typography, ButtonBase, Dialog, DialogActions, DialogContent, DialogTitle, Paper, IconButton, Menu, MenuItem, Tooltip, useMediaQuery, useTheme } from "@mui/material"
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
 import { useNavigate, useParams } from "react-router-dom"
@@ -9,12 +9,17 @@ import axios from 'axios';
 /* PARENT PAGES */
 import AddCollection from './AddCollection';
 
+/* COMPONENTS */
+// import UploadImage from '../components/UploadImage';
 
 /* GLOBAL STYLES */
 import global from "../styles/global";
 
 
-function AddCategory({ children }) {
+function AddCategory() {
+
+  const theme = useTheme()
+  const matches = useMediaQuery(theme.breakpoints.down('md'));
 
   /* FORM DIALOG POPUP */
   const [open, setOpen] = useState(false);
@@ -39,18 +44,29 @@ function AddCategory({ children }) {
 
   /* LIST OF DATA */
   let { id } = useParams();
+  let { UserId } = useParams();
 
   const [listOfCategory, setlistOfCategory] = useState([]);
 
   useEffect(() => {
-    /* COLLECTION */
-    axios.get(`http://localhost:3001/collection/byId/${id}`).then((response) => {
-      console.log(response.data)
-    });
+    // /* COLLECTION */
+    // axios.get(`http://localhost:3001/collection/byId/${id}`).then((response) => {
+    //   console.log(response.data)
+    // });
 
     /* CATEGORY */
-    axios.get(`http://localhost:3001/category/${id}`).then((response) => {
-      setlistOfCategory(response.data);
+    axios.get(`http://localhost:3001/category/${id}/${UserId}`, {
+      headers: {
+        accessToken: localStorage.getItem("accessToken"),
+      },
+    }).then((response) => {
+      if (response.data.error) {
+        history("/NOT FOUND")
+      }
+      else {
+        setlistOfCategory(response.data);
+      }
+
     });
     /* REMOVE THE ESLINT-DISABLE IF YOU WANT TO SEE WARNING [ITS USELESS EITHERWAY] */
   }, []);  // eslint-disable-line react-hooks/exhaustive-deps     
@@ -164,6 +180,7 @@ function AddCategory({ children }) {
 
         {/* NEW CATEGORIES BUTTON BOX */}
         {/* background: "blue", zIndex: "12", position: "fixed" */}
+        {matches ? (null) : (
         <Box sx={{ display: "flex", flexDirection: "row", height: "200px", minHeight: "200px" }}>
           <Box sx={{ flex: 1, width: "100vw", display: "flex", flexDirection: "row", right: "0px" }}>
 
@@ -175,8 +192,8 @@ function AddCategory({ children }) {
                   <img
                     src="/pictures/assets/back.svg"
                     alt="back"
-                    height="30"
-                    width="30"
+                    height="20vh"
+                    width="20vw"
                   />
                 </ButtonBase>
               </Box>
@@ -187,7 +204,7 @@ function AddCategory({ children }) {
 
             {/* CATEGORY BUTTON */}
 
-            <Box sx={{ flex: "2", marginRight: "10px" }}>
+            <Box sx={{ flex: "1.5", marginRight: "10px" }}>
               <Box>
                 <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
                   <Typography variant="h5" sx={global.TypogBut}> New Category </Typography>
@@ -230,6 +247,7 @@ function AddCategory({ children }) {
 
           </Box>
         </Box>
+        )}
 
         {/* LIST OF CATEGORIES */}
 
@@ -243,9 +261,9 @@ function AddCategory({ children }) {
               }}>
 
 
-                <Box sx={{ flex: "1", textAlign: "left", display: "flex", flexDirection: "row" }}>
+                <Box sx={{ flex: "1", textAlign: "left", display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
 
-                  <Box sx={{ flex: "7" }}>
+                  {/* <Box sx={{ flex: "7" }}>
                     <ButtonBase
                       onClick={() => {
                         history(`/add_bookmark/${id}/${CollectionName}/${value.id}/${value.CategoryName}`);
@@ -264,7 +282,7 @@ function AddCategory({ children }) {
                       </Tooltip>
 
                     </ButtonBase>
-                  </Box>
+                  </Box> */}
 
                   {/* BUTTON FOR RENAME AND DELETE */}
 
@@ -282,8 +300,25 @@ function AddCategory({ children }) {
 
                 {/* CUSTOM IMAGE */}
 
-                <Box sx={{ flex: "5", background: "blue" }}>
-                  {children}
+                <Box sx={{ flex: "5" }}>
+                  <ButtonBase
+                    onClick={() => {
+                      history(`/add_bookmark/${id}/${CollectionName}/${value.UserId}/${value.id}/${value.CategoryName}`);
+                    }}>
+
+                    <Tooltip
+                      enterDelay={500} leaveDelay={50}
+                      title={
+                        value.CategoryName
+                      }>
+
+                      <Typography noWrap variant="h5" sx={{ color: "white", marginLeft: "10px", marginTop: "10px", fontWeight: "bold", maxWidth: "300px" }}>
+                        {value.CategoryName}
+                      </Typography>
+
+                    </Tooltip>
+
+                  </ButtonBase>
                 </Box>
               </Paper>
             )

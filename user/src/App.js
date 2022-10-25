@@ -79,7 +79,7 @@ function App() {
         {/* NAVIGATION PART */}
 
         <Router>
-          <AppBar position="fixed" sx={{ background: "#6633ff", position: "sticky" }}>
+          <AppBar position="fixed" sx={{ background: "#6633ff", position: "fixed" }}>
 
             {/* AuthSTATE */}
 
@@ -92,8 +92,8 @@ function App() {
                         <img
                           src="/pictures/Logo/BookmarkLogo.png"
                           alt="Bookmark Website"
-                          height="80"
-                          width="250"
+                          height="75"
+                          width="200"
                         />
                       </Link>
                     </Box>
@@ -180,8 +180,8 @@ function App() {
                         <img
                           src="/pictures/Logo/BookmarkLogo.png"
                           alt="Bookmark Website"
-                          height="80"
-                          width="250"
+                          height="75"
+                          width="200"
                         />
                       </Link>
                     </Box>
@@ -270,8 +270,8 @@ function App() {
             <Route path="/login" exact element={<Login />} />
             <Route path="/register" exact element={<Register />} />
             <Route path="/add_collection" exact element={<AddCollection />} />
-            <Route path="/add_category/:id/:CollectionName" exact element={<AddCategory />} />
-            <Route path="/add_bookmark/:id/:CollectionName/:CATid/:CategoryName" exact element={<AddBookmark />} />
+            <Route path="/add_category/:id/:CollectionName/:UserId" exact element={<AddCategory />} />
+            <Route path="/add_bookmark/:id/:CollectionName/:UserId/:CATid/:CategoryName" exact element={<AddBookmark />} />
             <Route path="/account" exact element={<Account />} />
             <Route path="/forgot-pass" exact element={<SendEmail />} />
             <Route path="/reset-password/:id/:forgotToken" exact element={<ResetPass />} />

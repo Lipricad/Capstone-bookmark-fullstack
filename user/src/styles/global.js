@@ -34,6 +34,12 @@ const global = {
     fontWeight: "bold"
   },
 
+  TypogCollectionName: {
+    color: "white",
+    fontWeight: "bold",
+    maxWidth: "160px"
+  },
+
   buttonnav: {
     "&:hover": {
       transition: "0.4s",
@@ -127,7 +133,7 @@ const global = {
     display: "flex",
     flexDirection: "column",
     flex: "4",
-    maxHeight: "60vh",
+    maxHeight: "65%",
     textAlign: "center",
     overflow: "auto",
     borderTop: "2px solid #45436d",
@@ -147,7 +153,7 @@ const global = {
   //background: "#3b3b3b"  borderBottom: "2px solid #272727"  FOR DARKK MODE ETO GAWIN MO SA FUTURE 
 
   CategoryOverflowstyle: {
-    flex: "15 1 auto",
+    flex: "15",
     maxHeight: "95vh",
     // background: "#666666",
     background: "#FFFFFF",
@@ -173,6 +179,25 @@ const global = {
       backgroundColor: "white",
       color: "black"
     }
+  },
+
+
+  /* COLLECTION BOX STYLES */
+
+
+  NewCollectionButton: {
+    border: "3px solid #6633ff",
+    padding: "10px",
+    marginTop: "30px",
+    marginBottom: "30px", "&:hover": {
+      background: "#45436d",
+      transition: "0.3s"
+    }
+  },
+
+  MNewCollectionButton: {
+    border: "3px solid #8984D6",
+    padding: "10px",
   },
 
 

@@ -70,11 +70,11 @@ function Register() {
 
   return (
     <Box sx={{
-      display: "flex", minHeight: "91vh", background: 'url(pictures/background/reg_bg.jpg)',
+      display: "flex", minHeight: "100vh", background: 'url(pictures/background/reg_bg.jpg)',
       backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundPosition: "center"
     }}>
 
-      <Box sx={{ flexGrow: 1, textAlign: "center", marginTop: "10vh", marginBottom: "100px" }}>
+      <Box sx={{ flexGrow: 1, textAlign: "center", marginTop: "20vh", marginBottom: "100px" }}>
         <Typography variant="h2" sx={global.TypogTitle}> Join Us </Typography>
 
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >

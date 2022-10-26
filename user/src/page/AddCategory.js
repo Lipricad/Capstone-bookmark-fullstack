@@ -223,8 +223,11 @@ function AddCategory() {
                 </Box>
               </Box>
 
-              <Box sx={{ flex: "3" }}> </Box>
-              <Box sx={{ flex: "2" }}> </Box>
+              <Box sx={{ flex: "4", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                <Box sx={{ flex: "1"}}></Box>
+                <Box sx={{ flex: "2"}}> <Typography variant="h3" sx={global.TypogTitle}> CATEGORIES </Typography></Box>
+              </Box>
+              <Box sx={{ flex: "1" }}> </Box>
 
               {/* CATEGORY BUTTON */}
 
@@ -247,70 +250,44 @@ function AddCategory() {
             return (
 
               <Paper elevation={3} key={key} sx={{
-                margin: "1vh 1vw 2vh 1.5vw", width: "360px", height: "250px", display: "flex", flexDirection: "column",
+                margin: "5vh 2vw 2vh 1.5vw", width: "300px", height: "150px", display: "flex", flexDirection: "row",
                 background: "#3b3b3b", border: "1px solid #272727", zIndex: "1"
               }}>
 
 
-                <Box sx={{ flex: "1", textAlign: "left", display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
 
-                  {/* <Box sx={{ flex: "7" }}>
-                    <ButtonBase
-                      onClick={() => {
-                        history(`/add_bookmark/${id}/${CollectionName}/${value.id}/${value.CategoryName}`);
-                      }}>
-
-                      <Tooltip
-                        enterDelay={500} leaveDelay={50}
-                        title={
-                          value.CategoryName
-                        }>
-
-                        <Typography noWrap variant="h5" sx={{ color: "white", marginLeft: "10px", marginTop: "10px", fontWeight: "bold", maxWidth: "300px" }}>
-                          {value.CategoryName}
-                        </Typography>
-
-                      </Tooltip>
-
-                    </ButtonBase>
-                  </Box> */}
-
-                  {/* BUTTON FOR RENAME AND DELETE */}
-
-                  <Box sx={{ flex: "1" }}>
-                    <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value) }}>
-                      <img
-                        src="/pictures/assets/3_dots.svg"
-                        alt="Menubar"
-                        height="25"
-                        width="25"
-                      />
-                    </IconButton>
-                  </Box>
-                </Box>
-
-                {/* CUSTOM IMAGE */}
-
-                <Box sx={{ flex: "5" }}>
+                <Box sx={{ flex: "6", padding: "60px 0" }}>
                   <ButtonBase
                     onClick={() => {
                       history(`/add_bookmark/${id}/${CollectionName}/${value.UserId}/${value.id}/${value.CategoryName}`);
                     }}>
-
                     <Tooltip
                       enterDelay={500} leaveDelay={50}
                       title={
                         value.CategoryName
                       }>
 
-                      <Typography noWrap variant="h5" sx={{ color: "white", marginLeft: "10px", marginTop: "10px", fontWeight: "bold", maxWidth: "300px" }}>
+                      <Typography variant="h6" noWrap sx={{ marginLeft: "10px", color: "white", textAlign: "center", maxWidth: "175px" }}>
                         {value.CategoryName}
                       </Typography>
 
                     </Tooltip>
-
                   </ButtonBase>
                 </Box>
+
+                {/* BUTTON FOR RENAME AND DELETE */}
+
+                <Box sx={{ flex: "1" }}>
+                  <IconButton onClick={MenuDropDown} onMouseOver={() => { DropDownId(value) }}>
+                    <img
+                      src="/pictures/assets/3_dots.svg"
+                      alt="Menubar"
+                      height="25"
+                      width="25"
+                    />
+                  </IconButton>
+                </Box>
+
               </Paper>
             )
           })}

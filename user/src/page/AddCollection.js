@@ -320,7 +320,7 @@ function AddCollection({ children }) {
                   })}
 
                 </Box>
-                <Box sx={{ flex: "1", background: "red", positon: "fixed" }}> </Box>    {/* FOOTER TO */}
+                <Box sx={{ flex: "1",  }}> </Box>    {/* FOOTER TO */}
               </Box>
 
             </Box>

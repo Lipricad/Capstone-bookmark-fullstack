@@ -61,9 +61,10 @@ function SendEmail() {
   };
 
   return (
-    <Box sx={{ display: "flex", minHeight: "91vh", flexDirection: "column" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: 'url(pictures/background/fpass_bg.jpg)',
+    backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundPosition: "center" }}>
 
-      <Box sx={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <Box sx={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", marginTop: "10vh" }}>
 
         <Paper elevation={3} sx={{ flex: 1, textAlign: "center", padding: "3vh 5vw 3vh 5vw", margin: "15vh 0vh 8vh 0vh" }}>
 

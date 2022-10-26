@@ -258,7 +258,7 @@ function AddBookmark() {
 
               <Box sx={{ flex: "2" }}>
                 <Box>
-                  <ButtonBase sx={global.buttonBase} onClick={() => { history("/add_collection"); }} >
+                  <ButtonBase sx={global.buttonBase} onClick={() => { history(-1); }} >
                     <img
                       src="/pictures/assets/back.svg"
                       alt="back"

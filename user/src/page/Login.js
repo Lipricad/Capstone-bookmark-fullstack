@@ -77,11 +77,11 @@ function Login() {
 
   return (
     <Box sx={{
-      display: "flex", flexDirection: "column", minHeight: "91vh", background: 'url(pictures/background/signin_bg.jpg)',
+      display: "flex", flexDirection: "column", minHeight: "100vh", background: 'url(pictures/background/signin_bg.jpg)',
       backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundPosition: "center"
     }}>
 
-      <Box sx={{ flexGrow: 1, textAlign: "center", marginTop: "10vh" }}>
+      <Box sx={{ flexGrow: 1, textAlign: "center", marginTop: "20vh" }}>
         <Typography variant="h2" sx={global.TypogTitle}> Login </Typography>
 
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>

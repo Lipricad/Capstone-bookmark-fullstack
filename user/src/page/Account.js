@@ -101,11 +101,11 @@ function Account() {
 
   return (
     <Box sx={{
-      display: "flex", minHeight: "91vh", flexDirection: "column", background: 'url(pictures/background/signin_bg.jpg)',
+      display: "flex", minHeight: "100vh", flexDirection: "column", background: 'url(pictures/background/normal_bg.jpg)',
       backgroundSize: "cover", backgroundRepeat: "no-repeat", backgroundAttachment: "fixed", backgroundPosition: "center"
     }}>
 
-      <Box sx={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+      <Box sx={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", marginTop: "10vh" }}>
 
         <Paper elevation={3} sx={{ flex: 1, textAlign: "center", padding: "25px 50px 50px 50px", margin: "10vh 0vh 8vh 0vh" }}>
 

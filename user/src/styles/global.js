@@ -132,8 +132,8 @@ const global = {
   CollectionOverflowstyle: {
     display: "flex",
     flexDirection: "column",
-    flex: "4",
-    maxHeight: "65%",
+    // flex: "4",
+    maxHeight: "60vh",
     textAlign: "center",
     overflow: "auto",
     borderTop: "2px solid #45436d",
@@ -174,6 +174,16 @@ const global = {
     }
   },
 
+  takeOff: {
+    height: "80%",
+    minHeight: "60vh",
+    background: 'url(pictures/Logo/bookmark_take_off.png)',
+    backgroundSize: "50%",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center",
+    filter: "drop-shadow(0 0 0.50rem #45436d)"
+  },
+
   menuStyle: {
     "& .MuiPaper-root": {
       backgroundColor: "white",
@@ -183,8 +193,6 @@ const global = {
 
 
   /* COLLECTION BOX STYLES */
-
-
   NewCollectionButton: {
     border: "3px solid #6633ff",
     padding: "10px",
@@ -198,6 +206,12 @@ const global = {
   MNewCollectionButton: {
     border: "3px solid #8984D6",
     padding: "10px",
+  },
+
+
+  /* CATEGORY BOX STYLES */
+  CategoryBoxStyle: {
+    background: "blue"
   },
 
 

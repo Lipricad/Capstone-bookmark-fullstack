@@ -19,7 +19,7 @@ import global from "../styles/global";
 function AddCategory() {
 
   const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('md'));
+  const matches = useMediaQuery(theme.breakpoints.down('lg'));
 
   /* FORM DIALOG POPUP */
   const [open, setOpen] = useState(false);
@@ -176,77 +176,68 @@ function AddCategory() {
 
   return (
     <AddCollection>
-      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100%" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", backgroundColor: "#ffffff" }}>
 
         {/* NEW CATEGORIES BUTTON BOX */}
         {/* background: "blue", zIndex: "12", position: "fixed" */}
-        {matches ? (null) : (
-        <Box sx={{ display: "flex", flexDirection: "row", height: "200px", minHeight: "200px" }}>
-          <Box sx={{ flex: 1, width: "100vw", display: "flex", flexDirection: "row", right: "0px" }}>
 
-            {/* BACK BUTTON */}
-
-            <Box sx={{ flex: "2" }}>
-              <Box>
-                <ButtonBase sx={global.buttonBase} onClick={() => { history("/add_collection"); }} >
-                  <img
-                    src="/pictures/assets/back.svg"
-                    alt="back"
-                    height="20vh"
-                    width="20vw"
-                  />
-                </ButtonBase>
-              </Box>
+        {matches ? (                                                                                                    //MOBILE BUTTON
+          <Box sx={global.CategoryBoxStyle}>
+            <Box>
+              <ButtonBase sx={global.buttonBase} onClick={() => { history("/add_collection"); }} >
+                <img
+                  src="/pictures/assets/back.svg"
+                  alt="back"
+                  height="20vh"
+                  width="20vw"
+                />
+              </ButtonBase>
             </Box>
-
-            <Box sx={{ flex: "3" }}> </Box>
-            <Box sx={{ flex: "2" }}> </Box>
-
-            {/* CATEGORY BUTTON */}
-
-            <Box sx={{ flex: "1.5", marginRight: "10px" }}>
-              <Box>
-                <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
-                  <Typography variant="h5" sx={global.TypogBut}> New Category </Typography>
-                </ButtonBase>
-              </Box>
-
-              {/* 3.1 DIALOG POPUP FORM */}
-
-              <Dialog open={open} onClose={handleClose}>
-                <Box sx={{ border: "3px solid black" }}>
-                  <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Create Category</DialogTitle>
-
-                  <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
-                    <Form onChange={(e) => { setNewCategory(e.target.value) }}>
-                      <DialogContent>
-                        <Box sx={{ padding: "20px", borderTop: "4px solid black", borderBottom: "4px solid black" }}>
-                          <Field
-                            autoComplete="off"
-                            name="CategoryName"
-                            className="InputFieldPopup"
-                            component={TextField}
-                            label="Category Name"
-                            helperText={<ErrorMessage name="CategoryName" />}
-                          />
-                        </Box>
-                      </DialogContent>
-                      <DialogActions sx={{ background: "#272727" }}>
-                        <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
-                          <Typography sx={global.TypogButCancel}> Cancel </Typography>
-                        </ButtonBase>
-                        <ButtonBase sx={global.buttonBase} type="submit">
-                          <Typography sx={global.TypogBut}> Confirm</Typography>
-                        </ButtonBase>
-                      </DialogActions>
-                    </Form>
-                  </Formik>
-                </Box>
-              </Dialog>
+            <Box>
+              <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
+                <img
+                  src="/pictures/assets/categoryicon.svg"
+                  alt="add_Category"
+                  height="20vh"
+                  width="20vw"
+                />
+              </ButtonBase>
             </Box>
-
           </Box>
-        </Box>
+        ) : (                                                                                                             //DESKTOP BUTTON
+          <Box sx={{ display: "flex", flexDirection: "row", height: "200px", minHeight: "200px" }}>
+            <Box sx={{ flex: 1, width: "100vw", display: "flex", flexDirection: "row", right: "0px" }}>
+
+              {/* BACK BUTTON */}
+
+              <Box sx={{ flex: "2" }}>
+                <Box>
+                  <ButtonBase sx={global.buttonBase} onClick={() => { history("/add_collection"); }} >
+                    <img
+                      src="/pictures/assets/back.svg"
+                      alt="back"
+                      height="20vh"
+                      width="20vw"
+                    />
+                  </ButtonBase>
+                </Box>
+              </Box>
+
+              <Box sx={{ flex: "3" }}> </Box>
+              <Box sx={{ flex: "2" }}> </Box>
+
+              {/* CATEGORY BUTTON */}
+
+              <Box sx={{ flex: "1.5", marginRight: "10px" }}>
+                <Box>
+                  <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
+                    <Typography variant="h5" sx={global.TypogBut}> New Category </Typography>
+                  </ButtonBase>
+                </Box>
+              </Box>
+
+            </Box>
+          </Box>
         )}
 
         {/* LIST OF CATEGORIES */}
@@ -257,7 +248,7 @@ function AddCategory() {
 
               <Paper elevation={3} key={key} sx={{
                 margin: "1vh 1vw 2vh 1.5vw", width: "360px", height: "250px", display: "flex", flexDirection: "column",
-                background: "#3b3b3b", border: "1px solid #272727"
+                background: "#3b3b3b", border: "1px solid #272727", zIndex: "1"
               }}>
 
 
@@ -324,6 +315,39 @@ function AddCategory() {
             )
           })}
 
+          {/* 3.1 DIALOG POPUP FORM */}
+
+          <Dialog open={open} onClose={handleClose}>
+            <Box sx={{ border: "3px solid black" }}>
+              <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Create Category</DialogTitle>
+
+              <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                <Form onChange={(e) => { setNewCategory(e.target.value) }}>
+                  <DialogContent>
+                    <Box sx={{ padding: "20px", borderTop: "4px solid black", borderBottom: "4px solid black" }}>
+                      <Field
+                        autoComplete="off"
+                        name="CategoryName"
+                        className="InputFieldPopup"
+                        component={TextField}
+                        label="Category Name"
+                        helperText={<ErrorMessage name="CategoryName" />}
+                      />
+                    </Box>
+                  </DialogContent>
+                  <DialogActions sx={{ background: "#272727" }}>
+                    <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
+                      <Typography sx={global.TypogButCancel}> Cancel </Typography>
+                    </ButtonBase>
+                    <ButtonBase sx={global.buttonBase} type="submit">
+                      <Typography sx={global.TypogBut}> Confirm</Typography>
+                    </ButtonBase>
+                  </DialogActions>
+                </Form>
+              </Formik>
+            </Box>
+          </Dialog>
+
 
           {/* DITO YUNG DROP DOWN MENU */}
 
@@ -369,7 +393,7 @@ function AddCategory() {
         </Box>
 
       </Box>
-    </AddCollection>
+    </AddCollection >
   )
 }
 

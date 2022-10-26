@@ -20,7 +20,7 @@ import Title from '../components/Title';
 function AddCollection({ children }) {
 
   const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('md'));
+  const matches = useMediaQuery(theme.breakpoints.down('lg'));
   /* MOBILE DRAWER */
   const [openMob, setOpenMob] = useState(false);
 
@@ -173,19 +173,25 @@ function AddCollection({ children }) {
       <Title CollectionName={CollectionName} CategoryName={CategoryName} />
       {matches ?
         (                                                                                                      //MOBILE SIZE
-          <Box sx={{ flex: "1", background: "white" }}>
-            <Box sx={{ flex: "1", background: "red" }}>
-              <IconButton onClick={() => setOpenMob(true)}>
-                <img
-                  src="/pictures/assets/addcollectionIcon.svg"
-                  alt="Menubar"
-                  height="30"
-                  width="30" />
-              </IconButton>
+          <Box sx={{ flex: "1", display: "flex", flexDirection: "column" }}>
+            <Box sx={{ flex: "1", maxHeight: "50px", background: "#8984D6", display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <Box sx={{ flex: "1", display: "flex", flexDirection: "row", alignItems: "center" }}>
+                <Box sx={{ flex: 1 }}>
+                  <IconButton onClick={() => setOpenMob(true)}>
+                    <img
+                      src="/pictures/assets/addcollectionIcon.svg"
+                      alt="Menubar"
+                      height="30"
+                      width="30" />
+                  </IconButton>
+                </Box>
+              </Box>
             </Box>
 
             <Box sx={global.CategoryOverflowstyle}>
-              {children}
+              <Box sx={global.takeOff}>
+                {children}
+              </Box>
             </Box>
 
             <Drawer
@@ -242,22 +248,22 @@ function AddCollection({ children }) {
           </Box>
         )
         : (                                                                                                   //DESKTOP SIZE
-          <Box sx={{ display: "flex", flexDirection: "row", flex: "1 1 auto" }}>
+          <Box sx={{ display: "flex", flexDirection: "row", flex: "1" }}>
 
             {/* 1. BOX FOR COLLECTION */}
 
-            <Box sx={{ flex: "1 1 auto", background: "#8984D6", display: "flex", flexDirection: "column", maxWidth: "250px", minWidth: " 250px", }}>
+            <Box sx={{ flex: "1", background: "#8984D6", display: "flex", flexDirection: "column", maxWidth: "250px", minWidth: " 250px", }}>
 
-              <Box sx={{ display: "flex", flex: "1 1 auto", maxHeight: "40px", minHeight: "40px" }}>
+              {/* <Box sx={{ display: "flex", flex: "1 1 auto", maxHeight: "40px", minHeight: "40px" }}>
                 <Box sx={{ flex: "1 1 auto" }}>
                   <Typography variant="h4" sx={global.TypogCollection}> Collection</Typography>
                 </Box>
-              </Box>
+              </Box> */}
 
 
               {/* 3. ADD COLLECTION */}
 
-              <Box sx={{ flex: "1 1 auto", textAlign: "center", maxHeight: "120px", minHeight: "120px" }}>
+              <Box sx={{ flex: "1", textAlign: "center", maxHeight: "120px", minHeight: "120px" }}>
                 <ButtonBase sx={global.NewCollectionButton}
                   onClick={handleClickOpen}>
                   <Typography variant="h5" sx={global.TypogBut}> New Collection</Typography>
@@ -267,7 +273,7 @@ function AddCollection({ children }) {
 
               {/* 4. COLUMN OF COLLECTION */}
 
-              <Box sx={{ flex: "15 1 auto", display: "flex", flexDirection: "column" }}>
+              <Box sx={{ flex: "1 1 auto", display: "flex", flexDirection: "column" }}>
                 <Box sx={global.CollectionOverflowstyle}>
                   {listOfCollection.map((value, key) => {
                     return (
@@ -321,7 +327,9 @@ function AddCollection({ children }) {
 
             {/* 5. CATEGORIES */}
             <Box sx={global.CategoryOverflowstyle}>
-              {children}
+              <Box sx={global.takeOff}>
+                {children}
+              </Box>
             </Box>
           </Box>
         )}

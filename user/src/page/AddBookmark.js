@@ -21,7 +21,7 @@ import global from "../styles/global";
 function AddBookmark() {
 
   const theme = useTheme()
-  const matches = useMediaQuery(theme.breakpoints.down('md'));
+  const matches = useMediaQuery(theme.breakpoints.down('lg'));
 
   let history = useNavigate();
 
@@ -248,7 +248,7 @@ function AddBookmark() {
 
   return (
     <AddCollection>
-      <Box>
+      <Box sx={{ height: "100vh", background: "#ffffff" }}>
         {matches ? (null) : (
           <Box sx={{ display: "flex", flexDirection: "row", height: "200px", minHeight: "200px" }}>
             {/* background: "blue", zIndex: "12", position: "fixed" */}
@@ -258,12 +258,12 @@ function AddBookmark() {
 
               <Box sx={{ flex: "2" }}>
                 <Box>
-                  <ButtonBase sx={global.buttonBase} onClick={() => { history(-1); }} >
+                  <ButtonBase sx={global.buttonBase} onClick={() => { history("/add_collection"); }} >
                     <img
                       src="/pictures/assets/back.svg"
                       alt="back"
-                      height="30"
-                      width="30"
+                      height="20vh"
+                      width="20vw"
                     />
                   </ButtonBase>
                 </Box>

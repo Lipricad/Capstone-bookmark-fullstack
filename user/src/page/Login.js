@@ -82,7 +82,7 @@ function Login() {
     }}>
 
       <Box sx={{ flexGrow: 1, textAlign: "center", marginTop: "20vh" }}>
-        <Typography variant="h2" sx={global.TypogTitle}> Login </Typography>
+        <Typography variant="h3" sx={global.TypogTitle}> Login </Typography>
 
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
           <Form>

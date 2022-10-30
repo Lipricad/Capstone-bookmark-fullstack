@@ -11,7 +11,7 @@ function HowToUse() {
       {/* STEP 1 */}
       <Box sx={global.HowtoBoxes}>
         <Box sx={global.HowtoTypogs}>
-          <Typography sx={{ fontSize: "2vw" }}>
+          <Typography variant="h6" sx={{ fontSize: "35px" }}>
             Step 1: Create a new collection, click the new collection button and input a name for the new collection then click CONFIRM.
           </Typography>
         </Box>
@@ -29,7 +29,7 @@ function HowToUse() {
       {/* STEP 2 */}
       <Box sx={global.HowtoBoxes}>
         <Box sx={global.HowtoTypogs}>
-          <Typography sx={{ fontSize: "2vw" }}>
+          <Typography variant="h6" sx={{ fontSize: "35px" }}>
             Step 2: Create a new category, to create a new category under your collection. Click the new category button and input the name of your new category then click CONFIRM.
           </Typography>
         </Box>
@@ -47,7 +47,7 @@ function HowToUse() {
       {/* STEP 3 */}
       <Box sx={global.HowtoBoxes}>
         <Box sx={global.HowtoTypogs}>
-          <Typography sx={{ fontSize: "2vw" }}>
+          <Typography variant="h6" sx={{ fontSize: "35px" }}>
             Step 3: To add bookmark under your category just click the add bookmark button then input the url (link) and the name of the website you want to save then click CONFIRM.
           </Typography>
         </Box>
@@ -65,7 +65,7 @@ function HowToUse() {
       {/* STEP 4 */}
       <Box sx={global.HowtoBoxes}>
         <Box sx={global.HowtoTypogs}>
-          <Typography sx={{ fontSize: "2vw" }}>
+          <Typography variant="h6" sx={{ fontSize: "21px" }}>
             Step 4: To access your saved bookmark, just click on the name of the bookmark that you save and it will automatically open that link on new tab.
           </Typography>
         </Box>

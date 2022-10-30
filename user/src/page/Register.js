@@ -75,7 +75,7 @@ function Register() {
     }}>
 
       <Box sx={{ flexGrow: 1, textAlign: "center", marginTop: "20vh", marginBottom: "100px" }}>
-        <Typography variant="h2" sx={global.TypogTitle}> Join Us </Typography>
+        <Typography variant="h3" sx={global.TypogTitle}> Join Us </Typography>
 
         <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
           <Form>

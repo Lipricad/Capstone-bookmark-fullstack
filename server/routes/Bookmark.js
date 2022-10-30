@@ -3,19 +3,6 @@ const router = express.Router()
 const { Bookmark } = require("../models")
 const { validateToken } = require("../middlewares/AuthMiddleware")
 
-// OUTPUT ONE 
-router.get('/:CategoryId/:UserId', validateToken, async (req, res) => {
-  const CategoryId = req.params.CategoryId
-  const UserId = req.params.UserId
-
-  if (UserId != req.user.id) {
-    res.json({ error: "Not same User." })
-  } else {
-    const bookmark = await Bookmark.findAll({ where: { CategoryId: CategoryId } })
-    res.json(bookmark);
-  }
-
-});
 
 // SORTED NAME
 router.get('/:CategoryId/sname', async (req, res) => {
@@ -31,6 +18,20 @@ router.get('/:CategoryId/sdate', async (req, res) => {
 
   const bookmark = await Bookmark.findAll({ where: { CategoryId: CategoryId }, order: [['updatedAt', 'DESC']] })
   res.json(bookmark);
+});
+
+// OUTPUT ONE 
+router.get('/:CategoryId/:UserId', validateToken, async (req, res) => {
+  const CategoryId = req.params.CategoryId
+  const UserId = req.params.UserId
+
+  if (UserId != req.user.id) {
+    res.json({ error: "Not same User." })
+  } else {
+    const bookmark = await Bookmark.findAll({ where: { CategoryId: CategoryId } })
+    res.json(bookmark);
+  }
+
 });
 
 // INPUT

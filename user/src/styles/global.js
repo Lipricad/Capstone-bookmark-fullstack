@@ -218,9 +218,27 @@ const global = {
     color: "#6633ff",
     fontWeight: "bold",
     textAlign: "center",
-    fontSize: "5vw"
+    fontSize: "4.5vw",
   },
 
+  /* BOOKMARK BOX STYLES */
+  BookmarkBoxStyle: {
+    display: "flex",
+    flexDirection: "column",
+  },
+
+  BookmarkBoxStylesearch: {
+    display: "flex",
+    flex: "1",
+    marginTop: "30px",
+    justifyContent: "center",
+  },
+
+  BookmarkBoxStylerow: {
+    display: "flex",
+    flexDirection: "row",
+    flex: "1",
+  },
 
   /* SEARCH BAR STYLES */
   searchfield: {
@@ -293,8 +311,9 @@ const global = {
     textAlign: "center",
     background: "#7251b2",
     flex: "1 1 auto",
-    color: "black", 
+    color: "black",
     marginBottom: "12px",
+    width: "100%"
   },
 }
 

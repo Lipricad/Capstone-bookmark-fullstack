@@ -49,11 +49,6 @@ function AddCategory() {
   const [listOfCategory, setlistOfCategory] = useState([]);
 
   useEffect(() => {
-    // /* COLLECTION */
-    // axios.get(`http://localhost:3001/collection/byId/${id}`).then((response) => {
-    //   console.log(response.data)
-    // });
-
     /* CATEGORY */
     axios.get(`http://localhost:3001/category/${id}/${UserId}`, {
       headers: {
@@ -230,7 +225,7 @@ function AddCategory() {
 
               <Box sx={{ flex: "4", display: "flex", flexDirection: "column", alignItems: "center" }}>
                 <Box sx={{ flex: "1" }}></Box>
-                <Box sx={{ flex: "2" }}> <Typography variant="h3" sx={global.TypogTitle}> CATEGORIES </Typography></Box>
+                <Box sx={{ flex: "2", justifyContent: "center" }}> <Typography variant="h3" sx={global.TypogTitle}> CATEGORIES </Typography> </Box>
               </Box>
               <Box sx={{ flex: "1" }}> </Box>
 
@@ -250,7 +245,7 @@ function AddCategory() {
 
         {/* LIST OF CATEGORIES */}
 
-        <Box sx={{ flex: "15", display: "flex", flexDirection: "row", flexWrap: "wrap", marginBottom: "200px" }}>
+        <Box sx={{ flex: "15", display: "flex", flexDirection: "row", flexWrap: "wrap", marginBottom: "200px", justifyContent: "center" }}>
           {listOfCategory.map((value, key) => {
             return (
 
@@ -314,6 +309,7 @@ function AddCategory() {
                         component={TextField}
                         label="Category Name"
                         helperText={<ErrorMessage name="CategoryName" />}
+                        fullWidth
                       />
                     </Box>
                   </DialogContent>

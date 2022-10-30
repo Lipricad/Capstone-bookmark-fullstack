@@ -15,6 +15,7 @@ import About from "../page/About"
 import AddCollection from '../page/AddCollection';
 import AddCategory from '../page/AddCategory';
 import AddBookmark from '../page/AddBookmark';
+import HowToUse from '../page/HowToUse';
 import Account from '../page/Account';
 import SendEmail from '../page/SendEmail';
 import ResetPass from '../page/ResetPass';
@@ -189,7 +190,7 @@ function Main() {
                       <List>
                         <ListItem button divider sx={{ padding: "20px" }} >
                           <ListItemIcon>
-                            <Link to="/about" className='NavBarDecoration'>
+                            <Link to="/howto" className='NavBarDecoration'>
                               <Typography variant="h5" sx={global.TypogBut}> How to Use? </Typography>
                             </Link>
                           </ListItemIcon>
@@ -215,7 +216,7 @@ function Main() {
                     <Box sx={{ display: "flex", flexGrow: 7, marginTop: "25px" }}>
                       <Box sx={{ flexGrow: 7 }}>
                         <ButtonBase sx={global.buttonnav}>
-                          <Link to="/about" className='NavBarDecoration'>
+                          <Link to="/howto" className='NavBarDecoration'>
                             <Typography variant="h5" sx={global.TypogBut}> How to Use? </Typography>
                           </Link>
                         </ButtonBase>
@@ -266,6 +267,7 @@ function Main() {
           <Route path="/add_collection" exact element={<AddCollection />} />
           <Route path="/add_category/:id/:CollectionName/:UserId" exact element={<AddCategory />} />
           <Route path="/add_bookmark/:id/:CollectionName/:UserId/:CATid/:CategoryName" exact element={<AddBookmark />} />
+          <Route path="/howto" exact element={<HowToUse />} />
           <Route path="/account" exact element={<Account />} />
           <Route path="/forgot-pass" exact element={<SendEmail />} />
           <Route path="/reset-password/:id/:forgotToken" exact element={<ResetPass />} />

@@ -211,7 +211,14 @@ const global = {
 
   /* CATEGORY BOX STYLES */
   CategoryBoxStyle: {
-    background: "blue"
+    display: "flex",
+  },
+
+  CategoryTitle: {
+    color: "#6633ff",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: "5vw"
   },
 
 
@@ -262,8 +269,33 @@ const global = {
     "&:hover": {
       backgroundColor: "lightgrey"
     }
-  }
+  },
 
+  //HOWTO STYLES
+  HowtoBoxMain: {
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100vh",
+    background: "#FFFFFFF",
+    marginTop: "78px",
+    width: "100%"
+  },
+
+  HowtoBoxes: {
+    display: "flex",
+    flex: "1",
+    flexDirection: "column",
+    alignItems: "center",
+    margin: "3vw",
+  },
+
+  HowtoTypogs: {
+    textAlign: "center",
+    background: "#7251b2",
+    flex: "1 1 auto",
+    color: "black", 
+    marginBottom: "12px",
+  },
 }
 
 export default global;

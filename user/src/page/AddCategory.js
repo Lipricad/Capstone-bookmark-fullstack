@@ -183,7 +183,7 @@ function AddCategory() {
 
         {matches ? (                                                                                                    //MOBILE BUTTON
           <Box sx={global.CategoryBoxStyle}>
-            <Box>
+            <Box sx={{ flex: 1 }}>
               <ButtonBase sx={global.buttonBase} onClick={() => { history("/add_collection"); }} >
                 <img
                   src="/pictures/assets/back.svg"
@@ -193,7 +193,12 @@ function AddCategory() {
                 />
               </ButtonBase>
             </Box>
-            <Box>
+            <Box sx={{ flex: 1, display: "flex", alignItems: "center" }}>
+              <Box sx={{ display: "flex", flex: 1 }}>
+                <Typography sx={global.CategoryTitle}>  CATEGORIES </Typography>
+              </Box>
+            </Box>
+            <Box sx={{ flex: 1 }}>
               <ButtonBase sx={global.buttonBase} onClick={handleClickOpen} >
                 <img
                   src="/pictures/assets/categoryicon.svg"
@@ -224,8 +229,8 @@ function AddCategory() {
               </Box>
 
               <Box sx={{ flex: "4", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                <Box sx={{ flex: "1"}}></Box>
-                <Box sx={{ flex: "2"}}> <Typography variant="h3" sx={global.TypogTitle}> CATEGORIES </Typography></Box>
+                <Box sx={{ flex: "1" }}></Box>
+                <Box sx={{ flex: "2" }}> <Typography variant="h3" sx={global.TypogTitle}> CATEGORIES </Typography></Box>
               </Box>
               <Box sx={{ flex: "1" }}> </Box>
 
@@ -296,7 +301,7 @@ function AddCategory() {
 
           <Dialog open={open} onClose={handleClose}>
             <Box sx={{ border: "3px solid black" }}>
-              <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Create Category</DialogTitle>
+              <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white", }}>Create Category</DialogTitle>
 
               <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                 <Form onChange={(e) => { setNewCategory(e.target.value) }}>
@@ -312,7 +317,7 @@ function AddCategory() {
                       />
                     </Box>
                   </DialogContent>
-                  <DialogActions sx={{ background: "#272727" }}>
+                  <DialogActions sx={{ background: "#7251b2" }}>
                     <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
                       <Typography sx={global.TypogButCancel}> Cancel </Typography>
                     </ButtonBase>
@@ -337,7 +342,7 @@ function AddCategory() {
 
           <Dialog open={openRename} onClose={handleCloseRename}>
             <Box sx={{ border: "3px solid black" }}>
-              <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> New name: </DialogTitle>
+              <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white", }}> New name: </DialogTitle>
 
               <Formik initialValues={initialValuesRename} onSubmit={updateCategoryname} validationSchema={validationSchemaRename}>
                 <Form>
@@ -353,7 +358,7 @@ function AddCategory() {
                       />
                     </Box>
                   </DialogContent>
-                  <DialogActions sx={{ background: "#272727" }}>
+                  <DialogActions sx={{ background: "#7251b2" }}>
                     <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseRename}>
                       <Typography sx={global.TypogButCancel}> Cancel </Typography>
                     </ButtonBase>

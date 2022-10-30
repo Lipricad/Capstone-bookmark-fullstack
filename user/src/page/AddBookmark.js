@@ -74,6 +74,20 @@ function AddBookmark() {
   const [listOfCategory, setlistOfCategory] = useState([]);
 
   useEffect(() => {
+    /* CATEGORY */
+    // axios.get(`http://localhost:3001/bookmark/${CATid}/${UserId}`, {
+    //   headers: {
+    //     accessToken: localStorage.getItem("accessToken"),
+    //   },
+    // }).then((response) => {
+    //   if (response.data.error) {
+    //     history("/NOT FOUND")
+    //   } else {
+    //     setlistOfBookmark(response.data);
+    //   }
+
+    // });
+
     /* BOOKMARK */
     axios.get(`http://localhost:3001/bookmark/${CATid}/${UserId}`, {
       headers: {
@@ -315,7 +329,7 @@ function AddBookmark() {
 
                 <Dialog open={open} onClose={handleClose}>
                   <Box sx={{ border: "3px solid black" }}>
-                    <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> New name: </DialogTitle>
+                    <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white", }}> New name: </DialogTitle>
                     <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
                       <Form>
                         <DialogContent>
@@ -340,7 +354,7 @@ function AddBookmark() {
                             />
                           </Box>
                         </DialogContent>
-                        <DialogActions sx={{ background: "#272727" }}>
+                        <DialogActions sx={{ background: "#7251b2" }}>
                           <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
                             <Typography sx={global.TypogButCancel}> Cancel </Typography>
                           </ButtonBase>
@@ -421,7 +435,7 @@ function AddBookmark() {
 
           <Dialog open={openRename} onClose={handleCloseRename}>
             <Box sx={{ border: "3px solid black" }}>
-              <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> Add a Bookmark </DialogTitle>
+              <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white", }}> Add a Bookmark </DialogTitle>
               <Formik initialValues={initialValuesRename} onSubmit={updateBookmarkname} validationSchema={validationSchemaRename}>
                 <Form>
                   <DialogContent>
@@ -436,7 +450,7 @@ function AddBookmark() {
                       />
                     </Box>
                   </DialogContent>
-                  <DialogActions sx={{ background: "#272727" }}>
+                  <DialogActions sx={{ background: "#7251b2" }}>
                     <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseRename}>
                       <Typography sx={global.TypogButCancel}> Cancel </Typography>
                     </ButtonBase>
@@ -455,7 +469,7 @@ function AddBookmark() {
 
           <Dialog open={openMoveto} onClose={handleCloseMove}>
             <Box sx={{ border: "3px solid black" }}>
-              <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}>Move to:</DialogTitle>
+              <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white", }}>Move to:</DialogTitle>
               <DialogContent>
                 <FormControl sx={{ m: 1, minWidth: 275, marginTop: "20px" }}>
                   <Select
@@ -476,7 +490,7 @@ function AddBookmark() {
                   </Select>
                 </FormControl>
               </DialogContent>
-              <DialogActions sx={{ background: "#272727" }}>
+              <DialogActions sx={{ background: "#7251b2" }}>
                 <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseMove}>
                   <Typography sx={global.TypogButCancel}> Cancel </Typography>
                 </ButtonBase>

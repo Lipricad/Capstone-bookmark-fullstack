@@ -381,7 +381,7 @@ function AddCollection({ children }) {
 
       <Dialog open={openRename} onClose={handleCloseRename}>
         <Box sx={{ border: "3px solid black" }}>
-          <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> New name: </DialogTitle>
+          <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white", }}> New name: </DialogTitle>
 
           <Formik initialValues={initialValuesRename} onSubmit={updateCollectionname} validationSchema={validationSchemaRename}>
             <Form>
@@ -397,7 +397,7 @@ function AddCollection({ children }) {
                   />
                 </Box>
               </DialogContent>
-              <DialogActions sx={{ background: "#272727" }}>
+              <DialogActions sx={{ background: "#7251b2" }}>
                 <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseRename}>
                   <Typography sx={global.TypogButCancel}> Cancel </Typography>
                 </ButtonBase>

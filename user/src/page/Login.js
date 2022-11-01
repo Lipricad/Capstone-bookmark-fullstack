@@ -11,12 +11,14 @@ import axios from 'axios';
 /* GLOBAL STYLES && IMPORTS */
 import global from "../styles/global";
 import { AuthContext } from "../helpers/AuthContext";
+import { AuthAdmin } from "../helpers/AuthAdmin";
 
 
 function Login() {
 
   /* REFRESH PAGE */
   const { setAuthState } = useContext(AuthContext);
+  const { setAuthStateAdmin } = useContext(AuthAdmin);
 
   let history = useNavigate();
 
@@ -67,7 +69,19 @@ function Login() {
           status: true
         });
 
-        history(`/add_collection`);
+        if (response.data.role === "user") {
+          history(`/add_collection`);
+        }
+        
+        if (response.data.role === "admin") {
+          setAuthStateAdmin({
+            email: response.data.email,
+            id: response.data.id,
+            status: true
+          });
+
+          history(`/admin`);
+        }
       }
       resetForm({ data: "" })
     });

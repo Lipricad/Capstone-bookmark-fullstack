@@ -8,7 +8,7 @@ const validateToken = (req, res, next) => {
   try {
     const validToken = verify(accessToken, "importantsecret");
 
-    req.user = validToken;   //PARA MAKUHA KO ULIT YUNG DATA OR MAACCESS KO SA OTHER PAGES
+    req.user = validToken;                                              //PARA MAKUHA KO ULIT YUNG DATA OR MAACCESS KO SA OTHER PAGES
 
     if (validToken) {
       return next();
@@ -39,4 +39,4 @@ const forgotToken = (req, res, next) => {
   }
 };
 
-module.exports = { validateToken, forgotToken };
+module.exports = { validateToken, forgotToken};

@@ -7,10 +7,9 @@ var nodemailer = require('nodemailer')
 
 const { sign } = require("jsonwebtoken")
 
-// const JWT_SECRET =
-//   "hvdvay6ert72839289()aiyg8t87qt72393293883uhefiuh78ttq3ifi78272jbkj?[]]pou89ywe";
+// const JWT_SECRET = "hvdvay6ert72839289()aiyg8t87qt72393293883uhefiuh78ttq3ifi78272jbkj?[]]pou89ywe";
 
-//INPUT REGISTER
+//INPUT REGISTER USER
 router.post("/", async (req, res) => {
   const { email, password } = req.body;
   const userEmail = await Users.findOne({ where: { email: email } });
@@ -20,11 +19,14 @@ router.post("/", async (req, res) => {
     bcrypt.hash(password, 10).then((hash) => {
       Users.create({
         email: email,
-        password: hash
+        password: hash,
+        role: "user"
       })
       res.json("200");
     });
 });
+
+
 
 //INPUT LOGIN
 router.post("/login", async (req, res) => {
@@ -38,10 +40,10 @@ router.post("/login", async (req, res) => {
       if (!match) res.json({ error: "Incorrect Combination of Email or Password." })
       else {
         const accessToken = sign(
-          { email: userEmail.email, id: userEmail.id },
+          { email: userEmail.email, id: userEmail.id, role: userEmail.role },
           "importantsecret"
         );
-        res.json({ token: accessToken, email: email, id: userEmail.id });
+        res.json({ token: accessToken, email: email, id: userEmail.id, role: userEmail.role });
       }
     })
 });
@@ -54,11 +56,7 @@ router.get('/auth', validateToken, (req, res) => {
   res.json(req.user);
 })
 
-//OUTPUT ALL - for ADMIN
-router.get("/", async (req, res) => {
-  const listOfUser = await Users.findAll()
-  res.json(listOfUser);
-});
+
 
 // OUTPUT BY USERID
 router.get('/userdetails', validateToken, async (req, res) => {
@@ -120,8 +118,6 @@ router.post('/forgot-password', async (req, res) => {
 
 
 
-
-
 //OUTPUT BY EMAIL FORGOT
 router.get('/reset-password/:id/:forgotToken', forgotToken, async (req, res, next) => {
   const { id, forgotToken } = req.params;
@@ -137,8 +133,8 @@ router.get('/reset-password/:id/:forgotToken', forgotToken, async (req, res, nex
   else {
     res.json(userEmail)
   }
-
 })
+
 
 
 //CHANGE PASSWORD - FORGOT
@@ -173,6 +169,28 @@ router.put('/changepass', validateToken, async (req, res) => {
   });
 
 })
+
+
+//ADMIN PART
+
+router.get("/authAdmin", validateToken, async (req, res) => {
+  const role = req.user.role
+  const checkAdmin = await Users.findOne({ where: { email: req.user.email, role: req.user.role } })
+
+  if (role === "admin") {
+    res.json(checkAdmin);
+  }
+  else {
+    res.json({error: "No Permission to Access"})
+  }
+});
+
+//OUTPUT ALL - for ADMIN
+router.get("/usersGET", validateToken, async (req, res) => {
+  const listOfUser = await Users.findAll({ where: { role: "user" } })
+  res.json(listOfUser);
+});
+
 
 
 module.exports = router

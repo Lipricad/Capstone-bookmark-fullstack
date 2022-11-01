@@ -165,7 +165,6 @@ function AddCollection({ children }) {
 
 
   return (
-    // background: "#3b3b3b"
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", background: "#8984D6", zIndex: "12", position: "fixed", marginTop: "78px", width: "100%" }}>
 
       {/* 0. COLLECTION TITLE */}
@@ -253,13 +252,6 @@ function AddCollection({ children }) {
             {/* 1. BOX FOR COLLECTION */}
 
             <Box sx={{ flex: "1", background: "#8984D6", display: "flex", flexDirection: "column", maxWidth: "250px", minWidth: " 250px", }}>
-
-              {/* <Box sx={{ display: "flex", flex: "1 1 auto", maxHeight: "40px", minHeight: "40px" }}>
-                <Box sx={{ flex: "1 1 auto" }}>
-                  <Typography variant="h4" sx={global.TypogCollection}> Collection</Typography>
-                </Box>
-              </Box> */}
-
 
               {/* 3. ADD COLLECTION */}
 

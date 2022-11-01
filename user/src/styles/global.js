@@ -305,16 +305,80 @@ const global = {
     flexDirection: "column",
     alignItems: "center",
     margin: "3vw",
+    background: "#f0f2f5",
+    padding: "20px",
+    filter: "drop-shadow(0 0 0.25rem #45436d)"
   },
 
   HowtoTypogs: {
     textAlign: "center",
     background: "#7251b2",
     flex: "1 1 auto",
-    color: "black",
+    color: "white",
     marginBottom: "12px",
     width: "100%"
   },
+
+
+
+  //ADMINBOX STYLES
+
+  adminBoxStylesMain: {
+    display: "flex",
+    flexDirection: "row",
+    minHeight: "100vh",
+    backgroundColor: "yellow"
+  },
+
+  adminBoxStylesPanel: {
+    flex: "1",
+    background: "red",
+    display: "flex",
+    flexDirection: "column",
+    marginTop: "78px",
+    maxWidth: "250px",
+    minWidth: " 250px",
+  },
+
+  adminBoxStylesBody: {
+    flex: "10",
+    display: "flex",
+    flexDirection: "column",
+    background: "purple"
+  },
+
+  adminBoxStyleTitle: {
+    flex: "1",
+    marginTop: "78px",
+    background: "green"
+  },
+
+  adminBoxStyleList: {
+    flex: "5",
+    display: "flex",
+    flexDirection: "row",
+    background: "pink"
+  },
+
+  adminBoxStylesTable: {
+    flex: "4",
+    background: "white",
+  },
+
+  adminBoxStylesCreate: {
+    flex: "1",
+    background: "blue",
+  },
+
+  adminTableTitle: {
+    fontWeight: "bold",
+    maxWidth: "300px"
+  },
+
+  adminTableTypog: {
+    maxWidth: "300px"
+  },
+
 }
 
 export default global;

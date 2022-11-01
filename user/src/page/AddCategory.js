@@ -9,9 +9,6 @@ import axios from 'axios';
 /* PARENT PAGES */
 import AddCollection from './AddCollection';
 
-/* COMPONENTS */
-// import UploadImage from '../components/UploadImage';
-
 /* GLOBAL STYLES */
 import global from "../styles/global";
 

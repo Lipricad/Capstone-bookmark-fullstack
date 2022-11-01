@@ -107,15 +107,15 @@ function Account() {
 
       <Box sx={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", marginTop: "10vh" }}>
 
-        <Paper elevation={3} sx={{ flex: 1, textAlign: "center", padding: "25px 50px 50px 50px", margin: "10vh 0vh 8vh 0vh" }}>
+        <Paper elevation={3} sx={{ flex: 1, textAlign: "center", padding: "25px 75px 50px 75px", margin: "10vh 0vh 8vh 0vh" }}>
 
           {/* TITLE */}
 
-          <Typography variant="h3" sx={{ color: "#6633ff", fontWeight: "bold", paddingBottom: "6vh" }}> Personal Details</Typography>
+          <Typography variant="h4" sx={{ color: "#6633ff", fontWeight: "bold", paddingBottom: "6vh" }}> Personal Details</Typography>
 
           {/* BODY */}
 
-          <Typography variant="h5" sx={{ color: "#6633ff", fontWeight: "bold", textAlign: "left" }}>
+          <Typography sx={{ color: "#6633ff", fontWeight: "bold", fontSize: "21px", textAlign: "left" }}>
             Contact Info
           </Typography>
 
@@ -128,7 +128,7 @@ function Account() {
                   value.email
                 }>
 
-                <Typography variant="h5" noWrap sx={{ color: "#6633ff", fontWeight: "bold", paddingTop: "25px", maxWidth: "400px" }}>
+                <Typography noWrap sx={{ color: "#6633ff", fontWeight: "bold", fontSize: "18px", paddingTop: "25px", maxWidth: "400px" }}>
                   {value.email}
                 </Typography>
 
@@ -137,7 +137,7 @@ function Account() {
           })}
 
 
-          <Typography variant="h5" sx={{ color: "#6633ff", fontWeight: "bold", textAlign: "left", padding: "40px 0px 0px 0px" }}>
+          <Typography sx={{ color: "#6633ff", fontWeight: "bold", fontSize: "21px", textAlign: "left", padding: "40px 0px 0px 0px" }}>
             Password and Security
           </Typography>
 
@@ -156,7 +156,7 @@ function Account() {
 
       <Dialog open={open} onClose={handleClose}>
         <Box sx={{ border: "3px solid black" }}>
-          <DialogTitle variant="h4" sx={{ background: "#272727", color: "white", }}> Change Password: </DialogTitle>
+          <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white", }}> Change Password: </DialogTitle>
 
           <Formik initialValues={initialValues} onSubmit={changePassword} validationSchema={validationSchema}>
             <Form>
@@ -195,7 +195,7 @@ function Account() {
                   />
                 </Box>
               </DialogContent>
-              <DialogActions sx={{ background: "#272727" }}>
+              <DialogActions sx={{ background: "#7251b2" }}>
                 <ButtonBase sx={global.buttonBaseCancel} onClick={handleClose}>
                   <Typography sx={global.TypogButCancel}> Cancel </Typography>
                 </ButtonBase>

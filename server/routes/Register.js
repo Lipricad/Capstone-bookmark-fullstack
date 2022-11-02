@@ -27,7 +27,6 @@ router.post("/", async (req, res) => {
 });
 
 
-
 //INPUT LOGIN
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
@@ -49,13 +48,11 @@ router.post("/login", async (req, res) => {
 });
 
 
-
 //AUTHENTICATION LOGIN
 router.get('/auth', validateToken, (req, res) => {
 
   res.json(req.user);
 })
-
 
 
 // OUTPUT BY USERID
@@ -65,7 +62,6 @@ router.get('/userdetails', validateToken, async (req, res) => {
   const user = await Users.findAll({ where: { id: UserId } })
   res.json(user);
 });
-
 
 
 // CREATE LINK BY EMAIL
@@ -117,7 +113,6 @@ router.post('/forgot-password', async (req, res) => {
 });
 
 
-
 //OUTPUT BY EMAIL FORGOT
 router.get('/reset-password/:id/:forgotToken', forgotToken, async (req, res, next) => {
   const { id, forgotToken } = req.params;
@@ -136,7 +131,6 @@ router.get('/reset-password/:id/:forgotToken', forgotToken, async (req, res, nex
 })
 
 
-
 //CHANGE PASSWORD - FORGOT
 router.put('/changepass-forgot', forgotToken, async (req, res) => {
   const { newPassword } = req.body
@@ -147,7 +141,6 @@ router.put('/changepass-forgot', forgotToken, async (req, res) => {
   });
 
 })
-
 
 
 //CHANGE PASSWORD - LOGGED IN
@@ -167,8 +160,10 @@ router.put('/changepass', validateToken, async (req, res) => {
 
     }
   });
-
 })
+
+
+
 
 
 //ADMIN PART
@@ -181,14 +176,41 @@ router.get("/authAdmin", validateToken, async (req, res) => {
     res.json(checkAdmin);
   }
   else {
-    res.json({error: "No Permission to Access"})
+    res.json({ error: "No Permission to Access" })
   }
 });
+
 
 //OUTPUT ALL - for ADMIN
 router.get("/usersGET", validateToken, async (req, res) => {
   const listOfUser = await Users.findAll({ where: { role: "user" } })
   res.json(listOfUser);
+});
+
+
+//UPDATE USER ACCOUNT ADMIN PART
+router.put("/:userId", validateToken, async (req, res) => {
+  const { id, newPassword } = req.body;
+
+  bcrypt.hash(newPassword, 10).then((hash) => {
+    Users.update({ password: hash }, { where: { id: id} })
+    res.json("Password successfully changed.");
+  });
+
+});
+
+
+// DELETE ADMIN PART
+router.delete("/:userId", validateToken, async (req, res) => {
+  const userId = req.params.userId
+
+  await Users.destroy({
+    where: {
+      id: userId,
+    },
+  });
+
+  res.json("200: deleted successfully")
 });
 
 

@@ -350,7 +350,8 @@ const global = {
   adminBoxStyleTitle: {
     flex: "1",
     marginTop: "78px",
-    background: "green"
+    background: "green",
+    minHeight: "100px"
   },
 
   adminBoxStyleList: {
@@ -376,7 +377,15 @@ const global = {
   },
 
   adminTableTypog: {
-    maxWidth: "300px"
+    maxWidth: "250px"
+  },
+
+  adminConfirmTypog: {
+    color: "white"
+  },
+
+  editMarginAdmin: {
+    margin: "15px"
   },
 
 }

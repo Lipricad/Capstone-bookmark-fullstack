@@ -13,7 +13,7 @@ function SearchBar({ placeholder, data }) {
 
   const [filteredData, setFilteredData] = useState([]);
 
-  const haldleFilter = (event) => {
+  const handleFilter = (event) => {
     const searchWord = event.target.value
     const newFilter = data.filter((value) => {
       return value.BookmarkName.toLowerCase().includes(searchWord.toLowerCase());
@@ -39,7 +39,7 @@ function SearchBar({ placeholder, data }) {
           type="search"
           variant="filled"
           fullWidth
-          onChange={haldleFilter}
+          onChange={handleFilter}
 
           sx={global.searchfield}
 

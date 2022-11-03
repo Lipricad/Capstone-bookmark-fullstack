@@ -351,7 +351,9 @@ const global = {
     flex: "1",
     marginTop: "78px",
     background: "green",
-    minHeight: "100px"
+    height: "100px",
+    minHeight: "100px",
+    maxHeight: "100px"
   },
 
   adminBoxStyleList: {
@@ -369,11 +371,27 @@ const global = {
   adminBoxStylesCreate: {
     flex: "1",
     background: "blue",
+    flexDirection: "column",
+  },
+
+  adminBoxStylesCreateSub: {
+    flex: "1",
+    background: "red",
+    display: "flex",
+    justifyContent: "center",
   },
 
   adminTableTitle: {
     fontWeight: "bold",
-    maxWidth: "300px"
+    maxWidth: "300px",
+    userSelect: "none"
+  },
+
+  adminTableTitlecursor: {
+    fontWeight: "bold",
+    maxWidth: "300px",
+    cursor: "pointer",
+    userSelect: "none"
   },
 
   adminTableTypog: {

@@ -113,7 +113,6 @@ function Register() {
                 label="Confirm Password"
                 helperText={<ErrorMessage name="cpassword" />}
               />
-
             </Box>
             <ButtonBase sx={global.buttonBase} type="submit" >
               <Typography variant="h5" sx={global.TypogBut}> Join Now</Typography>

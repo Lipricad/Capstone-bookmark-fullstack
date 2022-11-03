@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
-  Box, Typography, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper, ButtonBase, Tooltip, Dialog, DialogTitle, DialogContent, DialogActions
+  Box, Typography, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper, ButtonBase, Tooltip, Dialog, DialogTitle, DialogContent, DialogActions,
+  InputAdornment
 } from "@mui/material";
+import { TextField as Searchfield } from "@mui/material"
 import Swal from 'sweetalert2';
 import * as Yup from 'yup';
 import { TextField } from "formik-material-ui"
@@ -41,9 +43,34 @@ function AdminUsers() {
     setOpenEdit(false);
   };
 
+  const [openNew, setOpenNew] = useState(false);
+
+  const handleClickOpenNew = () => {
+    setOpenNew(true);
+  };
+  const handleCloseNew = () => {
+    setOpenNew(false);
+  };
 
 
   /* FORMIK */
+  const initialValues = {
+    email: "",
+    password: "",
+    cpassword: "",
+  };
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .required("Email address is required.")
+      .email("Please enter a valid email address."),
+    password: Yup.string()
+      .min(8, "Password not long enough.")
+      .required("Password is required."),
+    cpassword: Yup.string()
+      .required("Confirm Password is required.")
+      .oneOf([Yup.ref('password'), null], 'Passwords must match.'),
+  });
+
   const initialValuesEdit = {
     EditPassword: "",
     EditCPassword: "",
@@ -62,6 +89,7 @@ function AdminUsers() {
 
   // LIST OF USERS
   const [listOfUsers, setlistOfUsers] = useState([]);
+  const [rows, setRows] = useState([]);
 
   useEffect(() => {
     //VERIFY IF ADMIN YUNG NAKALOGGED IN
@@ -86,9 +114,8 @@ function AdminUsers() {
                   accessToken: localStorage.getItem("accessToken"),
                 },
               }).then((response) => {
-
                 setlistOfUsers(response.data);
-
+                setRows(response.data);
               });
           }
         }
@@ -108,19 +135,22 @@ function AdminUsers() {
 
 
 
-  /* DELETION OF USERS */
-  const deleteData = (delId) => {
+  /* PASSING DATA TO DATABASE */
 
-    handleCloseDel();
-
-    axios.delete(`http://localhost:3001/register/${delId.id}`, {
-      headers: { accessToken: localStorage.getItem("accessToken") },
-    }).then(() => {
-      setlistOfUsers(listOfUsers.filter((val) => {
-        return val.id !== delId.id;
-      }))
-    })
-  }
+  const onSubmit = (data, { resetForm }) => {
+    axios.post("http://localhost:3001/register", data).then((response) => {
+      if (response.data.error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: response.data.error,
+        })
+      } else {
+        history(`/loading`);
+      }
+      resetForm({ data: "" })
+    });
+  };
 
 
 
@@ -155,6 +185,60 @@ function AdminUsers() {
 
 
 
+  /* DELETION OF USERS */
+  const deleteData = (delId) => {
+
+    handleCloseDel();
+
+    axios.delete(`http://localhost:3001/register/${delId.id}`, {
+      headers: { accessToken: localStorage.getItem("accessToken") },
+    }).then(() => {
+      setRows(rows.filter((val) => {
+        return val.id !== delId.id;
+      }))
+      setlistOfUsers(listOfUsers.filter((val) => {
+        return val.id !== delId.id;
+      }))
+    })
+  }
+
+
+
+  /* SORTING */
+  const [order, setOrder] = useState("ASC");
+
+  const sorting = (col) => {
+    if (order === "ASC") {
+      const sorted = [...listOfUsers].sort((a, b) =>
+        a[col] > b[col] ? 1 : -1
+      );
+      setRows(sorted);
+      setOrder("DSC");
+    }
+    if (order === "DSC") {
+      const sorted = [...listOfUsers].sort((a, b) =>
+        a[col] < b[col] ? 1 : -1
+      );
+      setRows(sorted);
+      setOrder("ASC");
+    }
+  };
+
+  const arrowsort = <img src="/pictures/assets/arrows-sort.svg" alt="back" height="15" width="15" />
+
+
+
+  /* SEARCH */
+  const handleFilter = (event) => {
+    const searchWord = event.target.value
+    const newFilter = listOfUsers.filter((value) => {
+      return value.email.toLowerCase().includes(searchWord.toLowerCase());
+    });
+
+    setRows(newFilter);
+  };
+
+
   return (
     <AdminDash>
       {/* TITLE */}
@@ -165,59 +249,158 @@ function AdminUsers() {
       {/* LIST OF USERS */}
       < Box sx={global.adminBoxStyleList} >
         <Box sx={global.adminBoxStylesTable}>
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="justify"> <Typography sx={global.adminTableTitle}> ID </Typography> </TableCell>
-                  <TableCell align="justify"><Typography sx={global.adminTableTitle}> Email </Typography></TableCell>
-                  <TableCell align="justify"><Typography sx={global.adminTableTitle}> Password </Typography></TableCell>
-                  <TableCell align="justify"><Typography sx={global.adminTableTitle}> Role </Typography></TableCell>
-                  <TableCell align="justify"><Typography sx={global.adminTableTitle}> Status </Typography></TableCell>
-                  <TableCell align="justify"><Typography sx={global.adminTableTitle}> Edit </Typography></TableCell>
-                  <TableCell align="justify"><Typography sx={global.adminTableTitle}> Delete </Typography></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {listOfUsers.map((value, key) => {
-                  return (
-                    <TableRow key={key}>
-                      <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.id}>
-                        <Typography noWrap sx={global.adminTableTypog}> {value.id}</Typography>
-                      </Tooltip></TableCell>
-                      <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.email}>
-                        <Typography noWrap sx={global.adminTableTypog}> {value.email}</Typography>
-                      </Tooltip></TableCell>
-                      <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.password}>
-                        <Typography noWrap sx={global.adminTableTypog}> {value.password}</Typography>
-                      </Tooltip></TableCell>
-                      <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.role}>
-                        <Typography noWrap sx={global.adminTableTypog}> {value.role}</Typography>
-                      </Tooltip></TableCell>
-                      <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.updatedAt.substring(0, 4)}>
-                        {value.updatedAt.substring(0, 4) < currentYearMinus5 ? (<Typography sx={global.adminTableTypog}> inactive </Typography>) : (<Typography> active </Typography>)}
-                      </Tooltip></TableCell>
-                      <TableCell align="justify"><ButtonBase onClick={handleClickOpenEdit} onMouseOver={() => { DropDownId(value) }}> Edit </ButtonBase></TableCell>
-                      <TableCell align="justify"><ButtonBase onClick={handleClickOpenDel} onMouseOver={() => { DropDownId(value) }}> Delete </ButtonBase></TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Box>
+          <Paper>
+            <Searchfield
+              autoComplete='off'
+              placeholder="Search Email"
+              id="search_bar"
+              type="search"
+              variant="filled"
+              fullWidth
+              onChange={handleFilter}
 
-        {/* CREATE NEW USERS */}
-        <Box sx={global.adminBoxStylesCreate}>
+              sx={global.searchfield}
 
-        </Box>
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="start">
+                    <img
+                      src="/pictures/assets/search.svg"
+                      alt="search"
+                      height="30"
+                      width="30"
+                    />
+                  </InputAdornment>
+                )
+              }}
+            />
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 300 }} size="small" aria-label="a dense table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell align="justify"> <Typography sx={global.adminTableTitlecursor} onClick={() => sorting("id")}> ID {arrowsort}</Typography> </TableCell>
+                    <TableCell align="justify"><Typography sx={global.adminTableTitlecursor} onClick={() => sorting("email")}> Email  {arrowsort}</Typography></TableCell>
+                    <TableCell align="justify"><Typography sx={global.adminTableTitlecursor} onClick={() => sorting("password")}> Password {arrowsort}</Typography></TableCell>
+                    <TableCell align="justify"><Typography sx={global.adminTableTitlecursor} onClick={() => sorting("role")}> Role {arrowsort}</Typography></TableCell>
+                    <TableCell align="justify"><Typography sx={global.adminTableTitlecursor} onClick={() => sorting("updatedAt")}> Status {arrowsort}</Typography></TableCell>
+                    <TableCell align="justify"><Typography sx={global.adminTableTitle}> Edit </Typography></TableCell>
+                    <TableCell align="justify"><Typography sx={global.adminTableTitle}> Delete </Typography></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((value, key) => {
+                    return (
+                      <TableRow key={key}>
+
+                        <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.id}>
+                          <Typography noWrap sx={global.adminTableTypog}> {value.id}</Typography>
+                        </Tooltip></TableCell>
+
+                        <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.email}>
+                          <Typography noWrap sx={global.adminTableTypog}> {value.email}</Typography>
+                        </Tooltip></TableCell>
+
+                        <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.password}>
+                          <Typography noWrap sx={global.adminTableTypog}> {value.password}</Typography>
+                        </Tooltip></TableCell>
+
+                        <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.role}>
+                          <Typography noWrap sx={global.adminTableTypog}> {value.role}</Typography>
+                        </Tooltip></TableCell>
+
+                        <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.updatedAt.substring(0, 4)}>
+                          {value.updatedAt.substring(0, 4) < currentYearMinus5 ? (<Typography sx={global.adminTableTypog}> inactive </Typography>) : (<Typography> active </Typography>)}
+                        </Tooltip></TableCell>
+
+                        <TableCell align="justify"><ButtonBase onClick={handleClickOpenEdit} onMouseOver={() => { DropDownId(value) }}> Edit </ButtonBase></TableCell>
+
+                        <TableCell align="justify"><ButtonBase onClick={handleClickOpenDel} onMouseOver={() => { DropDownId(value) }}> Delete </ButtonBase></TableCell>
+
+                      </TableRow>
+                    )
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer >
+          </Paper>
+        </Box >
+
+
+        {/* ADD */}
+        < Box sx={global.adminBoxStylesCreate} >
+          {/* NEW USER ACCOUNT */}
+          < Box sx={global.adminBoxStylesCreateSub} >
+            <ButtonBase sx={global.buttonBase} onClick={handleClickOpenNew}>
+              <Typography sx={global.TypogBut}> Create New Account </Typography>
+            </ButtonBase>
+          </Box >
+        </Box >
+
+
+
+        {/* CREATE NEW DIALOG POPUP */}
+
+        < Dialog open={openNew} onClose={handleCloseNew} >
+          <Box sx={{ border: "3px solid black" }}>
+            <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white", }}> Create new account: </DialogTitle>
+            <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} >
+              <Form>
+                <DialogContent>
+                  <Box sx={global.editMarginAdmin}>
+                    <Field
+                      autoComplete="off"
+                      name="email"
+                      className="InputField"
+                      component={TextField}
+                      label="Email Address"
+                      helperText={<ErrorMessage name="email" />}
+                    />
+                  </Box>
+
+                  <Box sx={global.editMarginAdmin}>
+
+                    <Field
+                      autoComplete="off"
+                      name="password"
+                      className="InputField"
+                      component={TextField}
+                      type="password"
+                      label="Password"
+                      helperText={<ErrorMessage name="password" style={{ color: "red" }} />}
+                    />
+                  </Box>
+
+                  <Box sx={global.editMarginAdmin}>
+                    <Field
+                      autoComplete="off"
+                      name="cpassword"
+                      className="InputField"
+                      component={TextField}
+                      type="password"
+                      label="Confirm Password"
+                      helperText={<ErrorMessage name="cpassword" />}
+                    />
+                  </Box>
+                </DialogContent>
+                <DialogActions sx={{ background: "#7251b2" }}>
+                  <ButtonBase sx={global.buttonBaseCancel} onClick={handleCloseNew}>
+                    <Typography sx={global.TypogButCancel}> Cancel </Typography>
+                  </ButtonBase>
+                  <ButtonBase sx={global.buttonBase} type="submit">
+                    <Typography sx={global.TypogBut}> Confirm</Typography>
+                  </ButtonBase>
+                </DialogActions>
+              </Form>
+            </Formik>
+          </Box>
+        </Dialog >
 
 
         {/* EDIT DIALOG POPUP */}
 
-        <Dialog open={openEdit} onClose={handleCloseEdit}>
+        < Dialog open={openEdit} onClose={handleCloseEdit} >
           <Box sx={{ border: "3px solid black" }}>
-            <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white", }}> Edit User Account </DialogTitle>
+            <DialogTitle variant="h4" sx={{ background: "#7251b2", color: "white", }}> Edit user account: </DialogTitle>
             <Formik initialValues={initialValuesEdit} onSubmit={updateAccount} validationSchema={validationSchemaEdit}>
               <Form>
                 <DialogContent>
@@ -257,11 +440,11 @@ function AdminUsers() {
               </Form>
             </Formik>
           </Box>
-        </Dialog>
+        </Dialog >
 
         {/* DELETE POP UP DIALOG */}
 
-        <Dialog open={openDel} onClose={handleCloseDel}>
+        < Dialog open={openDel} onClose={handleCloseDel} >
           <Box sx={{ border: "3px solid black" }}>
             <DialogContent sx={{ background: "#7251b2" }}>
               <Typography variant="h6" sx={global.adminConfirmTypog}> Are you sure you want to delete this user?</Typography>
@@ -275,12 +458,12 @@ function AdminUsers() {
               </ButtonBase>
             </DialogActions>
           </Box>
-        </Dialog>
+        </Dialog >
 
 
 
       </Box >
-    </AdminDash>
+    </AdminDash >
   )
 }
 

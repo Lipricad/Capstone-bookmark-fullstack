@@ -132,7 +132,6 @@ const global = {
   CollectionOverflowstyle: {
     display: "flex",
     flexDirection: "column",
-    // flex: "4",
     maxHeight: "60vh",
     textAlign: "center",
     overflow: "auto",
@@ -327,30 +326,63 @@ const global = {
     display: "flex",
     flexDirection: "row",
     minHeight: "100vh",
-    backgroundColor: "yellow"
+    background: "#f0f2f5",
   },
 
   adminBoxStylesPanel: {
     flex: "1",
-    background: "red",
+    background: "#8984D6",
+    filter: "drop-shadow(0 0 0.10rem #45436d)",
     display: "flex",
     flexDirection: "column",
     marginTop: "78px",
-    maxWidth: "250px",
-    minWidth: " 250px",
+    maxWidth: "200px",
+    minWidth: " 200px",
+  },
+
+  adminBoxStylesPanelSub1: {
+    flex: "1",
+    borderBottom: "1px solid #45436d",
+    filter: "drop-shadow(0 0 0.25rem #45436d)",
+    height: "130px",
+    maxHeight: "130px",
+    minHeight: "130px",
+  },
+
+  adminBoxStylesPanelSub2: {
+    flex: "1",
+    display: "flex",
+    flexDirection: "column",
+    padding: "20px"
+  },
+
+  adminTitleTypog: {
+    color: "#ffffff",
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: "50px",
+    fontSize: "21px"
+  },
+
+  adminTitleTypogSub: {
+    color: "#ffffff",
+    fontWeight: "bold",
+    textAlign: "center",
+    fontSize: "17px",
   },
 
   adminBoxStylesBody: {
     flex: "10",
     display: "flex",
     flexDirection: "column",
-    background: "purple"
+    marginLeft: "10px",
   },
 
   adminBoxStyleTitle: {
     flex: "1",
-    marginTop: "78px",
-    background: "green",
+    margin: "78px 10px 10px 0",
+    background: "#8984D6",
+    filter: "drop-shadow(0 0 0.10rem #45436d)",
     height: "100px",
     minHeight: "100px",
     maxHeight: "100px"
@@ -360,7 +392,6 @@ const global = {
     flex: "5",
     display: "flex",
     flexDirection: "row",
-    background: "pink"
   },
 
   adminBoxStylesTable: {
@@ -370,13 +401,14 @@ const global = {
 
   adminBoxStylesCreate: {
     flex: "1",
-    background: "blue",
     flexDirection: "column",
+    marginLeft: "10px",
+    background: "#8984D6",
+    filter: "drop-shadow(0 0 0.10rem #45436d)",
   },
 
   adminBoxStylesCreateSub: {
     flex: "1",
-    background: "red",
     display: "flex",
     justifyContent: "center",
   },
@@ -395,7 +427,7 @@ const global = {
   },
 
   adminTableTypog: {
-    maxWidth: "250px"
+    maxWidth: "225px"
   },
 
   adminConfirmTypog: {

@@ -286,7 +286,7 @@ function Main() {
                   <Toolbar>
                     <Box sx={{ display: "flex", width: "100%" }}>
                       <Box sx={{ flexGrow: 1 }}>
-                        <Link to="/admin">
+                        <Link to="/admin/manage-account-user">
                           <img
                             src="/pictures/Logo/BookmarkLogo.png"
                             alt="Bookmark Website"
@@ -375,7 +375,7 @@ function Main() {
             <Route path="/account" exact element={<Account />} />
             <Route path="/forgot-pass" exact element={<SendEmail />} />
             <Route path="/reset-password/:id/:forgotToken" exact element={<ResetPass />} />
-            <Route path="/admin" exact element={<AdminUsers />} />
+            <Route path="/admin/manage-account-user" exact element={<AdminUsers />} />
 
             {/* <Route path="/try" exact element={<Tryy />} /> */}
             <Route path="*" exact element={<PageNotFound />} />

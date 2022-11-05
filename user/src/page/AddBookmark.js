@@ -395,7 +395,7 @@ function AddBookmark() {
                         </span>
                       }>
 
-                      <Typography variant="h6" noWrap sx={{ marginLeft: "10px", color: "white", textAlign: "center", maxWidth: "175px" }}>
+                      <Typography noWrap sx={{ fontSize:"18px",marginLeft: "10px", color: "white", textAlign: "center", maxWidth: "175px" }}>
 
                         {/* ICON OF THE BOOKMARK ICON ICON ICON ICON ICON ICON ICON */}
                         <img height="16" width="16" alt="icon" src={`http://www.google.com/s2/favicons?domain=${value.Bookmark_URL}`} />

@@ -193,7 +193,7 @@ router.put("/:userId", validateToken, async (req, res) => {
   const { id, newPassword } = req.body;
 
   bcrypt.hash(newPassword, 10).then((hash) => {
-    Users.update({ password: hash }, { where: { id: id} })
+    Users.update({ password: hash }, { where: { id: id } })
     res.json("Password successfully changed.");
   });
 

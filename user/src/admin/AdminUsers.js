@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import {
   Box, Typography, TableContainer, Table, TableBody, TableCell, TableHead, TableRow, Paper, ButtonBase, Tooltip, Dialog, DialogTitle, DialogContent, DialogActions,
-  InputAdornment
+  InputAdornment, TablePagination
 } from "@mui/material";
 import { TextField as Searchfield } from "@mui/material"
 import Swal from 'sweetalert2';
@@ -140,6 +140,7 @@ function AdminUsers() {
   const onSubmit = (data, { resetForm }) => {
     axios.post("http://localhost:3001/register", data).then((response) => {
       if (response.data.error) {
+        handleCloseNew();
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -239,17 +240,34 @@ function AdminUsers() {
   };
 
 
+
+  /* PAGINATION */
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+  const emptyRows =
+    rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+
+
   return (
     <AdminDash>
       {/* TITLE */}
-      < Box sx={global.adminBoxStyleTitle} >
-        <Typography>TTILE</Typography>
+      <Box sx={global.adminBoxStyleTitle} >
+        <Typography sx={global.adminTitleTypog}>Manage User</Typography>
       </Box >
 
       {/* LIST OF USERS */}
       < Box sx={global.adminBoxStyleList} >
         <Box sx={global.adminBoxStylesTable}>
-          <Paper>
+          <Paper sx={{background: "#ffffff", border: "1px solid black"}}>
             <Searchfield
               autoComplete='off'
               placeholder="Search Email"
@@ -275,7 +293,7 @@ function AdminUsers() {
               }}
             />
             <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 300 }} size="small" aria-label="a dense table">
+              <Table size="small" aria-label="simple table" >
                 <TableHead>
                   <TableRow>
                     <TableCell align="justify"> <Typography sx={global.adminTableTitlecursor} onClick={() => sorting("id")}> ID {arrowsort}</Typography> </TableCell>
@@ -288,39 +306,58 @@ function AdminUsers() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {rows.map((value, key) => {
-                    return (
-                      <TableRow key={key}>
+                  {rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((value, key) => {
+                      return (
+                        <TableRow key={key}>
 
-                        <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.id}>
-                          <Typography noWrap sx={global.adminTableTypog}> {value.id}</Typography>
-                        </Tooltip></TableCell>
+                          <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.id}>
+                            <Typography noWrap sx={global.adminTableTypog}> {value.id}</Typography>
+                          </Tooltip></TableCell>
 
-                        <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.email}>
-                          <Typography noWrap sx={global.adminTableTypog}> {value.email}</Typography>
-                        </Tooltip></TableCell>
+                          <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.email}>
+                            <Typography noWrap sx={global.adminTableTypog}> {value.email}</Typography>
+                          </Tooltip></TableCell>
 
-                        <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.password}>
-                          <Typography noWrap sx={global.adminTableTypog}> {value.password}</Typography>
-                        </Tooltip></TableCell>
+                          <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.password}>
+                            <Typography noWrap sx={global.adminTableTypog}> {value.password}</Typography>
+                          </Tooltip></TableCell>
 
-                        <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.role}>
-                          <Typography noWrap sx={global.adminTableTypog}> {value.role}</Typography>
-                        </Tooltip></TableCell>
+                          <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.role}>
+                            <Typography noWrap sx={global.adminTableTypog}> {value.role}</Typography>
+                          </Tooltip></TableCell>
 
-                        <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.updatedAt.substring(0, 4)}>
-                          {value.updatedAt.substring(0, 4) < currentYearMinus5 ? (<Typography sx={global.adminTableTypog}> inactive </Typography>) : (<Typography> active </Typography>)}
-                        </Tooltip></TableCell>
+                          <TableCell align="justify"> <Tooltip enterDelay={500} leaveDelay={50} title={value.updatedAt.substring(0, 4)}>
+                            {value.updatedAt.substring(0, 4) < currentYearMinus5 ? (<Typography sx={global.adminTableTypog}> inactive </Typography>) : (<Typography> active </Typography>)}
+                          </Tooltip></TableCell>
 
-                        <TableCell align="justify"><ButtonBase onClick={handleClickOpenEdit} onMouseOver={() => { DropDownId(value) }}> Edit </ButtonBase></TableCell>
+                          <TableCell align="justify"><ButtonBase onClick={handleClickOpenEdit} onMouseOver={() => { DropDownId(value) }}> Edit </ButtonBase></TableCell>
 
-                        <TableCell align="justify"><ButtonBase onClick={handleClickOpenDel} onMouseOver={() => { DropDownId(value) }}> Delete </ButtonBase></TableCell>
+                          <TableCell align="justify"><ButtonBase onClick={handleClickOpenDel} onMouseOver={() => { DropDownId(value) }}> Delete </ButtonBase></TableCell>
 
-                      </TableRow>
-                    )
-                  })}
+                        </TableRow>
+                      )
+                    })}
+                  {emptyRows > 0 && (
+                    <TableRow style={{ height: 37 * emptyRows }}>
+                      <TableCell colSpan={6} />
+                    </TableRow>
+                  )}
                 </TableBody>
               </Table>
+
+              {/* TABLE PAGINATION */}
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+
             </TableContainer >
           </Paper>
         </Box >

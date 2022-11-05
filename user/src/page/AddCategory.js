@@ -264,7 +264,7 @@ function AddCategory() {
                         value.CategoryName
                       }>
 
-                      <Typography variant="h6" noWrap sx={{ marginLeft: "10px", color: "white", textAlign: "center", maxWidth: "175px" }}>
+                      <Typography noWrap sx={{  fontSize:"18px",marginLeft: "10px", color: "white", textAlign: "center", maxWidth: "175px" }}>
                         {value.CategoryName}
                       </Typography>
 

@@ -80,7 +80,7 @@ function Login() {
             status: true
           });
 
-          history(`/admin`);
+          history(`/admin/manage-account-user`);
         }
       }
       resetForm({ data: "" })
